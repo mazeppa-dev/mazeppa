@@ -1,0 +1,202 @@
+[
+  [ "n0", "main(xs, ys)" ],
+  [ "n1", "zipTree(mapTree(xs), mapTree(ys))" ],
+  [ "n2", "zipTree(.g2(xs), mapTree(ys))" ],
+  [ "n3", "xs" ],
+  [ "n4", "zipTree(Empty(), mapTree(ys))" ],
+  [ "n5", "zipTree(Empty(), .g2(ys))" ],
+  [ "n6", "ys" ],
+  [ "n7", "zipTree(Empty(), Empty())" ],
+  [ "n8", ".g1(Empty(), Empty())" ],
+  [ "n9", "Empty()" ],
+  [ "n10", "zipTree(Empty(), Node(mapTree(.v3), Blah(.v4), mapTree(.v5)))" ],
+  [ "n11", ".g1(Empty(), Node(mapTree(.v3), Blah(.v4), mapTree(.v5)))" ],
+  [ "n12", "Empty()" ],
+  [
+    "n13",
+    "zipTree(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), mapTree(ys))"
+  ],
+  [ "n14", "zipTree(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), .g2(ys))" ],
+  [ "n15", "ys" ],
+  [ "n16", "zipTree(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), Empty())" ],
+  [ "n17", ".g1(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), Empty())" ],
+  [ "n18", ".g0(Empty(), mapTree(.v0), mapTree(.v2), Blah(.v1))" ],
+  [ "n19", ".g0(Empty(), .g2(.v0), mapTree(.v2), Blah(.v1))" ],
+  [ "n20", ".v0" ],
+  [ "n21", ".g0(Empty(), Empty(), mapTree(.v2), Blah(.v1))" ],
+  [ "n22", ".g0(Empty(), Empty(), .g2(.v2), Blah(.v1))" ],
+  [ "n23", ".v2" ],
+  [ "n24", ".g0(Empty(), Empty(), Empty(), Blah(.v1))" ],
+  [ "n25", "Empty()" ],
+  [
+    "n26",
+    ".g0(Empty(), Empty(), Node(mapTree(.v12), Blah(.v13), mapTree(.v14)), Blah(.v1))"
+  ],
+  [ "n27", "Empty()" ],
+  [
+    "n28",
+    ".g0(Empty(), Node(mapTree(.v9), Blah(.v10), mapTree(.v11)), mapTree(.v2), Blah(.v1))"
+  ],
+  [
+    "n29",
+    ".g0(Empty(), Node(mapTree(.v9), Blah(.v10), mapTree(.v11)), .g2(.v2), Blah(.v1))"
+  ],
+  [ "n30", ".v2" ],
+  [
+    "n31",
+    ".g0(Empty(), Node(mapTree(.v9), Blah(.v10), mapTree(.v11)), Empty(), Blah(.v1))"
+  ],
+  [ "n32", "Empty()" ],
+  [
+    "n33",
+    ".g0(Empty(), Node(mapTree(.v9), Blah(.v10), mapTree(.v11)), Node(mapTree(.v15), Blah(.v16), mapTree(.v17)), Blah(.v1))"
+  ],
+  [ "n34", "Empty()" ],
+  [
+    "n35",
+    "zipTree(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), Node(mapTree(.v6), Blah(.v7), mapTree(.v8)))"
+  ],
+  [
+    "n36",
+    ".g1(Node(mapTree(.v0), Blah(.v1), mapTree(.v2)), Node(mapTree(.v6), Blah(.v7), mapTree(.v8)))"
+  ],
+  [
+    "n37",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), mapTree(.v0), mapTree(.v2), Blah(.v1))"
+  ],
+  [
+    "n38",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), .g2(.v0), mapTree(.v2), Blah(.v1))"
+  ],
+  [ "n39", ".v0" ],
+  [
+    "n40",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Empty(), mapTree(.v2), Blah(.v1))"
+  ],
+  [
+    "n41",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Empty(), .g2(.v2), Blah(.v1))"
+  ],
+  [ "n42", ".v2" ],
+  [
+    "n43",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Empty(), Empty(), Blah(.v1))"
+  ],
+  [
+    "n44",
+    "Node(zipTree(Empty(), mapTree(.v6)), Pair(Blah(.v1), Blah(.v7)), zipTree(Empty(), mapTree(.v8)))"
+  ],
+  [ "n45", "zipTree(Empty(), mapTree(.v6))" ],
+  [ "n46", "zipTree(Empty(), .g2(.v6))" ],
+  [ "n47", ".v6" ],
+  [ "n48", "Pair(Blah(.v1), Blah(.v7))" ],
+  [ "n49", "Blah(.v1)" ],
+  [ "n50", ".v1" ],
+  [ "n51", "Blah(.v7)" ],
+  [ "n52", ".v7" ],
+  [ "n53", "zipTree(Empty(), mapTree(.v8))" ],
+  [ "n54", "zipTree(Empty(), .g2(.v8))" ],
+  [ "n55", ".v8" ],
+  [
+    "n56",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Empty(), Node(mapTree(.v21), Blah(.v22), mapTree(.v23)), Blah(.v1))"
+  ],
+  [
+    "n57",
+    "Node(zipTree(Empty(), mapTree(.v6)), Pair(Blah(.v1), Blah(.v7)), zipTree(Node(mapTree(.v21), Blah(.v22), mapTree(.v23)), mapTree(.v8)))"
+  ],
+  [ "n58", "zipTree(Empty(), mapTree(.v6))" ],
+  [ "n59", "zipTree(Empty(), .g2(.v6))" ],
+  [ "n60", ".v6" ],
+  [ "n61", "Pair(Blah(.v1), Blah(.v7))" ],
+  [ "n62", "Blah(.v1)" ],
+  [ "n63", ".v1" ],
+  [ "n64", "Blah(.v7)" ],
+  [ "n65", ".v7" ],
+  [
+    "n66",
+    "zipTree(Node(mapTree(.v21), Blah(.v22), mapTree(.v23)), mapTree(.v8))"
+  ],
+  [
+    "n67",
+    "zipTree(Node(mapTree(.v21), Blah(.v22), mapTree(.v23)), .g2(.v8))"
+  ],
+  [ "n68", ".v21" ],
+  [ "n69", ".v22" ],
+  [ "n70", ".v23" ],
+  [ "n71", ".v8" ],
+  [
+    "n72",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), mapTree(.v2), Blah(.v1))"
+  ],
+  [
+    "n73",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), .g2(.v2), Blah(.v1))"
+  ],
+  [ "n74", ".v2" ],
+  [
+    "n75",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), Empty(), Blah(.v1))"
+  ],
+  [
+    "n76",
+    "Node(zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), mapTree(.v6)), Pair(Blah(.v1), Blah(.v7)), zipTree(Empty(), mapTree(.v8)))"
+  ],
+  [
+    "n77",
+    "zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), mapTree(.v6))"
+  ],
+  [
+    "n78",
+    "zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), .g2(.v6))"
+  ],
+  [ "n79", ".v18" ],
+  [ "n80", ".v19" ],
+  [ "n81", ".v20" ],
+  [ "n82", ".v6" ],
+  [ "n83", "Pair(Blah(.v1), Blah(.v7))" ],
+  [ "n84", "Blah(.v1)" ],
+  [ "n85", ".v1" ],
+  [ "n86", "Blah(.v7)" ],
+  [ "n87", ".v7" ],
+  [ "n88", "zipTree(Empty(), mapTree(.v8))" ],
+  [ "n89", "zipTree(Empty(), .g2(.v8))" ],
+  [ "n90", ".v8" ],
+  [
+    "n91",
+    ".g0(Node(mapTree(.v6), Blah(.v7), mapTree(.v8)), Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), Node(mapTree(.v24), Blah(.v25), mapTree(.v26)), Blah(.v1))"
+  ],
+  [
+    "n92",
+    "Node(zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), mapTree(.v6)), Pair(Blah(.v1), Blah(.v7)), zipTree(Node(mapTree(.v24), Blah(.v25), mapTree(.v26)), mapTree(.v8)))"
+  ],
+  [
+    "n93",
+    "zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), mapTree(.v6))"
+  ],
+  [
+    "n94",
+    "zipTree(Node(mapTree(.v18), Blah(.v19), mapTree(.v20)), .g2(.v6))"
+  ],
+  [ "n95", ".v18" ],
+  [ "n96", ".v19" ],
+  [ "n97", ".v20" ],
+  [ "n98", ".v6" ],
+  [ "n99", "Pair(Blah(.v1), Blah(.v7))" ],
+  [ "n100", "Blah(.v1)" ],
+  [ "n101", ".v1" ],
+  [ "n102", "Blah(.v7)" ],
+  [ "n103", ".v7" ],
+  [
+    "n104",
+    "zipTree(Node(mapTree(.v24), Blah(.v25), mapTree(.v26)), mapTree(.v8))"
+  ],
+  [
+    "n105",
+    "zipTree(Node(mapTree(.v24), Blah(.v25), mapTree(.v26)), .g2(.v8))"
+  ],
+  [ "n106", ".v24" ],
+  [ "n107", ".v25" ],
+  [ "n108", ".v26" ],
+  [ "n109", ".v8" ]
+]

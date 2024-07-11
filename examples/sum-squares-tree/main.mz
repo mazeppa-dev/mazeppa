@@ -1,0 +1,11 @@
+main(xs) := sumTree(mapSqTree(xs));
+
+sumTree(xs) := match xs {
+    Leaf(x) -> x,
+    Branch(lhs, rhs) -> +(sumTree(lhs), sumTree(rhs))
+};
+
+mapSqTree(xs) := match xs {
+    Leaf(x) -> Leaf(*(x, x)),
+    Branch(lhs, rhs) -> Branch(mapSqTree(lhs), mapSqTree(rhs))
+};

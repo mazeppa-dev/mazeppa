@@ -1,0 +1,6 @@
+main(n) := factorial(n);
+
+factorial(n) := match =(n, 0u32) {
+    T() -> 1u32,
+    F() -> *(n, factorial(-(n, 1u32)))
+};

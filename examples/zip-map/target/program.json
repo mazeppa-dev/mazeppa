@@ -1,0 +1,35 @@
+[
+  [
+    [ "main", [ "xs", "ys" ], "zip(map(xs), map(ys))" ],
+    [ "map", [ "xs" ], ".g2(xs)" ],
+    [ "zip", [ "xs", "ys" ], ".g1(xs, ys)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [
+          "Cons",
+          [ "y", "ys" ],
+          [ "x", "xs" ],
+          "Cons(Pair(x, y), zip(xs, ys))"
+        ],
+        [ "Nil", [], [ "x", "xs" ], "Nil()" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "Cons", [ "x", "xs" ], [ "ys" ], ".g0(ys, x, xs)" ],
+        [ "Nil", [], [ "ys" ], "Nil()" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [ "Cons", [ "x", "xs" ], [], "Cons(Blah(x), map(xs))" ],
+        [ "Nil", [], [], "Nil()" ]
+      ]
+    ]
+  ]
+]

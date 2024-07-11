@@ -1,0 +1,15 @@
+main(xs, ys) := zipTree(mapTree(xs), mapTree(ys));
+
+zipTree(xs, ys) := match xs {
+    Empty() -> Empty(),
+    Node(lhs, x, rhs) -> match ys {
+        Empty() -> Empty(),
+        Node(lhs', y, rhs') ->
+            Node(zipTree(lhs, lhs'), Pair(x, y), zipTree(rhs, rhs'))
+    }
+};
+
+mapTree(xs) := match xs {
+    Empty() -> Empty(),
+    Node(lhs, x, rhs) -> Node(mapTree(lhs), Blah(x), mapTree(rhs))
+};

@@ -1,0 +1,10 @@
+[
+  [ "n0", "main(x)" ],
+  [ "n1", "Combine(const(x, loop()), const(x, panic()))" ],
+  [ "n2", "const(x, loop())" ],
+  [ "n3", "const(x, loop())" ],
+  [ "n4", "x" ],
+  [ "n5", "const(x, panic())" ],
+  [ "n6", "const(x, Panic(\"666\"))" ],
+  [ "n7", "\"666\"" ]
+]

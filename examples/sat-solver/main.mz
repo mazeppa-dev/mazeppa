@@ -1,0 +1,39 @@
+main(a, b, c, d, e, f, g) := solve(formula(a, b, c, d, e, f, g));
+
+// Do not try to solve the formula; just _extract_ it.
+@extract
+formula(a, b, c, d, e, f, g) :=
+    and(or(Var(a), or(Not(b), or(Not(c), F()))),
+    and(or(Not(f), or(Var(e), or(Not(g), F()))),
+    and(or(Var(e), or(Not(g), or(Var(f), F()))),
+    and(or(Not(g), or(Var(c), or(Var(d), F()))),
+    and(or(Var(a), or(Not(b), or(Not(c), F()))),
+    and(or(Not(f), or(Not(e), or(Var(g), F()))),
+    and(or(Var(a), or(Var(a), or(Var(c), F()))),
+    and(or(Not(g), or(Not(d), or(Not(b), F()))),
+    T()))))))));
+
+or(x, rest) := match x {
+    Var(x) -> If(x, T(), rest),
+    Not(x) -> If(x, rest, T())
+};
+
+// Do not even try to construct the whole formula! Remove this `@extract` and
+// see what happens.
+@extract
+and(clause, rest) := match clause {
+    If(x, m, n) -> If(x, and(m, rest), and(n, rest)),
+    T() -> rest,
+    F() -> F()
+};
+
+solve(formula) := match formula {
+    If(x, m, n) -> analyze(x, m, n),
+    T() -> T(),
+    F() -> F()
+};
+
+analyze(x, m, n) := match x {
+    T() -> solve(m),
+    F() -> solve(n)
+};

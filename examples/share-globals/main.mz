@@ -1,0 +1,8 @@
+// The supercompiler must share the call to `analyze` by creating only one
+// residual function for it.
+main(x, y) := Pair(analyze(x), analyze(y));
+
+analyze(x) := match x {
+    A(x) -> B(x),
+    C(x) -> D(x)
+};

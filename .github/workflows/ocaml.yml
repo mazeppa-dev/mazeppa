@@ -1,0 +1,46 @@
+name: OCaml CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Ubuntu packages
+      run: sudo apt install bubblewrap -y
+
+    - name: Install Opam
+      run: |
+        echo "" | bash -c "sh <(curl -fsSL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)"
+
+    - name: Cache Opam
+      id: cache-opam
+      uses: actions/cache@v4
+      with:
+        path: ~/.opam
+        key: ${{ hashFiles('**.opam') }}
+
+    - name: Initialize Opam
+      if: steps.cache-opam.outputs.cache-hit != 'true'
+      run: opam init --auto-setup
+
+    - name: Install the dependencies
+      if: steps.cache-opam.outputs.cache-hit != 'true'
+      run: opam install . --deps-only --with-test -y
+
+    - name: Check formatting
+      run: opam exec -- dune build @fmt --action-stderr-on-success=must-be-empty
+
+    - name: Unit tests
+      run: opam exec ./scripts/test.sh
+
+    - name: End-to-end tests
+      run: opam exec ./scripts/test-examples.sh

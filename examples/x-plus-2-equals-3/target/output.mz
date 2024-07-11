@@ -1,0 +1,7 @@
+main(x) := match x {
+    S(x0) -> match x0 {
+        S(x1) -> F(),
+        Z() -> T()
+    },
+    Z() -> F()
+};

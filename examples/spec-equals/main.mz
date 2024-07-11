@@ -1,0 +1,15 @@
+// This is the first Futamura projection: `equals` is an interpreter, while
+// `S(S(Z()))` is a program. The residual code has a simpler structure: it
+// contains no recursion, only pattern matching!
+main(x) := equals(S(S(Z())), x);
+
+equals(x, y) := match x {
+    Z() -> match y {
+        Z() -> T(),
+        S(_y) -> F()
+    },
+    S(x) -> match y {
+        Z() -> F(),
+        S(y) -> equals(x, y)
+    }
+};

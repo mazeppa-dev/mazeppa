@@ -1,0 +1,11 @@
+main(xs) := sum(mapSq(xs));
+
+sum(xs) := match xs {
+    Nil() -> 0i32,
+    Cons(x, xs) -> +(x, sum(xs))
+};
+
+mapSq(xs) := match xs {
+    Nil() -> Nil(),
+    Cons(x, xs) -> Cons(*(x, x), mapSq(xs))
+};

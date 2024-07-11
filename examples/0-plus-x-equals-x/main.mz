@@ -1,0 +1,18 @@
+// Theorem proving: "0 + x = x" (involves induction).
+main(x) := equals(add(Z(), x), x);
+
+add(x, y) := match x {
+    Z() -> y,
+    S(x) -> S(add(x, y))
+};
+
+equals(x, y) := match x {
+    Z() -> match y {
+        Z() -> T(),
+        S(_y) -> F()
+    },
+    S(x) -> match y {
+        Z() -> F(),
+        S(y) -> equals(x, y)
+    }
+};

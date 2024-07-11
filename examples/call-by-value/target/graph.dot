@@ -1,0 +1,20 @@
+digraph {
+    node [fontname="bold helvetica"];
+    edge [fontname="bold helvetica"];
+    n0 [label="n0: <unfold>"];
+    n1 [label="n1: Combine"];
+    n0 -> n1;
+    n2 [label="n2: <unfold>"];
+    n1 -> n2 [label=" #0 "];
+    n3 [label="n3: <fold>"] [style=filled];
+    n2 -> n3;
+    n3 -> n2 [style=dashed];
+    n4 [label="n4: x"];
+    n3 -> n4 [label=" x "];
+    n5 [label="n5: <unfold>"];
+    n1 -> n5 [label=" #1 "];
+    n6 [label="n6: Panic"];
+    n5 -> n6;
+    n7 [label="n7: \"666\""];
+    n6 -> n7 [label=" #0 "];
+}

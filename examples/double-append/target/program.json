@@ -1,0 +1,15 @@
+[
+  [
+    [ "append", [ "xs", "ys" ], ".g0(xs, ys)" ],
+    [ "main", [ "xs", "ys", "zs" ], "append(append(xs, ys), zs)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Cons", [ "x", "xs" ], [ "ys" ], "Cons(x, append(xs, ys))" ],
+        [ "Nil", [], [ "ys" ], "ys" ]
+      ]
+    ]
+  ]
+]

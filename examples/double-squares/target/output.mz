@@ -1,0 +1,6 @@
+main(xs) := f0(xs);
+
+f0(x0) := match x0 {
+    Cons(x1, x2) -> Cons(let x3 := *(x1, x1); *(x3, x3), f0(x2)),
+    Nil() -> Nil()
+};

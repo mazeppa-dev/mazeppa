@@ -1,0 +1,14 @@
+main(xs) := sum(f(xs));
+
+f(xs) := match xs {
+    Nil() -> Nil(), Cons(x, xs) -> Cons(*(2i32, x), g(xs))
+};
+
+g(xs) := match xs {
+    Nil() -> Nil(), Cons(x, xs) -> Cons(*(3i32, x), f(xs))
+};
+
+sum(xs) := match xs {
+    Nil() -> 0i32,
+    Cons(x, xs) -> +(x, sum(xs))
+};

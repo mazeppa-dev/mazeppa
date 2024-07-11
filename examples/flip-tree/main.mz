@@ -1,0 +1,11 @@
+main(xs) := sumTree(flip(flip(xs)));
+
+sumTree(xs) := match xs {
+    Leaf(x) -> x,
+    Branch(lhs, rhs) -> +(sumTree(lhs), sumTree(rhs))
+};
+
+flip(xs) := match xs {
+    Leaf(x) -> Leaf(x),
+    Branch(lhs, rhs) -> Branch(flip(rhs), flip(lhs))
+};

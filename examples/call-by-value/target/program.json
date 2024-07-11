@@ -1,0 +1,9 @@
+[
+  [
+    [ "const", [ "x", "_y" ], "x" ],
+    [ "loop", [], "loop()" ],
+    [ "main", [ "x" ], "Combine(const(x, loop()), const(x, panic()))" ],
+    [ "panic", [], "Panic(\"666\")" ]
+  ],
+  []
+]

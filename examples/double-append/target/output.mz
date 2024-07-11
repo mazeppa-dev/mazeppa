@@ -1,0 +1,11 @@
+main(xs, ys, zs) := f0(xs, ys, zs);
+
+f0(x0, x1, x2) := match x0 {
+    Cons(x3, x4) -> Cons(x3, f0(x4, x1, x2)),
+    Nil() -> f1(x1, x2)
+};
+
+f1(x0, x1) := match x0 {
+    Cons(x2, x3) -> Cons(x2, f1(x3, x1)),
+    Nil() -> x1
+};

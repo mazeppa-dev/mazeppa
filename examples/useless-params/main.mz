@@ -1,0 +1,3 @@
+// Although there is only `x` in the body of `main`, the supercompiler must
+// preserve the original arity of `main`.
+main(x, _y, _z) := main(x, x, x);

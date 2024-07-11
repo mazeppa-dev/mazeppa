@@ -1,0 +1,53 @@
+[
+  [
+    [ "failover", [ "op", "os" ], ".g3(os, op)" ],
+    [ "go", [ "pp", "ss", "op", "os" ], ".g0(pp, op, os, ss)" ],
+    [ "goFirst", [ "p", "pp", "ss", "op", "os" ], ".g2(ss, op, os, p, pp)" ],
+    [
+      "main",
+      [ "s" ],
+      "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s)"
+    ],
+    [ "matches", [ "p", "s" ], "go(p, s, p, s)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [
+          "Cons",
+          [ "p", "pp" ],
+          [ "op", "os", "ss" ],
+          "goFirst(p, pp, ss, op, os)"
+        ],
+        [ "Nil", [], [ "op", "os", "ss" ], "T()" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "F", [], [ "op", "os", "pp", "ss" ], "failover(op, os)" ],
+        [ "T", [], [ "op", "os", "pp", "ss" ], "go(pp, ss, op, os)" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [
+          "Cons",
+          [ "s", "ss" ],
+          [ "op", "os", "p", "pp" ],
+          ".g1(=(p, s), op, os, pp, ss)"
+        ],
+        [ "Nil", [], [ "op", "os", "p", "pp" ], "F()" ]
+      ]
+    ],
+    [
+      ".g3",
+      [
+        [ "Cons", [ "_s", "ss" ], [ "op" ], "matches(op, ss)" ],
+        [ "Nil", [], [ "op" ], "F()" ]
+      ]
+    ]
+  ]
+]

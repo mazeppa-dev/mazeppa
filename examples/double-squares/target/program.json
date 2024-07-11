@@ -1,0 +1,15 @@
+[
+  [
+    [ "main", [ "xs" ], "mapSq(mapSq(xs))" ],
+    [ "mapSq", [ "xs" ], ".g0(xs)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Cons", [ "x", "xs" ], [], "Cons(*(x, x), mapSq(xs))" ],
+        [ "Nil", [], [], "Nil()" ]
+      ]
+    ]
+  ]
+]

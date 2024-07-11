@@ -1,0 +1,32 @@
+main(s) := f0(s);
+
+f0(x0) := match x0 {
+    Cons(x1, x2) -> match =(97u8, x1) {
+        F() -> f1(x2),
+        T() -> f2(x2)
+    },
+    Nil() -> F()
+};
+
+f1(x0) := f0(x0);
+
+f2(x0) := match x0 {
+    Cons(x1, x2) -> match =(97u8, x1) {
+        F() -> f1(x2),
+        T() -> f4(x2)
+    },
+    Nil() -> F()
+};
+
+f3(x0) := f2(x0);
+
+f4(x0) := match x0 {
+    Cons(x1, x2) -> match =(98u8, x1) {
+        F() -> match =(97u8, x1) {
+            F() -> f1(x2),
+            T() -> f4(x2)
+        },
+        T() -> T()
+    },
+    Nil() -> F()
+};

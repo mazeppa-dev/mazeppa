@@ -1,0 +1,25 @@
+main(xs, ys) := match xs {
+    Empty() -> f0(ys),
+    Node(x0, x1, x2) -> f1(x0, x1, x2, ys)
+};
+
+f0(x0) := Empty();
+
+f1(x0, x1, x2, x3) := match x3 {
+    Empty() -> Empty(),
+    Node(x4, x5, x6) -> match x0 {
+        Empty() -> match x2 {
+            Empty() -> Node(f0(x4), Pair(Blah(x1), Blah(x5)), f0(x6)),
+            Node(x7, x8, x9) -> Node(f0(x4), Pair(Blah(x1), Blah(x5)), f2(x7, x8
+            , x9, x6))
+        },
+        Node(x10, x11, x12) -> match x2 {
+            Empty() -> Node(f2(x10, x11, x12, x4), Pair(Blah(x1), Blah(x5)), f0(
+            x6)),
+            Node(x13, x14, x15) -> Node(f2(x10, x11, x12, x4), Pair(Blah(x1),
+            Blah(x5)), f2(x13, x14, x15, x6))
+        }
+    }
+};
+
+f2(x0, x1, x2, x3) := f1(x0, x1, x2, x3);

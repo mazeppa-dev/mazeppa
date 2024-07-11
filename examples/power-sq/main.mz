@@ -1,0 +1,11 @@
+main(a) := powerSq(a, 7u8);
+
+powerSq(a, x) := match =(x, 0u8) {
+    T() -> 1i32,
+    F() -> match =(%(x, 2u8), 0u8) {
+        T() -> square(powerSq(a, /(x, 2u8))),
+        F() -> *(a, powerSq(a, -(x, 1u8)))
+    }
+};
+
+square(a) := *(a, a);

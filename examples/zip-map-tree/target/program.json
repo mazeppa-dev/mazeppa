@@ -1,0 +1,40 @@
+[
+  [
+    [ "main", [ "xs", "ys" ], "zipTree(mapTree(xs), mapTree(ys))" ],
+    [ "mapTree", [ "xs" ], ".g2(xs)" ],
+    [ "zipTree", [ "xs", "ys" ], ".g1(xs, ys)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Empty", [], [ "lhs", "rhs", "x" ], "Empty()" ],
+        [
+          "Node",
+          [ "lhs'", "y", "rhs'" ],
+          [ "lhs", "rhs", "x" ],
+          "Node(zipTree(lhs, lhs'), Pair(x, y), zipTree(rhs, rhs'))"
+        ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "Empty", [], [ "ys" ], "Empty()" ],
+        [ "Node", [ "lhs", "x", "rhs" ], [ "ys" ], ".g0(ys, lhs, rhs, x)" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [ "Empty", [], [], "Empty()" ],
+        [
+          "Node",
+          [ "lhs", "x", "rhs" ],
+          [],
+          "Node(mapTree(lhs), Blah(x), mapTree(rhs))"
+        ]
+      ]
+    ]
+  ]
+]

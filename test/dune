@@ -1,0 +1,5 @@
+(test
+ (name test_mazeppa)
+ (libraries mazeppa alcotest)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.eq)))

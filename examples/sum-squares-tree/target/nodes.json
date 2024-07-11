@@ -1,0 +1,23 @@
+[
+  [ "n0", "main(xs)" ],
+  [ "n1", "sumTree(mapSqTree(xs))" ],
+  [ "n2", "sumTree(.g1(xs))" ],
+  [ "n3", "xs" ],
+  [ "n4", "sumTree(Branch(mapSqTree(.v0), mapSqTree(.v1)))" ],
+  [ "n5", ".g0(Branch(mapSqTree(.v0), mapSqTree(.v1)))" ],
+  [ "n6", "+(sumTree(mapSqTree(.v0)), sumTree(mapSqTree(.v1)))" ],
+  [ "n7", "+(sumTree(.g1(.v0)), sumTree(mapSqTree(.v1)))" ],
+  [ "n8", "sumTree(.g1(.v0))" ],
+  [ "n9", ".v0" ],
+  [ "n10", "sumTree(mapSqTree(.v1))" ],
+  [ "n11", "sumTree(.g1(.v1))" ],
+  [ "n12", ".v1" ],
+  [ "n13", "+(.v4, .v5)" ],
+  [ "n14", ".v4" ],
+  [ "n15", ".v5" ],
+  [ "n16", "sumTree(Leaf(*(.v2, .v2)))" ],
+  [ "n17", ".g0(Leaf(*(.v2, .v2)))" ],
+  [ "n18", "*(.v2, .v2)" ],
+  [ "n19", ".v2" ],
+  [ "n20", ".v2" ]
+]

@@ -1,0 +1,14 @@
+main() := Combine(
+    Identity(test(), string(test()), string(string(test()))),
+    LengthOf(length(test())),
+    Equal(=("abc", "abc"), =("abc", "def")),
+    NotEqual(!=("abc", "abc"), !=("abc", "def")),
+    GreaterThan(>("abcx", "abc"), >("abc", "abc"), >("abc", "abcx")),
+    GreaterThanEqual(>=("abcx", "abc"), >=("abc", "abc"), >=("abc", "abcx")),
+    LessThan(<("abc", "abcx"), <("abc", "abc"), <("abcx", "abc")),
+    LessThanEqual(<=("abc", "abcx"), <=("abc", "abc"), <=("abcx", "abc")),
+    PlusPlus(++("abc", "def"), ++("abc", ++("def", "ghi"))),
+    CharAt(get(test(), 0u64), get(test(), 10u64), get(test(), 11u64))
+);
+
+test() := "hello world";

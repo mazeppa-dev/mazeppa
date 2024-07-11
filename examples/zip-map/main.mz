@@ -1,0 +1,14 @@
+main(xs, ys) := zip(map(xs), map(ys));
+
+zip(xs, ys) := match xs {
+    Nil() -> Nil(),
+    Cons(x, xs) -> match ys {
+        Nil() -> Nil(),
+        Cons(y, ys) -> Cons(Pair(x, y), zip(xs, ys))
+    }
+};
+
+map(xs) := match xs {
+    Nil() -> Nil(),
+    Cons(x, xs) -> Cons(Blah(x), map(xs))
+};

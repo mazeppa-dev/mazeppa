@@ -1,0 +1,333 @@
+[
+  [ "n0", "main(s)" ],
+  [ "n1", "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s)" ],
+  [
+    "n2",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s)"
+  ],
+  [
+    "n3",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s, s)"
+  ],
+  [
+    "n4",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), s, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s)"
+  ],
+  [
+    "n5",
+    ".g2(s, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), s, 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [ "n6", "s" ],
+  [
+    "n7",
+    ".g1(=(97u8, .v0), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v0, .v1), Cons(97u8, Cons(98u8, Nil())), .v1)"
+  ],
+  [ "n8", "=(97u8, .v0)" ],
+  [ "n9", "97u8" ],
+  [ "n10", ".v0" ],
+  [
+    "n11",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v0, .v1))"
+  ],
+  [ "n12", ".g3(Cons(.v0, .v1), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))" ],
+  [ "n13", "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1)" ],
+  [
+    "n14",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1)"
+  ],
+  [
+    "n15",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1, .v1)"
+  ],
+  [
+    "n16",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), .v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1)"
+  ],
+  [
+    "n17",
+    ".g2(.v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v1, 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [ "n18", ".v1" ],
+  [
+    "n19",
+    "go(Cons(97u8, Cons(98u8, Nil())), .v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v1))"
+  ],
+  [
+    "n20",
+    ".g0(Cons(97u8, Cons(98u8, Nil())), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v1), .v1)"
+  ],
+  [
+    "n21",
+    "goFirst(97u8, Cons(98u8, Nil()), .v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v1))"
+  ],
+  [
+    "n22",
+    ".g2(.v1, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v1), 97u8, Cons(98u8, Nil()))"
+  ],
+  [ "n23", ".v1" ],
+  [
+    "n24",
+    ".g1(=(97u8, .v3), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v3, .v4)), Cons(98u8, Nil()), .v4)"
+  ],
+  [ "n25", "=(97u8, .v3)" ],
+  [ "n26", "97u8" ],
+  [ "n27", ".v3" ],
+  [
+    "n28",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v3, .v4)))"
+  ],
+  [
+    "n29",
+    ".g3(Cons(97u8, Cons(.v3, .v4)), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))"
+  ],
+  [
+    "n30",
+    "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4))"
+  ],
+  [
+    "n31",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4))"
+  ],
+  [
+    "n32",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4), Cons(.v3, .v4))"
+  ],
+  [
+    "n33",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), Cons(.v3, .v4), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4))"
+  ],
+  [
+    "n34",
+    ".g2(Cons(.v3, .v4), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4), 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [
+    "n35",
+    ".g1(=(97u8, .v3), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4), Cons(97u8, Cons(98u8, Nil())), .v4)"
+  ],
+  [ "n36", "=(97u8, .v3)" ],
+  [ "n37", "97u8" ],
+  [ "n38", ".v3" ],
+  [
+    "n39",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v3, .v4))"
+  ],
+  [ "n40", ".g3(Cons(.v3, .v4), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))" ],
+  [ "n41", "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4)" ],
+  [
+    "n42",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4)"
+  ],
+  [
+    "n43",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4, .v4)"
+  ],
+  [
+    "n44",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4)"
+  ],
+  [
+    "n45",
+    ".g2(.v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v4, 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [ "n46", ".v4" ],
+  [
+    "n47",
+    "go(Cons(97u8, Cons(98u8, Nil())), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v4))"
+  ],
+  [
+    "n48",
+    ".g0(Cons(97u8, Cons(98u8, Nil())), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v4), .v4)"
+  ],
+  [
+    "n49",
+    "goFirst(97u8, Cons(98u8, Nil()), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v4))"
+  ],
+  [
+    "n50",
+    ".g2(.v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v4), 97u8, Cons(98u8, Nil()))"
+  ],
+  [ "n51", ".v4" ],
+  [
+    "n52",
+    "go(Cons(98u8, Nil()), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v4)))"
+  ],
+  [
+    "n53",
+    ".g0(Cons(98u8, Nil()), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v4)), .v4)"
+  ],
+  [
+    "n54",
+    "goFirst(98u8, Nil(), .v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v4)))"
+  ],
+  [
+    "n55",
+    ".g2(.v4, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v4)), 98u8, Nil())"
+  ],
+  [ "n56", ".v4" ],
+  [
+    "n57",
+    ".g1(=(98u8, .v7), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(.v7, .v8))), Nil(), .v8)"
+  ],
+  [ "n58", "=(98u8, .v7)" ],
+  [ "n59", "98u8" ],
+  [ "n60", ".v7" ],
+  [
+    "n61",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(.v7, .v8))))"
+  ],
+  [
+    "n62",
+    ".g3(Cons(97u8, Cons(97u8, Cons(.v7, .v8))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))"
+  ],
+  [
+    "n63",
+    "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n64",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n65",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n66",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n67",
+    ".g2(Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [
+    "n68",
+    ".g1(T(), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(98u8, Nil())), Cons(.v7, .v8))"
+  ],
+  [
+    "n69",
+    "go(Cons(97u8, Cons(98u8, Nil())), Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n70",
+    ".g0(Cons(97u8, Cons(98u8, Nil())), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), Cons(.v7, .v8))"
+  ],
+  [
+    "n71",
+    "goFirst(97u8, Cons(98u8, Nil()), Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n72",
+    ".g2(Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), 97u8, Cons(98u8, Nil()))"
+  ],
+  [
+    "n73",
+    ".g1(=(97u8, .v7), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)), Cons(98u8, Nil()), .v8)"
+  ],
+  [ "n74", "=(97u8, .v7)" ],
+  [ "n75", "97u8" ],
+  [ "n76", ".v7" ],
+  [
+    "n77",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(.v7, .v8)))"
+  ],
+  [
+    "n78",
+    ".g3(Cons(97u8, Cons(.v7, .v8)), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))"
+  ],
+  [
+    "n79",
+    "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8))"
+  ],
+  [
+    "n80",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8))"
+  ],
+  [
+    "n81",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8), Cons(.v7, .v8))"
+  ],
+  [
+    "n82",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8))"
+  ],
+  [
+    "n83",
+    ".g2(Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8), 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [
+    "n84",
+    ".g1(=(97u8, .v7), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8), Cons(97u8, Cons(98u8, Nil())), .v8)"
+  ],
+  [ "n85", "=(97u8, .v7)" ],
+  [ "n86", "97u8" ],
+  [ "n87", ".v7" ],
+  [
+    "n88",
+    "failover(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(.v7, .v8))"
+  ],
+  [ "n89", ".g3(Cons(.v7, .v8), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))))" ],
+  [ "n90", "matches(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8)" ],
+  [
+    "n91",
+    "go(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8)"
+  ],
+  [
+    "n92",
+    ".g0(Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8, .v8)"
+  ],
+  [
+    "n93",
+    "goFirst(97u8, Cons(97u8, Cons(98u8, Nil())), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8)"
+  ],
+  [
+    "n94",
+    ".g2(.v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), .v8, 97u8, Cons(97u8, Cons(98u8, Nil())))"
+  ],
+  [ "n95", ".v8" ],
+  [
+    "n96",
+    "go(Cons(97u8, Cons(98u8, Nil())), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v8))"
+  ],
+  [
+    "n97",
+    ".g0(Cons(97u8, Cons(98u8, Nil())), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v8), .v8)"
+  ],
+  [
+    "n98",
+    "goFirst(97u8, Cons(98u8, Nil()), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v8))"
+  ],
+  [
+    "n99",
+    ".g2(.v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, .v8), 97u8, Cons(98u8, Nil()))"
+  ],
+  [ "n100", ".v8" ],
+  [
+    "n101",
+    "go(Cons(98u8, Nil()), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v8)))"
+  ],
+  [
+    "n102",
+    ".g0(Cons(98u8, Nil()), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v8)), .v8)"
+  ],
+  [
+    "n103",
+    "goFirst(98u8, Nil(), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v8)))"
+  ],
+  [
+    "n104",
+    ".g2(.v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, .v8)), 98u8, Nil())"
+  ],
+  [ "n105", ".v8" ],
+  [
+    "n106",
+    "go(Nil(), .v8, Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, .v8))))"
+  ],
+  [
+    "n107",
+    ".g0(Nil(), Cons(97u8, Cons(97u8, Cons(98u8, Nil()))), Cons(97u8, Cons(97u8, Cons(98u8, .v8))), .v8)"
+  ],
+  [ "n108", "T()" ],
+  [ "n109", "F()" ],
+  [ "n110", "F()" ],
+  [ "n111", "F()" ]
+]

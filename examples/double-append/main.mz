@@ -1,0 +1,6 @@
+main(xs, ys, zs) := append(append(xs, ys), zs);
+
+append(xs, ys) := match xs {
+    Nil() -> ys,
+    Cons(x, xs) -> Cons(x, append(xs, ys))
+};

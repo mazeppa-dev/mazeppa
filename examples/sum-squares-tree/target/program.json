@@ -1,0 +1,28 @@
+[
+  [
+    [ "main", [ "xs" ], "sumTree(mapSqTree(xs))" ],
+    [ "mapSqTree", [ "xs" ], ".g1(xs)" ],
+    [ "sumTree", [ "xs" ], ".g0(xs)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Branch", [ "lhs", "rhs" ], [], "+(sumTree(lhs), sumTree(rhs))" ],
+        [ "Leaf", [ "x" ], [], "x" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [
+          "Branch",
+          [ "lhs", "rhs" ],
+          [],
+          "Branch(mapSqTree(lhs), mapSqTree(rhs))"
+        ],
+        [ "Leaf", [ "x" ], [], "Leaf(*(x, x))" ]
+      ]
+    ]
+  ]
+]

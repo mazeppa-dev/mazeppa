@@ -1,0 +1,74 @@
+// This is an anti-example: the residual code contains many repeated fragments.
+// Consider what can we do to improve the situation.
+main(a) :=
+    let env := Cell("a", a, Cell("x", Int(7u32), Nil()));
+    fetchCell(evalProgram(example(), env), "out");
+
+// Computes "out = a^x" using a simple while-loop.
+example() :=
+    Cons(Assign("out", Int(1i32)),
+    Cons(Assign("i", Var("x")),
+    Cons(While(GreaterThan(Var("i"), Int(0u32)),
+        Cons(Assign("out", Mul(Var("out"), Var("a"))),
+        Cons(Assign("i", Sub(Var("i"), Int(1u32))),
+        Nil()))),
+    Nil())));
+
+@extract
+fetchCell(env, x) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", x)),
+    Cell(y, value, xs) -> match =(x, y) {
+        T() -> value,
+        F() -> fetchCell(xs, x)
+    }
+};
+
+@extract
+updateCell(env, x, value) := match env {
+    Nil() -> Cell(x, value, Nil()),
+    Cell(y, value', xs) -> match =(x, y) {
+        T() -> Cell(x, value, xs),
+        F() ->
+            let xs := updateCell(xs, x, value);
+            Cell(y, value', xs)
+    }
+};
+
+evalProgram(program, env) := match program {
+    Nil() -> env,
+    Cons(stmt, rest) -> evalProgram(rest, evalStmt(stmt, env))
+};
+
+evalStmt(stmt, env) := match stmt {
+    Assign(x, t) -> updateCell(env, x, evalTerm(t, env)),
+    If(cond, then, else) -> match evalBoolean(cond, env) {
+        T() -> evalProgram(then, env),
+        F() -> evalProgram(else, env)
+    },
+    While(cond, repeat) -> match evalBoolean(cond, env) {
+        T() -> evalStmt(stmt, evalProgram(repeat, env)),
+        F() -> env
+    }
+};
+
+evalTerm(t, env) := match t {
+    Var(x) -> fetchCell(env, x),
+    Boolean(b) -> Boolean(b),
+    Int(n) -> Int(n),
+    Sub(t1, t2) ->
+        Int(-(evalInt(t1, env), evalInt(t2, env))),
+    Mul(t1, t2) ->
+        Int(*(evalInt(t1, env), evalInt(t2, env))),
+    GreaterThan(t1, t2) ->
+        Boolean(>(evalInt(t1, env), evalInt(t2, env)))
+};
+
+evalBoolean(t, env) := match evalTerm(t, env) {
+    Boolean(b) -> b,
+    Int(_n) -> Panic("want `Boolean(b)`, got `Int(n)`")
+};
+
+evalInt(t, env) := match evalTerm(t, env) {
+    Int(n) -> n,
+    Boolean(_b) -> Panic("want `Int(n)`, got `Boolean(b)`")
+};

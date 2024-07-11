@@ -1,0 +1,6 @@
+version = 0.26.2
+profile = janestreet
+module-item-spacing = sparse
+let-binding-indent = 4
+max-indent = 4
+wrap-comments = true

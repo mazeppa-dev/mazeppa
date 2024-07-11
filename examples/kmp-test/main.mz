@@ -1,0 +1,21 @@
+main(s) := matches(Cons('a', Cons('a', Cons('b', Nil()))), s);
+
+matches(p, s) := go(p, s, p, s);
+
+go(pp, ss, op, os) := match pp {
+    Nil() -> T(),
+    Cons(p, pp) -> goFirst(p, pp, ss, op, os)
+};
+
+goFirst(p, pp, ss, op, os) := match ss {
+    Nil() -> F(),
+    Cons(s, ss) -> match =(p, s) {
+        T() -> go(pp, ss, op, os),
+        F() -> failover(op, os)
+    }
+};
+
+failover(op, os) := match os {
+    Nil() -> F(),
+    Cons(_s, ss) -> matches(op, ss)
+};

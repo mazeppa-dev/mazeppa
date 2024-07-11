@@ -1,0 +1,23 @@
+[
+  [
+    [ "flip", [ "xs" ], ".g1(xs)" ],
+    [ "main", [ "xs" ], "sumTree(flip(flip(xs)))" ],
+    [ "sumTree", [ "xs" ], ".g0(xs)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Branch", [ "lhs", "rhs" ], [], "+(sumTree(lhs), sumTree(rhs))" ],
+        [ "Leaf", [ "x" ], [], "x" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "Branch", [ "lhs", "rhs" ], [], "Branch(flip(rhs), flip(lhs))" ],
+        [ "Leaf", [ "x" ], [], "Leaf(x)" ]
+      ]
+    ]
+  ]
+]

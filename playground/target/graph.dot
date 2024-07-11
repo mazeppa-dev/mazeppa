@@ -1,0 +1,8 @@
+digraph {
+    node [fontname="bold helvetica"];
+    edge [fontname="bold helvetica"];
+    n0 [label="n0: <unfold>"];
+    n1 [label="n1: <fold>"] [style=filled];
+    n0 -> n1;
+    n1 -> n0 [style=dashed];
+}

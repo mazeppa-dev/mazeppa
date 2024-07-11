@@ -1,0 +1,55 @@
+[
+  [
+    [ "analyze", [ "x", "m", "n" ], ".g3(x, m, n)" ],
+    [ "and", [ "clause", "rest" ], ".g1(clause, rest)" ],
+    [
+      "formula",
+      [ "a", "b", "c", "d", "e", "f", "g" ],
+      "and(or(Var(a), or(Not(b), or(Not(c), F()))), and(or(Not(f), or(Var(e), or(Not(g), F()))), and(or(Var(e), or(Not(g), or(Var(f), F()))), and(or(Not(g), or(Var(c), or(Var(d), F()))), and(or(Var(a), or(Not(b), or(Not(c), F()))), and(or(Not(f), or(Not(e), or(Var(g), F()))), and(or(Var(a), or(Var(a), or(Var(c), F()))), and(or(Not(g), or(Not(d), or(Not(b), F()))), T()))))))))"
+    ],
+    [
+      "main",
+      [ "a", "b", "c", "d", "e", "f", "g" ],
+      "solve(formula(a, b, c, d, e, f, g))"
+    ],
+    [ "or", [ "x", "rest" ], ".g0(x, rest)" ],
+    [ "solve", [ "formula" ], ".g2(formula)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Not", [ "x" ], [ "rest" ], "If(x, rest, T())" ],
+        [ "Var", [ "x" ], [ "rest" ], "If(x, T(), rest)" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "F", [], [ "rest" ], "F()" ],
+        [
+          "If",
+          [ "x", "m", "n" ],
+          [ "rest" ],
+          "If(x, and(m, rest), and(n, rest))"
+        ],
+        [ "T", [], [ "rest" ], "rest" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [ "F", [], [], "F()" ],
+        [ "If", [ "x", "m", "n" ], [], "analyze(x, m, n)" ],
+        [ "T", [], [], "T()" ]
+      ]
+    ],
+    [
+      ".g3",
+      [
+        [ "F", [], [ "m", "n" ], "solve(n)" ],
+        [ "T", [], [ "m", "n" ], "solve(m)" ]
+      ]
+    ]
+  ]
+]

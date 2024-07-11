@@ -1,0 +1,94 @@
+[
+  [
+    [ ".f0", [ "nVal", "mVal" ], ".g2(mVal, nVal)" ],
+    [ ".f1", [ "mVal", "env", "n" ], ".f0(eval(env, n), mVal)" ],
+    [ "eval", [ "env", "t" ], ".g3(t, env)" ],
+    [ "example", [], "Lam(pow(Var(0u64), seven()))" ],
+    [ "indexEnv", [ "env", "idx" ], ".g1(env, idx)" ],
+    [ "main", [], "normalize(0u64, Nil(), example())" ],
+    [ "normalize", [ "lvl", "env", "t" ], "quote(lvl, eval(env, t))" ],
+    [
+      "normalizeAt",
+      [ "lvl", "env", "t" ],
+      "normalize(+(lvl, 1u64), Cons(vvar(lvl), env), t)"
+    ],
+    [ "pow", [ "a", "x" ], "Appl(x, a)" ],
+    [ "quote", [ "lvl", "v" ], ".g4(v, lvl)" ],
+    [ "quoteNeutral", [ "lvl", "nt" ], ".g5(nt, lvl)" ],
+    [
+      "seven", [],
+      "Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Var(0u64))))))))))"
+    ],
+    [ "vvar", [ "lvl" ], "Neutral(NVar(lvl))" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "F", [], [ "idx", "value", "xs" ], "indexEnv(xs, -(idx, 1u64))" ],
+        [ "T", [], [ "idx", "value", "xs" ], "value" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [
+          "Cons",
+          [ "value", "xs" ],
+          [ "idx" ],
+          ".g0(=(idx, 0u64), idx, value, xs)"
+        ],
+        [
+          "Nil",
+          [],
+          [ "idx" ],
+          "Panic(++(\"the variable is unbound: \", string(idx)))"
+        ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [
+          "Closure",
+          [ "env", "body" ],
+          [ "nVal" ],
+          "eval(Cons(nVal, env), body)"
+        ],
+        [ "Neutral", [ "nt" ], [ "nVal" ], "Neutral(NAppl(nt, nVal))" ]
+      ]
+    ],
+    [
+      ".g3",
+      [
+        [ "Appl", [ "m", "n" ], [ "env" ], ".f1(eval(env, m), env, n)" ],
+        [ "Lam", [ "body" ], [ "env" ], "Closure(env, body)" ],
+        [ "Var", [ "idx" ], [ "env" ], "indexEnv(env, idx)" ]
+      ]
+    ],
+    [
+      ".g4",
+      [
+        [
+          "Closure",
+          [ "env", "body" ],
+          [ "lvl" ],
+          "Lam(normalizeAt(lvl, env, body))"
+        ],
+        [ "Neutral", [ "nt" ], [ "lvl" ], "quoteNeutral(lvl, nt)" ]
+      ]
+    ],
+    [
+      ".g5",
+      [
+        [
+          "NAppl",
+          [ "nt", "nVal" ],
+          [ "lvl" ],
+          "Appl(quoteNeutral(lvl, nt), quote(lvl, nVal))"
+        ],
+        [ "NVar", [ "var" ], [ "lvl" ], "Var(-(-(lvl, var), 1u64))" ]
+      ]
+    ]
+  ]
+]

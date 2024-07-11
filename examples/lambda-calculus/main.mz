@@ -1,0 +1,52 @@
+// Look at the process graph: it contains no generalization nodes, only
+// unfoldings and decompositions! It means that the supercompiler was smart
+// enough to carry out the whole computation.
+main() := normalize(0u64, Nil(), example());
+
+example() := Lam(pow(Var(0u64), seven()));
+
+seven() := Lam(Lam(
+    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
+    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
+    Appl(Var(1u64), Var(0u64))))))))));
+
+// Exponentiation of Church numerals is reverse application.
+pow(a, x) := Appl(x, a);
+
+indexEnv(env, idx) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", string(idx))),
+    Cons(value, xs) -> match =(idx, 0u64) {
+        T() -> value,
+        F() -> indexEnv(xs, -(idx, 1u64))
+    }
+};
+
+// This is a standard normalization-by-evaluation procedure that obtains a beta
+// normal form, if it exists.
+normalize(lvl, env, t) := quote(lvl, eval(env, t));
+
+normalizeAt(lvl, env, t) := normalize(+(lvl, 1u64), Cons(vvar(lvl), env), t);
+
+vvar(lvl) := Neutral(NVar(lvl));
+
+eval(env, t) := match t {
+    Var(idx) -> indexEnv(env, idx),
+    Lam(body) -> Closure(env, body),
+    Appl(m, n) ->
+        let mVal := eval(env, m);
+        let nVal := eval(env, n);
+        match mVal {
+            Closure(env, body) -> eval(Cons(nVal, env), body),
+            Neutral(nt) -> Neutral(NAppl(nt, nVal))
+        }
+};
+
+quote(lvl, v) := match v {
+    Closure(env, body) -> Lam(normalizeAt(lvl, env, body)),
+    Neutral(nt) -> quoteNeutral(lvl, nt)
+};
+
+quoteNeutral(lvl, nt) := match nt {
+    NVar(var) -> Var(-(-(lvl, var), 1u64)),
+    NAppl(nt, nVal) -> Appl(quoteNeutral(lvl, nt), quote(lvl, nVal))
+};

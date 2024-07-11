@@ -1,0 +1,17 @@
+main() := equals(add(S(S(Z())), S(S(Z()))), S(S(S(S(Z())))));
+
+add(x, y) := match x {
+    Z() -> y,
+    S(x) -> S(add(x, y))
+};
+
+equals(x, y) := match x {
+    Z() -> match y {
+        Z() -> T(),
+        S(_y) -> F()
+    },
+    S(x) -> match y {
+        Z() -> F(),
+        S(y) -> equals(x, y)
+    }
+};

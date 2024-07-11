@@ -1,0 +1,167 @@
+[
+  [
+    [ ".f0", [ "env" ], "fetchCell(evalProgram(example(), env), \"out\")" ],
+    [ ".f1", [ "xs", "value'", "y" ], "Cell(y, value', xs)" ],
+    [ "evalBoolean", [ "t", "env" ], ".g9(evalTerm(t, env))" ],
+    [ "evalInt", [ "t", "env" ], ".g10(evalTerm(t, env))" ],
+    [ "evalProgram", [ "program", "env" ], ".g4(program, env)" ],
+    [ "evalStmt", [ "stmt", "env" ], ".g7(stmt, env, stmt)" ],
+    [ "evalTerm", [ "t", "env" ], ".g8(t, env)" ],
+    [
+      "example", [],
+      "Cons(Assign(\"out\", Int(1i32)), Cons(Assign(\"i\", Var(\"x\")), Cons(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), Nil())))"
+    ],
+    [ "fetchCell", [ "env", "x" ], ".g1(env, x)" ],
+    [ "main", [ "a" ], ".f0(Cell(\"a\", a, Cell(\"x\", Int(7u32), Nil())))" ],
+    [ "updateCell", [ "env", "x", "value" ], ".g3(env, value, x)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "F", [], [ "value", "x", "xs" ], "fetchCell(xs, x)" ],
+        [ "T", [], [ "value", "x", "xs" ], "value" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [
+          "Cell",
+          [ "y", "value", "xs" ],
+          [ "x" ],
+          ".g0(=(x, y), value, x, xs)"
+        ],
+        [ "Nil", [], [ "x" ], "Panic(++(\"the variable is unbound: \", x))" ]
+      ]
+    ],
+    [
+      ".g10",
+      [
+        [
+          "Boolean",
+          [ "_b" ],
+          [],
+          "Panic(\"want `Int(n)`, got `Boolean(b)`\")"
+        ],
+        [ "Int", [ "n" ], [], "n" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [
+          "F",
+          [],
+          [ "value", "value'", "x", "xs", "y" ],
+          ".f1(updateCell(xs, x, value), value', y)"
+        ],
+        [
+          "T",
+          [],
+          [ "value", "value'", "x", "xs", "y" ],
+          "Cell(x, value, xs)"
+        ]
+      ]
+    ],
+    [
+      ".g3",
+      [
+        [
+          "Cell",
+          [ "y", "value'", "xs" ],
+          [ "value", "x" ],
+          ".g2(=(x, y), value, value', x, xs, y)"
+        ],
+        [ "Nil", [], [ "value", "x" ], "Cell(x, value, Nil())" ]
+      ]
+    ],
+    [
+      ".g4",
+      [
+        [
+          "Cons",
+          [ "stmt", "rest" ],
+          [ "env" ],
+          "evalProgram(rest, evalStmt(stmt, env))"
+        ],
+        [ "Nil", [], [ "env" ], "env" ]
+      ]
+    ],
+    [
+      ".g5",
+      [
+        [ "F", [], [ "else", "env", "then" ], "evalProgram(else, env)" ],
+        [ "T", [], [ "else", "env", "then" ], "evalProgram(then, env)" ]
+      ]
+    ],
+    [
+      ".g6",
+      [
+        [ "F", [], [ "env", "repeat", "stmt" ], "env" ],
+        [
+          "T",
+          [],
+          [ "env", "repeat", "stmt" ],
+          "evalStmt(stmt, evalProgram(repeat, env))"
+        ]
+      ]
+    ],
+    [
+      ".g7",
+      [
+        [
+          "Assign",
+          [ "x", "t" ],
+          [ "env", "stmt" ],
+          "updateCell(env, x, evalTerm(t, env))"
+        ],
+        [
+          "If",
+          [ "cond", "then", "else" ],
+          [ "env", "stmt" ],
+          ".g5(evalBoolean(cond, env), else, env, then)"
+        ],
+        [
+          "While",
+          [ "cond", "repeat" ],
+          [ "env", "stmt" ],
+          ".g6(evalBoolean(cond, env), env, repeat, stmt)"
+        ]
+      ]
+    ],
+    [
+      ".g8",
+      [
+        [ "Boolean", [ "b" ], [ "env" ], "Boolean(b)" ],
+        [
+          "GreaterThan",
+          [ "t1", "t2" ],
+          [ "env" ],
+          "Boolean(>(evalInt(t1, env), evalInt(t2, env)))"
+        ],
+        [ "Int", [ "n" ], [ "env" ], "Int(n)" ],
+        [
+          "Mul",
+          [ "t1", "t2" ],
+          [ "env" ],
+          "Int(*(evalInt(t1, env), evalInt(t2, env)))"
+        ],
+        [
+          "Sub",
+          [ "t1", "t2" ],
+          [ "env" ],
+          "Int(-(evalInt(t1, env), evalInt(t2, env)))"
+        ],
+        [ "Var", [ "x" ], [ "env" ], "fetchCell(env, x)" ]
+      ]
+    ],
+    [
+      ".g9",
+      [
+        [ "Boolean", [ "b" ], [], "b" ],
+        [ "Int", [ "_n" ], [], "Panic(\"want `Boolean(b)`, got `Int(n)`\")" ]
+      ]
+    ]
+  ]
+]

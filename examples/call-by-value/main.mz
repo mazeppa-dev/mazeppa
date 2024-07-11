@@ -1,0 +1,8 @@
+// Call-by-name would give us `Combine(x, x)`, but we are call-by-value.
+main(x) := Combine(const(x, loop()), const(x, panic()));
+
+loop() := loop();
+
+panic() := Panic("666");
+
+const(x, _y) := x;

@@ -1,0 +1,14 @@
+main(xs, ys) := sum(zipSq(xs, ys));
+
+sum(xs) := match xs {
+    Nil() -> 0i32,
+    Cons(x, xs) -> +(x, sum(xs))
+};
+
+zipSq(xs, ys) := match xs {
+    Nil() -> Nil(),
+    Cons(x, xs) -> match ys {
+        Nil() -> Nil(),
+        Cons(y, ys) -> Cons(*(x, y), zipSq(xs, ys))
+    }
+};

@@ -1,0 +1,11 @@
+(executable
+ (public_name mazeppa)
+ (name main)
+ (libraries mazeppa spectrum clap)
+ (preprocess
+  (pps ppx_deriving.show ppx_yojson_conv)))
+
+(env
+ (release
+  (ocamlopt_flags
+   (:standard -O3))))

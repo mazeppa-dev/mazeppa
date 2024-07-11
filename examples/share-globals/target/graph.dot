@@ -1,0 +1,28 @@
+digraph {
+    node [fontname="bold helvetica"];
+    edge [fontname="bold helvetica"];
+    n0 [label="n0: <unfold>"];
+    n1 [label="n1: Pair"];
+    n0 -> n1;
+    n2 [label="n2: <unfold>"];
+    n1 -> n2 [label=" #0 "];
+    n3 [label="n3: <analyze>"] [shape=box style=bold];
+    n2 -> n3;
+    n4 [label="n4: x"];
+    n3 -> n4 [label=" x "];
+    n5 [label="n5: B"];
+    n3 -> n5 [label=" x=A(.v0) "];
+    n6 [label="n6: .v0"];
+    n5 -> n6 [label=" #0 "];
+    n7 [label="n7: D"];
+    n3 -> n7 [label=" x=C(.v1) "];
+    n8 [label="n8: .v1"];
+    n7 -> n8 [label=" #0 "];
+    n9 [label="n9: <unfold>"];
+    n1 -> n9 [label=" #1 "];
+    n10 [label="n10: <fold>"] [style=filled];
+    n9 -> n10;
+    n10 -> n3 [style=dashed];
+    n11 [label="n11: y"];
+    n10 -> n11 [label=" x "];
+}

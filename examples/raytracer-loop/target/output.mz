@@ -1,0 +1,9 @@
+main(xs, ys) := f0(xs, ys);
+
+f0(x0, x1) := match x0 {
+    Cons(x2, x3) -> match x1 {
+        Cons(x4, x5) -> +(*(x2, x4), f0(x3, x5)),
+        Nil() -> 0i32
+    },
+    Nil() -> 0i32
+};
