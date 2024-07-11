@@ -1,4 +1,5 @@
 # Mazeppa
+[![CI](https://github.com/mazeppa-dev/mazeppa/workflows/OCaml%20CI/badge.svg)](https://github.com/mazeppa-dev/mazeppa/actions)
 
 Supercompilation [^turchin-concept] is a program transformation technique that symbolically evaluates a given program, with run-time values as unknowns. In doing so, it discovers execution patterns of the original program and synthesizes them into standalone functions; the result of supercompilation is a more efficient residual program. In terms of transformational power, supercompilation subsumes both deforestation [^deforestation] and partial evaluation [^partial-evaluation], and even exhibits certain capabilities of theorem proving.
 
