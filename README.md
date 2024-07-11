@@ -737,13 +737,17 @@ The definition of `eval` is now complete.
 
 ### Is Mazeppa production-ready?
 
-Not yet, we need to battle-test Mazeppa on some actual programming language. Our long-term goal is to find suitable heuristics to profitably supercompile _any_ source file under 10'000 LoC (in Mazeppa).
+Not yet, we need to battle-test Mazeppa on some actual programming language. Our long-term goal is to [find suitable heuristics] to profitably supercompile _any_ source file under 10'000 LoC (in Mazeppa).
+
+[find suitable heuristics]: https://github.com/mazeppa-dev/mazeppa/issues/2
 
 ### How can I execute programs in Mazeppa?
 
 It is completely up to you. You can compile Mazeppa to machine code, write a high-level interpreter for it, compile it to bytecode for execution by a virtual machine -- anything you want.
 
-We are working on a default Mazeppa-to-C translator for easy setup.
+We are working on a default [Mazeppa-to-C translator] for easy setup.
+
+[Mazeppa-to-C translator]: https://github.com/mazeppa-dev/mazeppa/issues/1
 
 ### How can I perform I/O in Mazeppa?
 
