@@ -9,7 +9,7 @@
 (generate_opam_files true)
 
 (source
- (github Hirrolot/mazeppa))
+ (github mazeppa-dev/mazeppa))
 
 (authors "Tima Kinsart")
 
@@ -17,7 +17,7 @@
 
 (license MIT)
 
-(documentation https://github.com/Hirrolot/mazeppa)
+(documentation https://github.com/mazeppa-dev/mazeppa)
 
 (package
  (name mazeppa)

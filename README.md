@@ -17,7 +17,7 @@ $ opam init --auto-setup
 Then clone the repository and install Mazeppa:
 
 ```
-$ git clone https://github.com/Hirrolot/mazeppa.git
+$ git clone https://github.com/mazeppa-dev/mazeppa.git
 $ cd mazeppa
 $ ./scripts/install.sh
 ```
@@ -731,7 +731,7 @@ The definition of `eval` is now complete.
  1. Update `CHANGELOG.md`.
  1. Release the project in [GitHub Releases].
 
-[GitHub Releases]: https://github.com/Hirrolot/mazeppa/releases
+[GitHub Releases]: https://github.com/mazeppa-dev/mazeppa/releases
 
 ## FAQ
 

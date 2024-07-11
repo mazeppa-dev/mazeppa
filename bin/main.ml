@@ -2,7 +2,7 @@ open Mazeppa
 open Mazeppa.Internals
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-let github_repo = "https://github.com/Hirrolot/mazeppa"
+let github_repo = "https://github.com/mazeppa-dev/mazeppa"
 
 let version = "0.1.0"
 

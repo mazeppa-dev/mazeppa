@@ -5,9 +5,9 @@ synopsis: "A modern supercompiler for call-by-value functional languages"
 maintainer: ["Tima Kinsart"]
 authors: ["Tima Kinsart"]
 license: "MIT"
-homepage: "https://github.com/Hirrolot/mazeppa"
-doc: "https://github.com/Hirrolot/mazeppa"
-bug-reports: "https://github.com/Hirrolot/mazeppa/issues"
+homepage: "https://github.com/mazeppa-dev/mazeppa"
+doc: "https://github.com/mazeppa-dev/mazeppa"
+bug-reports: "https://github.com/mazeppa-dev/mazeppa/issues"
 depends: [
   "ocaml"
   "ocamlformat"
@@ -38,4 +38,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/Hirrolot/mazeppa.git"
+dev-repo: "git+https://github.com/mazeppa-dev/mazeppa.git"
