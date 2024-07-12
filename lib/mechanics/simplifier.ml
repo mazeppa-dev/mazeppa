@@ -140,29 +140,28 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
   (* *(t, 1), *(1, t) -> t *)
   | ((t1 as t), (Const (Const.Int n) as t2) | (Const (Const.Int n) as t1), (t2 as t))
     when op = symbol "*" -> if Checked_oint.is_one n then t else Call (op, [ t1; t2 ])
-  (* *(x, 0), *(0, x) -> 0 *)
-  (* &(x, 0), &(0, x) -> 0 *)
-  | (Var _x as t1), (Const (Const.Int n) as t2)
-  | (Const (Const.Int n) as t1), (Var _x as t2)
+  (* *(t, 0), *(0, t) -> 0 *)
+  (* &(t, 0), &(0, t) -> 0 *)
+  | (t1, (Const (Const.Int n) as t2) | (Const (Const.Int n) as t1), t2)
     when op = symbol "*" || op = symbol "&" ->
     if Checked_oint.is_zero n then int n else Call (op, [ t1; t2 ])
   (* /(t, 1) -> t *)
   | t, Const (Const.Int n) when op = symbol "/" && Checked_oint.is_one n -> t
-  (* %(x, 1) -> 0 *)
-  | Var _x, Const (Const.Int n) when op = symbol "%" && Checked_oint.is_one n ->
+  (* %(t, 1) -> 0 *)
+  | _t, Const (Const.Int n) when op = symbol "%" && Checked_oint.is_one n ->
     let (module Singleton) = Checked_oint.singleton n in
     int Singleton.(to_generic zero)
-  (* /(x, 0), %(x, 0) -> out of range *)
-  | Var _x, Const (Const.Int n)
+  (* /(t, 0), %(t, 0) -> out of range *)
+  | _t, Const (Const.Int n)
     when (op = symbol "/" || op = symbol "%") && Checked_oint.is_zero n ->
     do_int_op2 ~op (Checked_oint.pair_exn (n, n))
-  (* |(x, x), &(x, x) -> x *)
-  | Var x, Var y when (op = symbol "|" || op = symbol "&") && x = y -> Var x
-  (* =(x, x), >=(x, x), <=(x, x) -> T() *)
-  | Var x, Var y when (op = symbol "=" || op = symbol ">=" || op = symbol "<=") && x = y
+  (* |(t, t), &(t, t) -> t *)
+  | t1, t2 when (op = symbol "|" || op = symbol "&") && equal t1 t2 -> t1
+  (* =(t, t), >=(t, t), <=(t, t) -> T() *)
+  | t1, t2 when (op = symbol "=" || op = symbol ">=" || op = symbol "<=") && equal t1 t2
     -> Call (symbol "T", [])
-  (* !=(x, x), >(x, x), <(x, x) -> F() *)
-  | Var x, Var y when (op = symbol "!=" || op = symbol ">" || op = symbol "<") && x = y ->
+  (* !=(t, t), >(t, t), <(t, t) -> F() *)
+  | t1, t2 when (op = symbol "!=" || op = symbol ">" || op = symbol "<") && equal t1 t2 ->
     Call (symbol "F", [])
   (* The catch-call rule. *)
   | t1, t2 -> Call (op, [ t1; t2 ])
