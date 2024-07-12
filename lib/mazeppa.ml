@@ -3,25 +3,6 @@ module Symbol = Symbol
 module Raw_term = Raw_term
 module Raw_program = Raw_program
 
-module Internals = struct
-  module Parser = Parser
-  module Lexer = Lexer
-  module Util = Util
-  module Symbol_map = Symbol_map
-  module Subst = Subst
-  module Gensym = Gensym
-  module Const = Const
-  module Term = Term
-  module Program = Program
-  module Homeomorphic_emb = Homeomorphic_emb
-  module Msg = Msg
-  module Converter = Converter
-  module Supervisor = Supervisor
-  module Visualizer = Visualizer
-  module Residualizer = Residualizer
-  module Pretty = Pretty
-end
-
 exception Panic of string
 
 let supercompile_exn input =
@@ -52,3 +33,22 @@ let supercompile (input : Raw_program.t) : Raw_program.t =
       assert (List.is_empty reduction_path);
       raise (Panic msg)
 ;;
+
+module Internals = struct
+  module Parser = Parser
+  module Lexer = Lexer
+  module Util = Util
+  module Symbol_map = Symbol_map
+  module Subst = Subst
+  module Gensym = Gensym
+  module Const = Const
+  module Term = Term
+  module Program = Program
+  module Homeomorphic_emb = Homeomorphic_emb
+  module Msg = Msg
+  module Converter = Converter
+  module Supervisor = Supervisor
+  module Visualizer = Visualizer
+  module Residualizer = Residualizer
+  module Pretty = Pretty
+end
