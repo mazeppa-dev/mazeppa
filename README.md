@@ -250,7 +250,7 @@ f4(x0) := match x0 {
 };
 ```
 
-The naive algorithm that we wrote has been automatically transformed into a well-known efficient version!
+The naive algorithm that we wrote has been automatically transformed into a well-known efficient version! While the naive algorithm has complexity _O(|p| * |s|)_, the specialized one is _O(|s|)_.
 
 Synthesizing KMP is a standard example that showcases the power of supercompilation with respect to other techniques (e.g., see [^perfect-process-tree] and [^positive-supercomp]). Obtaining KMP by partial evaluation is not possible without changing the original definition of `matches` [^partial-evaluation-matches-1] [^partial-evaluation-matches-2].
 
