@@ -694,7 +694,7 @@ Notation:
  - `env` is a _total environment_ over _t_, whose general form is `{ x1 -> t1, ..., xN -> tN }`. Each `tI` term must be closed and well-formed; this property is preserved by `eval`.
  - `env(x)` is `tI`, where `x -> tI` is in `env`.
  - `env[x1 -> t1, ..., xN -> tN]` is the environment `env` extended with new bindings `x1 -> t1`, _..._, `xN -> tN`. If some `xI` is already bound in `env`, it is rebound.
- - `t[env]` denotes _simultaneous_ and _capture-avoiding_ substitution of all free variables in `t` by their bound values in `env`.
+ - `t[env]` denotes a _simultaneous substitution_ of all free variables in `t` by their bound values in `env`.
  - `tVal ^= eval(env, t)` evaluates `t` under `env`; then:
    - If it is `Panic(t')`, the result of the _whole_ evaluation rule is `Panic(t')`.
    - Otherwise, `tVal` is available for the next clauses.
