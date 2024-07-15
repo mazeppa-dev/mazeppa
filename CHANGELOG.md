@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.1.1 - 2024-07-15
+
 ### Added
 
  - `mazeppa eval`: A built-in evaluator for the Mazeppa language ([issue #5](https://github.com/mazeppa-dev/mazeppa/issues/5)).
