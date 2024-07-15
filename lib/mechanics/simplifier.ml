@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 (* To avoid confusion with variables, integers are named [m] or [n] in this file.
    (Normally, we name both [x], [y], or [z].) *)
 
@@ -170,7 +172,7 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
 let handle_call ~op = function
   | `FCall, [ t ] when Symbol.is_op1 op -> handle_op1 ~op t
   | `FCall, [ t1; t2 ] when Symbol.is_op2 op -> handle_op2 ~op (t1, t2)
-  | `FCall, args when Symbol.(is_op1 op || is_op2 op) -> invalid_arg_list ~op args
+  | `FCall, args when Symbol.is_primitive_op op -> invalid_arg_list ~op args
   | (`CCall | `FCall | `GCall), args -> Call (op, args)
 ;;
 

@@ -130,7 +130,8 @@ let ( let$ ) filename k =
       (fun () -> k oc)
 ;;
 
-let supercompile ~(conf : config) (program_raw : Raw_program.t) : unit =
+let supercompile ~(conf : config) (input : Raw_program.t) : unit =
+    prepare_target_dir conf;
     let$ output_oc = conf.target_dir ^ "/output.mz" in
     if conf.inspect
     then
@@ -144,11 +145,17 @@ let supercompile ~(conf : config) (program_raw : Raw_program.t) : unit =
           ; nodes_oc = Some nodes_oc
           ; output_oc
           }
-        program_raw
+        input
     else
       supercompile
         ~channels:{ program_oc = None; graph_oc = None; nodes_oc = None; output_oc }
-        program_raw
+        input
+;;
+
+let eval (input : Raw_program.t) : unit =
+    (* Just check that the input program is (syntactically) well-formed. *)
+    ignore (Converter.to_program input);
+    print_endline (Raw_term.to_string (Mazeppa.eval input))
 ;;
 
 let parse_cli () =
@@ -168,7 +175,13 @@ let parse_cli () =
                 the target directory."
              false
        in
-       { target_dir; inspect })
+       `Run { target_dir; inspect })
+    ; (Clap.case
+         "eval"
+         ~description:
+           "Evaluate a program and print the result. The main function must not accept \
+            parameters."
+       @@ fun () -> `Eval)
     ]
     |> Clap.subcommand
 ;;
@@ -187,15 +200,16 @@ let its_over ?(reduction_path = []) msg =
 let () =
     Printexc.record_backtrace true;
     Clap.description (Printf.sprintf "The Mazeppa supercompiler (v%s)." version);
-    let conf = parse_cli () in
+    let command = parse_cli () in
     Clap.close ();
     try
-      let program_raw = read_file_exn "main.mz" in
-      prepare_target_dir conf;
-      supercompile ~conf program_raw
+      let input = read_file_exn "main.mz" in
+      match command with
+      | `Run conf -> supercompile ~conf input
+      | `Eval -> eval input
     with
     | Util.Panic { msg; reduction_path } -> its_over ~reduction_path msg
-    | Sys_error msg -> its_over msg
+    | Mazeppa.Panic msg | Sys_error msg -> its_over msg
     | e ->
       Spectrum.Simple.eprintf
         "@{<bold,red>internal compiler error:@} %s\n\n\

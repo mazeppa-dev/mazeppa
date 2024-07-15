@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 module MakeMutable (S : sig
     val program : Program.t
 
@@ -223,6 +225,26 @@ module Make (S : sig
 struct
   let run (t : Term.t) : Process_graph.t =
       let module Runner = MakeMutable (S) in
+      Runner.run t
+  ;;
+end
+
+module MakeSimple (S : sig
+    val program : Program.t
+  end) =
+struct
+  let run (t : Term.t) : Process_graph.t =
+      let module Runner =
+        MakeMutable (struct
+          include S
+
+          let inspect = false
+
+          let observe_node (_id, _node) = ()
+
+          let unobserve_node _id = ()
+        end)
+      in
       Runner.run t
   ;;
 end

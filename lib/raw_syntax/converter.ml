@@ -68,7 +68,7 @@ end = struct
   ;;
 end
 
-let to_program (program_raw : t) : Program.t =
+let to_program (input : t) : Program.t =
     let module Arity_table = Arity_table (struct end) in
     let f_gensym, g_gensym = Gensym.(create ~prefix:".f" (), create ~prefix:".g" ()) in
     let f_rules, g_rules, extract_f_rules =
@@ -120,7 +120,7 @@ let to_program (program_raw : t) : Program.t =
         fresh_f, params_tail, u_fv
     in
     let seen_functions = Hashtbl.create 64 in
-    program_raw
+    input
     (* First, only check function signatures and record information about them. *)
     |> List.map (fun (attrs, f, params, body_raw) ->
       if Symbol.is_primitive_op f

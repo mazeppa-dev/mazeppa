@@ -10,3 +10,9 @@ module Make (_ : sig
   end) : sig
   val run : Term.t -> Process_graph.t
 end
+
+module MakeSimple (_ : sig
+    val program : Program.t
+  end) : sig
+  val run : Term.t -> Process_graph.t
+end

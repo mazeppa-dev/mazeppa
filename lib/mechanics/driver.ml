@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 type 'a step =
   | Var of Symbol.t
   | Const of Const.t
@@ -86,7 +88,7 @@ struct
     | `FCall, [ t ] when Symbol.is_op1 op -> step_of_term (Simplifier.handle_op1 ~op t)
     | `FCall, [ t1; t2 ] when Symbol.is_op2 op ->
       step_of_term (Simplifier.handle_op2 ~op (t1, t2))
-    | `FCall, args when Symbol.(is_op1 op || is_op2 op) -> invalid_arg_list ~op args
+    | `FCall, args when Symbol.is_primitive_op op -> invalid_arg_list ~op args
     | `FCall, args ->
       let params, body = Program.find_f_rule ~program op in
       Unfold (Simplifier.handle_term ~params ~args body)

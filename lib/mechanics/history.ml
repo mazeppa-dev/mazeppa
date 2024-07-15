@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 (* Our algorithm is the following: 1) compare global nodes only with global nodes, 2)
    compare local nodes only up to the first global ancestor (not including it), and 3) do
    not compare trivial nodes.

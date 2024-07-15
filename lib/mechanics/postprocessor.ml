@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 open Raw_term
 
 let symbol = Symbol.of_string

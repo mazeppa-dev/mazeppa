@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Added
+
+ - `mazeppa eval`: A built-in evaluator for the Mazeppa language ([issue #5](https://github.com/mazeppa-dev/mazeppa/issues/5)).
+ - Expose the `Const` module in the public API.
+
 ### Changed
 
  - The following simplification rules have been upgraded to handle arbitrary values instead of variables:

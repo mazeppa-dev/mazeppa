@@ -666,7 +666,7 @@ where _ASCII(c)_ is an appropriate `u8` integer constant, according to the ASCII
 ### Evaluation
 
 Suppose that _t_ is a well-formed term closed under environment _env_ (defined below) and _program_ is a well-formed program. Then the evaluation of _t_ is governed by the following big-step environment machine:
- - `eval(env, x) = env(x)`
+ - `eval(env, x) = eval({ }, env(x))`
  - `eval(env, const) = const`, where `const` is in `<const>`.
  - `eval(env, f(t1, ..., tN)) =`
    - `t1Val ^= eval(env, t1)`
@@ -681,14 +681,14 @@ Suppose that _t_ is a well-formed term closed under environment _env_ (defined b
    - `t1Val ^= eval(env, t1)`
    - `t2Val ^= eval(env, t2)`
    - `evalOp2(t1Val, op, t2Val)`, where `op` is in `<op2>`.
- - `eval(env, let x := t; u) =`
-   - `tVal ^= eval(env, t)`
-   - `eval(env[x -> tVal], u)`
  - `eval(env, match t { p1 -> t1, ..., pN -> tN }) =`
    - `Ci(s1, ..., sN) ^= eval(env, t)`
    - `eval(env', tI)`, where
      - `Ci(x1, ..., xN) -> tI` is among the rules in `match t { ... }`, and
      - `env'` is `env[x1 -> s1, ..., xN -> sN]`.
+ - `eval(env, let x := t; u) =`
+   - `tVal ^= eval(env, t)`
+   - `eval(env[x -> tVal], u)`
 
 Notation:
  - `env` is a _total environment_ over _t_, whose general form is `{ x1 -> t1, ..., xN -> tN }`. Each `tI` term must be closed and well-formed; this property is preserved by `eval`.
@@ -743,9 +743,7 @@ Not yet, we need to battle-test Mazeppa on some actual programming language. Our
 
 ### How can I execute programs in Mazeppa?
 
-It is completely up to you. You can compile Mazeppa to machine code, write a high-level interpreter for it, compile it to bytecode for execution by a virtual machine -- anything you want.
-
-We are working on a default [Mazeppa-to-C translator] for easy setup.
+For debugging and other purposes, we provide a built-in interpreter that can execute Mazeppa programs. You can launch it by typing `mazeppa eval` (make sure that your `main` function does not accept parameters). We are also working on a [Mazeppa-to-C translator], which will enable compilation to zero-overhead machine code.
 
 [Mazeppa-to-C translator]: https://github.com/mazeppa-dev/mazeppa/issues/1
 

@@ -17,6 +17,13 @@ let u8, u16, i32, i64, i128 =
 
 let symbol = Symbol.of_string
 
+let list xs =
+    List.fold_right
+      (fun x xs -> Raw_term.(call ("Cons", [ x; xs ])))
+      xs
+      (Raw_term.call ("Nil", []))
+;;
+
 let make_subst list = list |> List.map (fun (x, t) -> symbol x, t) |> Symbol_map.of_list
 
 let print_constants () =
@@ -192,11 +199,11 @@ let he_cases = [ "Tests", he ]
 
 (* Only test errors. Happy paths are covered in [examples/]. *)
 let raw_program_errors () =
-    let check ~expected program_raw =
+    let check ~expected input =
         Alcotest.check_raises
           "Raw program errors"
           (Util.Panic { msg = expected; reduction_path = [] })
-          (fun () -> ignore (Converter.to_program program_raw))
+          (fun () -> ignore (Converter.to_program input))
     in
     check
       ~expected:"Cannot redefine the primitive operator `+`"
@@ -265,6 +272,119 @@ let raw_program_errors () =
 
 let raw_program_errors_cases = [ "Tests", raw_program_errors ]
 
+let sum_squares_rules : Raw_program.t =
+    let open Raw_term in
+    [ ( []
+      , symbol "sum"
+      , [ symbol "xs" ]
+      , Match
+          ( var "xs"
+          , [ (symbol "Nil", []), int (i32 0)
+            ; ( (symbol "Cons", [ symbol "x"; symbol "xs" ])
+              , call ("+", [ var "x"; call ("sum", [ var "xs" ]) ]) )
+            ] ) )
+    ; ( []
+      , symbol "mapSq"
+      , [ symbol "xs" ]
+      , Match
+          ( var "xs"
+          , [ (symbol "Nil", []), call ("Nil", [])
+            ; ( (symbol "Cons", [ symbol "x"; symbol "xs" ])
+              , call
+                  ( "Cons"
+                  , [ call ("*", [ var "x"; var "x" ]); call ("mapSq", [ var "xs" ]) ] ) )
+            ] ) )
+    ]
+;;
+
+let supercompile () =
+    let open Raw_term in
+    let main_rule =
+        [], symbol "main", [ symbol "xs" ], call ("sum", [ call ("mapSq", [ var "xs" ]) ])
+    in
+    let expected =
+        [ [], symbol "main", [ symbol "xs" ], call ("f0", [ var "xs" ])
+        ; ( []
+          , symbol "f0"
+          , [ symbol "x0" ]
+          , Match
+              ( var "x0"
+              , [ ( (symbol "Cons", [ symbol "x1"; symbol "x2" ])
+                  , call
+                      ( "+"
+                      , [ call ("*", [ var "x1"; var "x1" ]); call ("f0", [ var "x2" ]) ]
+                      ) )
+                ; (symbol "Nil", []), int (i32 0)
+                ] ) )
+        ]
+    in
+    Alcotest.(check' (module Raw_program))
+      ~msg:"Supercompilation"
+      ~actual:(Mazeppa.supercompile (main_rule :: sum_squares_rules))
+      ~expected
+;;
+
+let supercompilation_cases = [ "Tests", supercompile ]
+
+let eval () =
+    let open Raw_term in
+    let input_list =
+        list [ int (i32 0); int (i32 1); int (i32 2); int (i32 3); int (i32 4) ]
+    in
+    let main_rule =
+        [], symbol "main", [], call ("sum", [ call ("mapSq", [ input_list ]) ])
+    in
+    Alcotest.(check' (module Raw_term))
+      ~msg:"Evaluation"
+      ~actual:(Mazeppa.eval (main_rule :: sum_squares_rules))
+      ~expected:(int (i32 30));
+    Alcotest.(check' (module Raw_term))
+      ~msg:"Propagate panics"
+      ~actual:
+        (Mazeppa.eval
+           [ ( []
+             , symbol "main"
+             , []
+             , Let (symbol "x", call ("Panic", [ int (i32 5) ]), int (i32 100)) )
+           ])
+      ~expected:(call ("Panic", [ int (i32 5) ]))
+;;
+
+let evaluation_cases = [ "Tests", eval ]
+
+let eval_errors () =
+    let open Raw_term in
+    let check_rules ~expected input =
+        Alcotest.check_raises "Evaluation errors" (Mazeppa.Panic expected) (fun () ->
+          ignore (Mazeppa.eval input))
+    in
+    let check ~expected ?(rules = []) body =
+        let input = ([], symbol "main", [], body) :: rules in
+        check_rules ~expected input
+    in
+    check_rules
+      ~expected:"The main function cannot accept parameters"
+      [ [], symbol "main", [ symbol "x" ], var "x" ];
+    check ~expected:"No such function `f`" (call ("f", []));
+    check
+      ~expected:"No such case `C`"
+      (Match (call ("C", []), [ (symbol "C'", []), call ("f", []) ]));
+    check
+      ~expected:"Expected a constructor call: `5i32`"
+      ~rules:[ [], symbol "f", [], int (i32 5) ]
+      (Match (call ("f", []), []));
+    check ~expected:"Expected a constant: `C()`" (call ("length", [ call ("C", []) ]));
+    check
+      ~expected:"Cannot reduce: `+(5i32, \"hello world\")`"
+      (call ("+", [ int (i32 5); string "hello world" ]));
+    check ~expected:"Unbound variable `x`" (var "x");
+    check
+      ~expected:"Unexpected argument list for `+`: `0i32`,`1i32`,`2i32`"
+      (call ("+", [ int (i32 0); int (i32 1); int (i32 2) ]))
+;;
+
+let evaluation_errors_cases = [ "Tests", eval_errors ]
+
 let make_test_case (name, f) = Alcotest.test_case name `Quick f
 
 let make_test (name, test_cases) = name, List.map make_test_case test_cases
@@ -278,6 +398,9 @@ let () =
        ; "MSG", msg_cases
        ; "Homeomorphic embedding", he_cases
        ; "Raw program errors", raw_program_errors_cases
+       ; "Supercompilation", supercompilation_cases
+       ; "Evaluation", evaluation_cases
+       ; "Evaluation errors", evaluation_errors_cases
        ]
        |> List.map make_test)
 ;;

@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 type t =
   | Step of t Driver.step
   | Bind of (Symbol.t * t) list * binder

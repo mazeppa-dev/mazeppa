@@ -1,37 +1,36 @@
 module Checked_oint = Checked_oint
 module Symbol = Symbol
+module Const = Const
 module Raw_term = Raw_term
 module Raw_program = Raw_program
 
 exception Panic of string
 
-let supercompile_exn input =
-    let program = Converter.to_program input in
-    let module Supervisor =
-      Supervisor.Make (struct
-        let program = program
-
-        let inspect = false
-
-        let observe_node (_id, _node) = ()
-
-        let unobserve_node _id = ()
-      end)
-    in
-    let main_symbol = Symbol.of_string "main" in
-    let main_params, _ = Program.find_f_rule ~program main_symbol in
-    let t = Term.(Call (main_symbol, var_list main_params)) in
-    let graph = Supervisor.run t in
-    let t_res, program_res = Residualizer.run graph in
-    ([], main_symbol, main_params, t_res) :: program_res
+let wrap_panic f =
+    try f () with
+    | Util.Panic { msg; reduction_path } ->
+      assert (List.is_empty reduction_path);
+      raise (Panic msg)
 ;;
 
 let supercompile (input : Raw_program.t) : Raw_program.t =
-    try supercompile_exn input with
-    | Util.Panic { msg; reduction_path } ->
-      (* Inspection is disabled. *)
-      assert (List.is_empty reduction_path);
-      raise (Panic msg)
+    wrap_panic (fun () ->
+      let program = Converter.to_program input in
+      let module Supervisor =
+        Supervisor.MakeSimple (struct
+          let program = program
+        end)
+      in
+      let main_symbol = Symbol.of_string "main" in
+      let main_params, _ = Program.find_f_rule ~program main_symbol in
+      let t = Term.(Call (main_symbol, var_list main_params)) in
+      let graph = Supervisor.run t in
+      let t_res, program_res = Residualizer.run graph in
+      ([], main_symbol, main_params, t_res) :: program_res)
+;;
+
+let eval (input : Raw_program.t) : Raw_term.t =
+    wrap_panic (fun () -> Evaluator.run_exn input)
 ;;
 
 module Internals = struct
@@ -41,7 +40,6 @@ module Internals = struct
   module Symbol_map = Symbol_map
   module Subst = Subst
   module Gensym = Gensym
-  module Const = Const
   module Term = Term
   module Program = Program
   module Homeomorphic_emb = Homeomorphic_emb

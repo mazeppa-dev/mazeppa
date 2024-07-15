@@ -61,7 +61,7 @@ let kind op : [ `CCall | `FCall | `GCall ] =
     then `FCall
     else if op.[0] = '.' && op.[1] = 'g'
     then `GCall
-    else if is_op1 op || is_op2 op
+    else if is_primitive_op op
     then `FCall
     else Util.panic "An unknown symbol kind: `%s`" op
 ;;

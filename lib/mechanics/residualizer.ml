@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 (* Invariants: 1) We arrange function parameters lexicographically, so that all functions
    are called with proper argument positions. 2) We only generate function definitions
    which are called 2+ times -- useless functions are "inlined" automatically without
