@@ -1,0 +1,68 @@
+[
+  [
+    [ "decide", [ "t" ], ".g3(t)" ],
+    [ "eval", [ "stmt" ], ".g2(stmt)" ],
+    [ "fetchCell", [ "env", "x" ], ".g5(env, x)" ],
+    [ "main", [ "stmt" ], "eval(stmt)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "F", [], [ "else", "then" ], "eval(else)" ],
+        [ "T", [], [ "else", "then" ], "eval(then)" ]
+      ]
+    ],
+    [
+      ".g1",
+      [
+        [ "F", [], [ "else", "then" ], "eval(else)" ],
+        [ "T", [], [ "else", "then" ], "eval(then)" ]
+      ]
+    ],
+    [
+      ".g2",
+      [
+        [
+          "If1",
+          [ "cond", "then", "else" ],
+          [],
+          ".g0(decide(cond), else, then)"
+        ],
+        [
+          "If2",
+          [ "cond", "then", "else" ],
+          [],
+          ".g1(decide(cond), else, then)"
+        ]
+      ]
+    ],
+    [
+      ".g3",
+      [
+        [ "F", [], [], "F()" ],
+        [ "T", [], [], "T()" ],
+        [ "Var", [ "env", "x" ], [], "fetchCell(env, x)" ]
+      ]
+    ],
+    [
+      ".g4",
+      [
+        [ "F", [], [ "value", "x", "xs" ], "fetchCell(xs, x)" ],
+        [ "T", [], [ "value", "x", "xs" ], "value" ]
+      ]
+    ],
+    [
+      ".g5",
+      [
+        [
+          "Cell",
+          [ "y", "value", "xs" ],
+          [ "x" ],
+          ".g4(=(x, y), value, x, xs)"
+        ],
+        [ "Nil", [], [ "x" ], "Panic(++(\"the variable is unbound: \", x))" ]
+      ]
+    ]
+  ]
+]

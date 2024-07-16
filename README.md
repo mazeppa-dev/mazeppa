@@ -145,7 +145,7 @@ After the process graph is completed, residualization converts it to a final pro
 
 In summary, supercompilation consists of 1) unfolding function definitions, 2) analyzing calls that pattern-match an unknown variable, 3) breaking down computation into smaller parts, 4) folding repeated computations, and 5) decomposing calls that cannot be unfolded, such as `+(.v3, .v4)` (`n13`) in our example. The whole supercompilation process is guaranteed to terminate, because when some computation is becoming dangerously bigger and bigger, we break it down into subproblems and solve them in isolation.
 
-There are a plenty of other interesting examples of deforestation in the [`examples/`](examples/) folder, including tree-like data structures. In fact, we have reimplemented all samples from the previous work on higher-order call-by-value supercompilation by Peter A. Jonsson and Johan Nordlander [^CbV-supercomp] [^CbV-supercomp-next]; in all cases, Mazeppa has performed similarly or better.
+There are a plenty of other interesting examples of deforestation in the [`examples/`](examples/) folder, including tree-like data structures. In fact, we have reimplemented all samples from the previous work on higher-order call-by-value supercompilation by Peter A. Jonsson and Johan Nordlander [^CbV-supercomp] [^CbV-supercomp-next]; in almost all cases, Mazeppa has performed similarly or better.
 
 ## Specializing the power function
 
@@ -421,10 +421,6 @@ Finally, note that `@extract` is only a low-level mechanism; a compiler front-en
 
 Both methods can be combined to achieve a desired effect.
 
-<hr>
-
-There are many more examples of supercompilation (including some simple theorem proving!) in the [`examples`](examples/) folder. Feel free to explore them all and ask us questions, if you have any.
-
 ## Mazeppa as a library
 
 After running `./scripts/install.sh`, Mazeppa is available as an OCaml library!
@@ -528,6 +524,10 @@ Mazeppa employs several interesting design choices (ranked by importance):
  - **Term-free process graphs.** In Mazeppa, process graphs do not contain any references to terms: residualization can work without them. As a result, the garbage collector can deallocate terms that were used during construction of a subgraph. In addition ot that, this policy has several other important advantages: 1) the graph is still there for inspection with `--inspect`, 2) when it is drawn, it only reveals information about the _decisions_ the supercompiler has taken, which makes it much easier to look at. Several existing supercompilers refrain from proper process graphs (e.g., Neil Mitchell's Supero [^mitchell-supero] and the aforementioned [^supercomp-by-eval]), but as a result, 1) they are less capable of inspection by a user, 2) the algorithms become cluttered with code generation details.
 
  - **Two-dimensional configuration analysis.** Usually a supercompiler keeps a "history" of a subset of all ancestors while transforming a node; if this node is "close enough" to one of its ancestors, it is time to break the term into smaller parts to guarantee termination. In Mazeppa, we keep two separate data structures instead: the one containing a subset of node's ancestors and the one containing a subset of fully transformed nodes. The former data structure is used to guarantee termination (as usual), while the latter is used to enhance _sharing of functions_ in residual code. Specifically, if the current node (of special kind) is an instance of some previously transformed node, we fold the current node into this previous node. This way, Mazeppa performs both _vertical_ and _horizontal_ analysis of configurations, which makes residual code more compact and supercompilation more efficient.
+
+ - **Productivity analysis.** When analyzing an inner function call that pattern-matches an unknown value, supercompilation duplicates the whole context of computation as many times as there are case alternatives. Obviously, this is a very dangerous situation to be in. To ameliorate, Mazeppa duplicates the context iff this inner call produces a _definite top-level value_ from all exit points, because if it does, great chances that the value can be deconstructed by subsequent pattern matching. Otherwise, Mazeppa extracts the inner call and transforms it in isolation (which is equivalent to `@extract`). In practice, this analysis prevents a huge amount of unneeded specializations, thereby compactifying residual program size a lot.
+   - We perform productivity analysis strictly _before_ supercompilation. The algorithm marks qualifying pattern-matching functions as productive, and is linear in the size of an input program.
+   - An emergent effect is that after extracting these pattern-matching calls, horizontal configuration analysis becomes able to fold more repeated computations.
 
  - **Smart histories.** Instead of blindly comparing a current node with all its ancestors, we employ a more fine-grained control, that is: 1) global nodes (the ones that analyze an unknown variable) are compared with global nodes only, 2) local nodes (the ones that reduce linearly in a single step) are compared with local nodes only up to the latest global node, but not including it, and 3) trivial nodes (the ones that break down terms into smaller components) are not compared with anything else. Besides a more economic approach to termination checking, this scheme allows Mazeppa to discover more optimization opportunities; see [^metric-space], sections 4.6 and 4.7. Termination of supercompilation is guaranteed by the fact that homeomorphic embedding is still tested on all potentially infinite subsequences of global and local terms (there cannot exist an infinite sequence of trivial terms only).
 
@@ -755,6 +755,10 @@ Since Mazeppa is a purely functional language, the only way to implement I/O is 
 
 No, we do not think that a type system is necessary at this point. It is the responsibility of a front-end compiler to ensure that programs do not "go wrong".
 
+### Can I use Mazeppa for theorem proving?
+
+The more we make supercompilation predictable, the less it is capable of theorem proving. For those interested in program analysis rather than optimization, we suggest looking into _distillation_ [^distillation-theorem-proving].
+
 ### Where can I learn more about supercompilation?
 
 For the English audience, the following paper presents a decent introduction into supercompilation:
@@ -851,6 +855,8 @@ Just fork the repository, work in your own branch, and submit a pull request. Pr
 [^distillation-graphs]: Hamilton, Geoff & Mendel-Gleason, Gavin. (2010). A Graph-Based Definition of Distillation.
 
 [^distillation-lts]: Hamilton, Geoff & Jones, Neil. (2012). Distillation with labelled transition systems. Conference Record of the Annual ACM Symposium on Principles of Programming Languages. 15-24. 10.1145/2103746.2103753.
+
+[^distillation-theorem-proving]: G. W. Hamilton. 2006. Poitín: Distilling Theorems From Conjectures. Electron. Notes Theor. Comput. Sci. 151, 1 (March, 2006), 143–160. https://doi.org/10.1016/j.entcs.2005.11.028
 
 [^hamilton-700]: Hamilton, Geoff. "The Next 700 Program Transformers." International Symposium on Logic-Based Program Synthesis and Transformation. Cham: Springer International Publishing, 2021.
 

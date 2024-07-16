@@ -73,6 +73,8 @@ end = struct
 
   let is_extractable f = Symbol_set.mem f S.program.extract_f_rules
 
+  let is_productive g = Symbol_set.mem g S.program.productive_g_rules
+
   let is_extracted_call = function
     | Term.Call (f, _args) when is_extractable f -> true
     | _ -> false
@@ -80,22 +82,29 @@ end = struct
 
   let extract_call : Term.t -> unit =
       let open Term in
-      let rec go = function
-        | Call (f, _args) as t when is_extractable f ->
+      let extract t =
           let x = Gensym.emit var_gensym in
           raise_notrace (Extract ((x, t), Var x))
-        | Call (op, args) when not (Symbol.is_lazy op) -> go_args ~op ~acc:[] args
+      in
+      let rec go ~depth = function
+        | Call (f, _args) as t when is_extractable f && depth > 0 -> extract t
+        | Call (op, args) when not (Symbol.is_lazy op) -> go_args ~depth ~op ~acc:[] args
         | Var _ | Const _ | Call _ -> ()
-      and go_args ~op ~acc = function
-        | [] -> ()
-        | t :: rest when is_value t -> go_args ~op ~acc:(t :: acc) rest
+      and go_args ~depth ~op ~acc = function
+        | [] -> go_call ~depth ~op (Symbol.kind op, List.rev acc)
+        | t :: rest when is_value t -> go_args ~depth ~op ~acc:(t :: acc) rest
         | t :: rest ->
-          (try go t with
+          (try go ~depth:(depth + 1) t with
            | Extract ((x, call), shell) ->
              let shell = Call (op, List.rev acc @ [ shell ] @ rest) in
              raise_notrace (Extract ((x, call), shell)))
+      and go_call ~depth ~op = function
+        | `GCall, Call (c, _c_args) :: _args when Symbol.kind c = `CCall -> ()
+        | `GCall, (_ :: _ as args) when (not (is_productive op)) && depth > 0 ->
+          extract (Call (op, args))
+        | (`CCall | `FCall | `GCall), _args -> ()
       in
-      fun t -> if not (is_extracted_call t) then go t
+      fun t -> go ~depth:0 t
   ;;
 
   let rec run ~(history : History.t) (n : Term.t) : Process_graph.t =

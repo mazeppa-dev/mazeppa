@@ -26,6 +26,7 @@ type t =
   { f_rules : f_rules_by_name
   ; g_rules : g_rules_by_name
   ; extract_f_rules : Symbol_set.t
+  ; productive_g_rules : Symbol_set.t
   }
 
 val find_f_rule : program:t -> Symbol.t -> f_rule

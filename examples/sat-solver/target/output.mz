@@ -1,31 +1,28 @@
-main(a, b, c, d, e, f, g) := f8(If(a, f7(a, b, c, d, e, f, g), If(b, If(c, F(),
-    f7(a, b, c, d, e, f, g)), f7(a, b, c, d, e, f, g))));
+main(a, b, c, d, e, f, g) := f8(let x0 := let x0 := let x0 := let x0 := let x0
+    := let x0 := let x0 := If(g, If(d, If(b, F(), f0()), f0()), f0());
+    If(a, f1(x0), f4(x0, a, c));
+    If(f, f5(x0, e, g), f1(x0));
+    f7(x0, a, b, c);
+    If(g, f4(x0, c, d), f1(x0));
+    If(e, f1(x0), f5(x0, g, f));
+    If(f, If(e, f1(x0), f6(x0, g)), f1(x0));
+    f7(x0, a, b, c));
 
 f0() := T();
 
-f1(x0, x1, x2) := If(x2, If(x1, If(x0, F(), f0()), f0()), f0());
+f1(x0) := x0;
 
-f2(x0, x1, x2, x3, x4) := If(x0, f1(x1, x3, x4), If(x0, f1(x1, x3, x4), If(x2,
-    f1(x1, x3, x4), F())));
+f2(x0, x1) := If(x1, f1(x0), f3(x0));
 
-f3(x0, x1, x2, x3, x4, x5, x6) := If(x5, If(x4, If(x6, f2(x0, x1, x2, x3, x6), F
-    ()), f2(x0, x1, x2, x3, x6)), f2(x0, x1, x2, x3, x6));
+f3(x0) := F();
 
-f4(x0, x1, x2, x3, x4, x5, x6) := If(x0, f3(x0, x1, x2, x3, x4, x5, x6), If(x1,
-    If(x2, F(), f3(x0, x1, x2, x3, x4, x5, x6)), f3(x0, x1, x2, x3, x4, x5, x6))
-    );
+f4(x0, x1, x2) := If(x1, f1(x0), f2(x0, x2));
 
-f5(x0, x1, x2, x3, x4, x5, x6) := If(x6, If(x2, f4(x0, x1, x2, x3, x4, x5, x6),
-    If(x3, f4(x0, x1, x2, x3, x4, x5, x6), F())), f4(x0, x1, x2, x3, x4, x5, x6)
-    );
+f5(x0, x1, x2) := If(x1, f2(x0, x2), f1(x0));
 
-f6(x0, x1, x2, x3, x4, x5, x6) := If(x4, f5(x0, x1, x2, x3, x4, x5, x6), If(x6,
-    If(x5, f5(x0, x1, x2, x3, x4, x5, x6), F()), f5(x0, x1, x2, x3, x4, x5, x6))
-    );
+f6(x0, x1) := If(x1, f3(x0), f1(x0));
 
-f7(x0, x1, x2, x3, x4, x5, x6) := If(x5, If(x4, f6(x0, x1, x2, x3, x4, x5, x6),
-    If(x6, F(), f6(x0, x1, x2, x3, x4, x5, x6))), f6(x0, x1, x2, x3, x4, x5, x6)
-    );
+f7(x0, x1, x2, x3) := If(x1, f1(x0), If(x2, f6(x0, x3), f1(x0)));
 
 f8(x0) := match x0 {
     F() -> F(),

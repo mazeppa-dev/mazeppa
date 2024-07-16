@@ -1,3 +1,5 @@
+// Since `append` is not productive, the inner call will be extracted. Alas,
+// this prevents deforestation.
 main(xs, ys, zs) := append(append(xs, ys), zs);
 
 append(xs, ys) := match xs {

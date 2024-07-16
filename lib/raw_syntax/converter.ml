@@ -68,6 +68,47 @@ end = struct
   ;;
 end
 
+(* Launches the productivity analysis of all program rules. A function is productive iff
+   all exit points produce a constant or constructor. *)
+let compute_productive_g_rules program =
+    (* Because of the cache, our algorithm is linear in the program size. *)
+    let cache = Hashtbl.create 128 in
+    let update_cache ~op = function
+      | true ->
+        (* [op] was bound to [false] previously to avoid non-termination, but since it is
+           productive, we can rebind it to [true]. *)
+        Hashtbl.replace cache op true;
+        true
+      | false -> false
+    in
+    let rec go_term = function
+      | Term.Var _x -> false
+      | Term.Const _const -> true
+      | Term.Call (op, _args) ->
+        (match Hashtbl.find_opt cache op with
+         | Some result -> result
+         | None -> go_call ~op (Symbol.kind op))
+    and go_call ~op = function
+      | `CCall -> true
+      | `FCall when Symbol.is_primitive_op op -> false
+      | `FCall ->
+        Hashtbl.add cache op false;
+        let _params, body = Program.find_f_rule ~program op in
+        update_cache ~op (go_term body)
+      | `GCall ->
+        Hashtbl.add cache op false;
+        Program.(G_rules_by_name.bindings (find_g_rule_list ~program op))
+        |> List.for_all (fun (_c, (_c_params, _params, body)) -> go_term body)
+        |> update_cache ~op
+    in
+    program.g_rules
+    |> Program.G_rules_by_name.to_seq
+    |> Seq.filter_map (fun (g, _rules) ->
+      (* Arguments are ignored. *)
+      if go_term (Term.Call (g, [])) then Some g else None)
+    |> Symbol_set.of_seq
+;;
+
 let to_program (input : t) : Program.t =
     let module Arity_table = Arity_table (struct end) in
     let f_gensym, g_gensym = Gensym.(create ~prefix:".f" (), create ~prefix:".g" ()) in
@@ -151,5 +192,13 @@ let to_program (input : t) : Program.t =
           (Symbol.verbatim x)
           (Symbol.verbatim f));
       f_rules := Program.F_rules.add f (params, body) !f_rules);
-    { f_rules = !f_rules; g_rules = !g_rules; extract_f_rules = !extract_f_rules }
+    let program =
+        Program.
+          { f_rules = !f_rules
+          ; g_rules = !g_rules
+          ; extract_f_rules = !extract_f_rules
+          ; productive_g_rules = Symbol_set.empty
+          }
+    in
+    { program with productive_g_rules = compute_productive_g_rules program }
 ;;

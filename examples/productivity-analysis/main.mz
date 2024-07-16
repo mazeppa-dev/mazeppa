@@ -1,0 +1,29 @@
+main(stmt) := eval(stmt);
+
+eval(stmt) := match stmt {
+    If1(cond, then, else) -> match decide(cond) {
+        T() -> eval(then),
+        F() -> eval(else)
+    },
+    If2(cond, then, else) -> match decide(cond) {
+        T() -> eval(then),
+        F() -> eval(else)
+    }
+};
+
+// The following unproductive functions will be extracted automatically. As a
+// result, the residual code will be more compact.
+
+decide(t) := match t {
+    Var(env, x) -> fetchCell(env, x),
+    T() -> T(),
+    F() -> F()
+};
+
+fetchCell(env, x) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", x)),
+    Cell(y, value, xs) -> match =(x, y) {
+        T() -> value,
+        F() -> fetchCell(xs, x)
+    }
+};
