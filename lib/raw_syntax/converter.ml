@@ -2,72 +2,6 @@
 
 open Raw_program
 
-let check_duplicate_symbols ~op list : unit =
-    let rec go = function
-      | [] -> ()
-      | x :: xs when List.exists (( = ) x) xs ->
-        Util.panic
-          "A duplicate symbol %s occurs inside `%s(%s)`"
-          (Symbol.verbatim x)
-          (Symbol.to_string op)
-          (Symbol.comma_sep list)
-      | _x :: xs -> go xs
-    in
-    go list
-;;
-
-let print_pattern ((c, c_args), _t_raw) =
-    let c, c_args = Symbol.to_string c, Symbol.comma_sep c_args in
-    Printf.sprintf "`%s(%s)`" c c_args
-;;
-
-let check_duplicate_patterns list : unit =
-    let rec go = function
-      | [] -> ()
-      | ((c, _c_args), _t_raw) :: xs
-        when List.exists (fun ((c', _c_args'), _t_raw') -> c = c') xs ->
-        Util.panic
-          "A duplicate pattern %s occurs among %s"
-          (Symbol.verbatim c)
-          (String.concat ", " (List.map print_pattern list))
-      | _x :: xs -> go xs
-    in
-    go list
-;;
-
-(* We record all function signatures and non-primitive operator calls in the so-called
-   "arity table". If some operator (= function/constructor) is used inconsistently within
-   the source program, we abort with a proper panic. Otherwise, supercompilation might
-   crash or produce an incorrect residual program. *)
-module Arity_table (_ : sig end) : sig
-  val record : scrutinee:Raw_term.t -> Symbol.t * int -> unit
-end = struct
-  let table = Hashtbl.create 64
-
-  let record ~scrutinee (op, arity) : unit =
-      match Hashtbl.find_opt table op with
-      | Some (prev_scrutinee, prev_arity) when arity <> prev_arity ->
-        Util.panic
-          "%s has an ambiguous arity: first %s, then %s"
-          (Symbol.verbatim op)
-          (Raw_term.verbatim prev_scrutinee)
-          (Raw_term.verbatim scrutinee)
-      | None when op = Symbol.of_string "Panic" && arity <> 1 ->
-        Util.panic
-          "%s accepts only one argument: %s"
-          (Symbol.verbatim op)
-          (Raw_term.verbatim scrutinee)
-      | None when Symbol.(op = of_string "T" || op = of_string "F") && arity <> 0 ->
-        Util.panic
-          "%s accepts no arguments: %s"
-          (Symbol.verbatim op)
-          (Raw_term.verbatim scrutinee)
-      | None when not (Symbol.is_primitive_op op) ->
-        Hashtbl.replace table op (scrutinee, arity)
-      | _ -> ()
-  ;;
-end
-
 (* Launches the productivity analysis of all program rules. A function is productive iff
    all exit points produce a constant or constructor. *)
 let compute_productive_g_rules program =
@@ -107,6 +41,73 @@ let compute_productive_g_rules program =
       (* Arguments are ignored. *)
       if go_term (Term.Call (g, [])) then Some g else None)
     |> Symbol_set.of_seq
+;;
+
+(* We record all function signatures and non-primitive operator calls in the so-called
+   "arity table". If some operator (= function/constructor) is used inconsistently within
+   the source program, we abort with a proper panic. Otherwise, supercompilation might
+   crash or produce an incorrect residual program. *)
+module Arity_table (_ : sig end) : sig
+  val record : scrutinee:Raw_term.t -> Symbol.t * int -> unit
+end = struct
+  let table = Hashtbl.create 64
+
+  let record ~scrutinee (op, arity) : unit =
+      match Hashtbl.find_opt table op with
+      | Some (prev_scrutinee, prev_arity) when arity <> prev_arity ->
+        Util.panic
+          "%s has an ambiguous arity: first %s, then %s"
+          (Symbol.verbatim op)
+          (Raw_term.verbatim prev_scrutinee)
+          (Raw_term.verbatim scrutinee)
+      | None when op = Symbol.of_string "Panic" && arity <> 1 ->
+        Util.panic
+          "%s accepts only one argument: %s"
+          (Symbol.verbatim op)
+          (Raw_term.verbatim scrutinee)
+      | None when Symbol.(op = of_string "T" || op = of_string "F") && arity <> 0 ->
+        Util.panic
+          "%s accepts no arguments: %s"
+          (Symbol.verbatim op)
+          (Raw_term.verbatim scrutinee)
+      | None when not (Symbol.is_primitive_op op) ->
+        Hashtbl.replace table op (scrutinee, arity)
+      | _ -> ()
+  ;;
+end
+
+let check_duplicate_symbols ~op list : unit =
+    let rec go = function
+      | [] -> ()
+      | x :: xs when List.exists (( = ) x) xs ->
+        Util.panic
+          "A duplicate symbol %s occurs inside `%s(%s)`"
+          (Symbol.verbatim x)
+          (Symbol.to_string op)
+          (Symbol.comma_sep list)
+      | _x :: xs -> go xs
+    in
+    go list
+;;
+
+let print_pattern_list list =
+    list
+    |> List.map (fun (pattern, _t_raw) -> Raw_term.pattern_verbatim pattern)
+    |> String.concat ", "
+;;
+
+let check_duplicate_patterns list : unit =
+    let rec go = function
+      | [] -> ()
+      | ((c, _c_params), _t_raw) :: xs
+        when List.exists (fun ((c', _c_params'), _t_raw') -> c = c') xs ->
+        Util.panic
+          "A duplicate pattern %s occurs among %s"
+          (Symbol.verbatim c)
+          (print_pattern_list list)
+      | _x :: xs -> go xs
+    in
+    go list
 ;;
 
 let to_program (input : t) : Program.t =

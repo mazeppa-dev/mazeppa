@@ -26,3 +26,7 @@ val is_immediate : t -> bool
 val to_string : t -> string
 
 val verbatim : t -> string
+
+val pattern_to_string : pattern -> string
+
+val pattern_verbatim : pattern -> string

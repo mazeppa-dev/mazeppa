@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - Function productivity analysis for preventing unneeded specializations ([issue #2](https://github.com/mazeppa-dev/mazeppa/issues/2)).
+ - `pattern_to_string` and `pattern_verbatim` (`Raw_term`).
 
 ## 0.1.1 - 2024-07-15
 

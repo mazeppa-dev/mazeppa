@@ -45,7 +45,13 @@ let to_string =
         [%string "$c($c_params) -> $t"]
     in
     go
-[@@coverage off]
 ;;
 
-let verbatim t = "`" ^ to_string t ^ "`" [@@coverage off]
+let verbatim t = "`" ^ to_string t ^ "`"
+
+let pattern_to_string (c, c_params) =
+    let c, c_args = Symbol.to_string c, Symbol.comma_sep c_params in
+    [%string "$c($c_args)"]
+;;
+
+let pattern_verbatim pattern = "`" ^ pattern_to_string pattern ^ "`"
