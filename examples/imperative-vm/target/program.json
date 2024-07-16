@@ -2,6 +2,12 @@
   [
     [ ".f0", [ "env" ], "fetchCell(evalProgram(example(), env), \"out\")" ],
     [ ".f1", [ "xs", "value'", "y" ], "Cell(y, value', xs)" ],
+    [ ".f2", [ "t2Val", "t1Val" ], "Int(-(t1Val, t2Val))" ],
+    [ ".f3", [ "t1Val", "env", "t2" ], ".f2(evalInt(t2, env), t1Val)" ],
+    [ ".f4", [ "t2Val", "t1Val" ], "Int(*(t1Val, t2Val))" ],
+    [ ".f5", [ "t1Val", "env", "t2" ], ".f4(evalInt(t2, env), t1Val)" ],
+    [ ".f6", [ "t2Val", "t1Val" ], "Boolean(>(t1Val, t2Val))" ],
+    [ ".f7", [ "t1Val", "env", "t2" ], ".f6(evalInt(t2, env), t1Val)" ],
     [ "evalBoolean", [ "t", "env" ], ".g9(evalTerm(t, env))" ],
     [ "evalInt", [ "t", "env" ], ".g10(evalTerm(t, env))" ],
     [ "evalProgram", [ "program", "env" ], ".g4(program, env)" ],
@@ -138,20 +144,14 @@
           "GreaterThan",
           [ "t1", "t2" ],
           [ "env" ],
-          "Boolean(>(evalInt(t1, env), evalInt(t2, env)))"
+          ".f7(evalInt(t1, env), env, t2)"
         ],
         [ "Int", [ "n" ], [ "env" ], "Int(n)" ],
         [
-          "Mul",
-          [ "t1", "t2" ],
-          [ "env" ],
-          "Int(*(evalInt(t1, env), evalInt(t2, env)))"
+          "Mul", [ "t1", "t2" ], [ "env" ], ".f5(evalInt(t1, env), env, t2)"
         ],
         [
-          "Sub",
-          [ "t1", "t2" ],
-          [ "env" ],
-          "Int(-(evalInt(t1, env), evalInt(t2, env)))"
+          "Sub", [ "t1", "t2" ], [ "env" ], ".f3(evalInt(t1, env), env, t2)"
         ],
         [ "Var", [ "x" ], [ "env" ], "fetchCell(env, x)" ]
       ]

@@ -54,11 +54,17 @@ evalTerm(t, env) := match t {
     Boolean(b) -> Boolean(b),
     Int(n) -> Int(n),
     Sub(t1, t2) ->
-        Int(-(evalInt(t1, env), evalInt(t2, env))),
+        let t1Val := evalInt(t1, env);
+        let t2Val := evalInt(t2, env);
+        Int(-(t1Val, t2Val)),
     Mul(t1, t2) ->
-        Int(*(evalInt(t1, env), evalInt(t2, env))),
+        let t1Val := evalInt(t1, env);
+        let t2Val := evalInt(t2, env);
+        Int(*(t1Val, t2Val)),
     GreaterThan(t1, t2) ->
-        Boolean(>(evalInt(t1, env), evalInt(t2, env)))
+        let t1Val := evalInt(t1, env);
+        let t2Val := evalInt(t2, env);
+        Boolean(>(t1Val, t2Val))
 };
 
 evalBoolean(t, env) := match evalTerm(t, env) {
