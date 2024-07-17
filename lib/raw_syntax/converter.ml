@@ -23,7 +23,7 @@ let compute_productive_g_rules program =
          | Some result -> result
          | None -> go_call ~op (Symbol.kind op))
     and go_call ~op = function
-      | `CCall -> true
+      | `CCall -> op <> Symbol.of_string "Panic"
       | `FCall when Symbol.is_primitive_op op -> false
       | `FCall ->
         Hashtbl.add cache op false;
