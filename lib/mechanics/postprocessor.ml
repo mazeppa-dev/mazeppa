@@ -159,6 +159,9 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
            when x' = v1 && y = v2 && not (Symbol.is_lazy op) ->
            Gensym.assign ~other:gensym_backup gensym;
            Call (op, [ t; s ])
+         | Var y when x' = y ->
+           Gensym.assign ~other:gensym_backup gensym;
+           t
          | _ -> Let (x', t, u))
     and go_subterm ~env t =
         let gensym_backup = Gensym.clone gensym in
