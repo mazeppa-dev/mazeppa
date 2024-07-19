@@ -64,6 +64,26 @@ let match_against (t1, t2) : t Symbol_map.t option =
     | Fail -> None
 ;;
 
+let rename_against (t1, t2) : t Symbol_map.t option =
+    let exception Fail in
+    let subst = ref Symbol_map.empty in
+    let rec go = function
+      | Var x, Var y ->
+        (match Symbol_map.find_opt x !subst with
+         | Some (Var y') -> if y <> y' then raise_notrace Fail
+         | _ -> subst := Symbol_map.add x (Var y) !subst)
+      | Const const, Const const' when Const.equal const const' -> ()
+      | Call (op, args), Call (op', args') when op = op' ->
+        List.iter2 (fun t1 t2 -> go (t1, t2)) args args'
+      | (Var _ | Const _ | Call _), _ -> raise_notrace Fail
+    in
+    try
+      go (t1, t2);
+      Some !subst
+    with
+    | Fail -> None
+;;
+
 [@@@coverage off]
 
 let is_var = function

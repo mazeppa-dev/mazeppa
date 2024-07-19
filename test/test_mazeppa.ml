@@ -78,6 +78,28 @@ let match_against () =
 
 let term_instance_matching_cases = [ "Tests", match_against ]
 
+let rename_against () =
+    let check ~expected (t1, t2) =
+        Alcotest.(check' (option (module Subst)))
+          ~msg:"Rename against"
+          ~actual:(T.rename_against (t1, t2))
+          ~expected
+    in
+    check ~expected:None T.(var "x", call ("Foo", []));
+    check
+      ~expected:(Some (make_subst [ "x", T.var "y" ]))
+      T.(call ("Foo", [ var "x"; var "x" ]), call ("Foo", [ var "y"; var "y" ]));
+    check
+      ~expected:None
+      T.(call ("Foo", [ var "x"; var "x" ]), call ("Foo", [ var "y"; var "z" ]));
+    check ~expected:None T.(call ("Foo", []), var "x");
+    check ~expected:None T.(call ("Foo", []), call ("Bar", []));
+    check ~expected:(Some (make_subst [])) T.(string "hello world", string "hello world");
+    check ~expected:None T.(string "hello world", string "hello world 123")
+;;
+
+let term_renaming_matching_cases = [ "Tests", rename_against ]
+
 let classify () =
     let module Category = struct
       type t = T.category
@@ -394,6 +416,7 @@ let () =
       "Mazeppa"
       ([ "Print constants", print_constants_cases
        ; "Term instance matching", term_instance_matching_cases
+       ; "Term renaming matching", term_renaming_matching_cases
        ; "Term classification", term_classification_cases
        ; "MSG", msg_cases
        ; "Homeomorphic embedding", he_cases

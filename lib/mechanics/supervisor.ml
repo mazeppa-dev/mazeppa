@@ -144,9 +144,9 @@ end = struct
           State.processed_globals := (n, n_id) :: !State.processed_globals;
           graph
         | (m, m_id) :: rest ->
-          (match Term.match_against (m, n) with
-           | Some subst when Subst.is_safe subst -> fold ~history ~bindings:subst m_id
-           | _ -> go rest)
+          (match Term.rename_against (m, n) with
+           | Some subst -> fold ~history ~bindings:subst m_id
+           | None -> go rest)
       in
       match Term.classify n with
       | Term.Global -> go !State.processed_globals

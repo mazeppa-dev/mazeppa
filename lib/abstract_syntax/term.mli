@@ -34,6 +34,9 @@ val subst_params : params:Symbol.t list -> args:t list -> t -> t
    The map will contain bindings for all free variables in [t1]. *)
 val match_against : t * t -> t Symbol_map.t option
 
+(* Just like [match_against] but produces a renaming or returns [None]. *)
+val rename_against : t * t -> t Symbol_map.t option
+
 val is_var : t -> bool
 
 val is_const : t -> bool
