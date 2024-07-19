@@ -26,12 +26,15 @@ type t =
   { f_rules : f_rules_by_name
   ; g_rules : g_rules_by_name
   ; extract_f_rules : Symbol_set.t
-  ; productive_g_rules : Symbol_set.t
+  ; productive_g_rules : bool list Symbol_map.t
+  ; unproductive_g_rules : Symbol_set.t
   }
 
 val find_f_rule : program:t -> Symbol.t -> f_rule
 
 val find_g_rule_list : program:t -> Symbol.t -> g_rules_by_pattern
+
+val find_productive_g_rule_list : program:t -> Symbol.t -> bool list
 
 val find_g_rule : program:t -> Symbol.t * Symbol.t -> g_rule
 

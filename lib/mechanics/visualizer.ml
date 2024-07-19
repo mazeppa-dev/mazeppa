@@ -41,7 +41,11 @@ let connect ~oc ~attrs ~parent_node current_node =
 
 let run ~(oc : out_channel Lazy.t) (graph : Process_graph.t) : unit =
     let oc = Lazy.force oc in
-    let node_gensym = Gensym.create ~prefix:"n" () in
+    let node_gensym, inv_gensym =
+        (* Nodes starting with [n] are "physical"; nodes starting with [inv] are
+           "invisible", i.e., they are not real addresses. *)
+        Gensym.(create ~prefix:"n" (), create ~prefix:"inv" ())
+    in
     let rec go ?(attrs = "") ~parent_node graph =
         let current_node = Gensym.emit node_gensym in
         match graph with
@@ -85,19 +89,25 @@ let run ~(oc : out_channel Lazy.t) (graph : Process_graph.t) : unit =
           go_bindings ~parent_node bindings;
           go_body ~parent_node graph
         | Process_graph.(Extract ((x, call), graph)) ->
-          draw_node ~oc ~label:"<extract>" ~attrs:"style=filled" current_node;
-          connect ~oc ~attrs ~parent_node current_node;
-          let parent_node = Some current_node in
-          go_bindings ~parent_node [ x, call ];
-          go_body ~parent_node graph
+          go_extract ~attrs ~parent_node ~current_node ((x, call), graph)
+    and go_extract ~attrs ~parent_node ~current_node ((x, call), graph) =
+        draw_node ~oc ~label:"<extract>" ~attrs:"style=filled" current_node;
+        connect ~oc ~attrs ~parent_node current_node;
+        let parent_node = Some current_node in
+        go_bindings ~parent_node [ x, call ];
+        go_body ~parent_node graph
     and go_variants ~parent_node (x, variants) =
         List.iter
-          (fun ((c, c_params), graph) ->
+          (fun ((c, c_params), (binding, graph)) ->
              let attrs =
                  Symbol.(
                    label "%s=%s(%s)" (to_string x) (to_string c) (comma_sep c_params))
              in
-             go ~attrs ~parent_node graph)
+             match binding with
+             | Some binding ->
+               let current_node = Gensym.emit inv_gensym in
+               go_extract ~attrs ~parent_node ~current_node (binding, graph)
+             | None -> go ~attrs ~parent_node graph)
           variants
     and go_bindings ~parent_node bindings =
         List.iter

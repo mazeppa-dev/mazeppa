@@ -73,7 +73,7 @@ end = struct
 
   let is_extractable f = Symbol_set.mem f S.program.extract_f_rules
 
-  let is_productive g = Symbol_set.mem g S.program.productive_g_rules
+  let is_unproductive g = Symbol_set.mem g S.program.unproductive_g_rules
 
   let is_extracted_call = function
     | Term.Call (f, _args) when is_extractable f -> true
@@ -100,7 +100,7 @@ end = struct
              raise_notrace (Extract ((x, call), shell)))
       and go_call ~depth ~op = function
         | `GCall, Call (c, _c_args) :: _args when Symbol.kind c = `CCall -> ()
-        | `GCall, (_ :: _ as args) when (not (is_productive op)) && depth > 0 ->
+        | `GCall, (_ :: _ as args) when is_unproductive op && depth > 0 ->
           extract (Call (op, args))
         | (`CCall | `FCall | `GCall), _args -> ()
       in

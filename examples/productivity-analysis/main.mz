@@ -11,15 +11,15 @@ eval(stmt) := match stmt {
     }
 };
 
-// The following unproductive functions will be extracted automatically. As a
-// result, the residual code will be more compact.
-
+// This function will be transformed because the last two branches are
+// productive, so deforestation is possible.
 decide(t) := match t {
     Var(env, x) -> fetchCell(env, x),
     T() -> T(),
     F() -> F()
 };
 
+// This function will be extracted because it is not productive.
 fetchCell(env, x) := match env {
     Nil() -> Panic(++("the variable is unbound: ", x)),
     Cell(y, value, xs) -> match =(x, y) {

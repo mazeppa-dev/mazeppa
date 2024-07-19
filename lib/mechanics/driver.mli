@@ -8,9 +8,11 @@ type 'a step =
   (* Unfold a call. *)
   | Unfold of 'a
   (* Case analysis of a g-call. *)
-  | Analyze of Symbol.t * 'a * (contraction * 'a) list
+  | Analyze of Symbol.t * 'a * (contraction * 'a case_body) list
 
 and contraction = Symbol.t * Symbol.t list
+
+and 'a case_body = (Symbol.t * 'a) option * 'a
 
 module Make (_ : sig
     val program : Program.t

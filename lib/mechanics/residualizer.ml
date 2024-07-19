@@ -57,10 +57,11 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
           match graph with
           | Process_graph.Step step -> go_step ~env step
           | Process_graph.Bind (bindings, binder) -> go_binder ~env ~bindings binder
-          | Process_graph.Extract ((x, call), graph) ->
-            let call_res = go ~env call in
-            let t_res = go ~env graph in
-            Raw_term.Let (x, call_res, t_res))
+          | Process_graph.Extract (binding, graph) -> go_extract ~env (binding, graph))
+    and go_extract ~env ((x, call), graph) =
+        let call_res = go ~env call in
+        let t_res = go ~env graph in
+        Raw_term.Let (x, call_res, t_res)
     and go_step ~(env : environment) = function
       | Driver.Var x -> query_env ~env x
       | Driver.Const const -> Raw_term.Const const
@@ -72,9 +73,10 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
         let t_res = go ~env graph in
         let cases_res =
             variants
-            |> List.map (fun ((c, c_params), graph) ->
-              let t_res = go ~env graph in
-              (c, c_params), t_res)
+            |> List.map (fun (contraction, (binding, graph)) ->
+              match binding with
+              | Some binding -> contraction, go_extract ~env (binding, graph)
+              | None -> contraction, go ~env graph)
         in
         Raw_term.Match (t_res, cases_res)
     and go_binder ~(env : environment) ~bindings = function

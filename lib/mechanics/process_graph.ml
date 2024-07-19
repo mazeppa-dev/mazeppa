@@ -27,7 +27,12 @@ let compute_symbol_table (graph : t) : symbol_table =
       | Driver.Unfold graph -> go graph
       | Driver.Analyze (_x, graph, variants) ->
         go graph;
-        List.iter (fun (_contraction, graph) -> go graph) variants
+        List.iter
+          (fun (_contraction, (binding, graph)) ->
+             match binding with
+             | Some binding -> go (Extract (binding, graph))
+             | None -> go graph)
+          variants
     and go_binder ~bindings binder =
         List.iter (fun (_x, graph) -> go graph) bindings;
         match binder with

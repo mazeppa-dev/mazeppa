@@ -5,14 +5,23 @@ type 'a step =
   | Const of Const.t
   | Decompose of Symbol.t * 'a list
   | Unfold of 'a
-  | Analyze of Symbol.t * 'a * (contraction * 'a) list
+  | Analyze of Symbol.t * 'a * (contraction * 'a case_body) list
 
 and contraction = Symbol.t * Symbol.t list
+
+and 'a case_body = (Symbol.t * 'a) option * 'a
 
 let step_of_term : Term.t -> Term.t step = function
   | Term.Var x -> Var x
   | Term.Const const -> Const const
   | Term.Call (op, args) -> Decompose (op, args)
+;;
+
+let map_case_body ~(f : 'a -> 'b) : 'a case_body -> 'b case_body = function
+  | Some (x, t), u ->
+    let binding = Some (x, f t) in
+    binding, f u
+  | None, u -> None, f u
 ;;
 
 let map ~(f : 'a -> 'b) : 'a step -> 'b step = function
@@ -22,7 +31,9 @@ let map ~(f : 'a -> 'b) : 'a step -> 'b step = function
   | Unfold t -> Unfold (f t)
   | Analyze (x, t, variants) ->
     let t = f t in
-    let variants = List.map (fun (contraction, t) -> contraction, f t) variants in
+    let variants =
+        List.map (fun (contraction, body) -> contraction, map_case_body ~f body) variants
+    in
     Analyze (x, t, variants)
 ;;
 
@@ -54,22 +65,54 @@ module Make (S : sig
 struct
   open S
 
-  let rec reduce : Term.t -> Term.t step = function
+  let view_g_rules g =
+      let rules, productive_rules =
+          ( Program.(G_rules_by_name.bindings (find_g_rule_list ~program g))
+          , Program.find_productive_g_rule_list ~program g )
+      in
+      List.combine rules productive_rules
+  ;;
+
+  let maybe_extract_body ~depth ~is_productive body =
+      if is_productive || depth = 0 || Term.is_var body
+      then None, body
+      else (
+        let x = Gensym.emit gensym in
+        Some (x, body), Var x)
+  ;;
+
+  let analyze_g_rules ~depth ~f g =
+      view_g_rules g
+      |> List.map (fun ((c, (c_params, params, body)), is_productive) ->
+        let fresh_vars = Gensym.emit_list ~length_list:c_params gensym in
+        let contraction = c, fresh_vars in
+        let body =
+            body
+            |> Simplifier.handle_term
+                 ~params:(c_params @ params)
+                 ~args:(Term.var_list fresh_vars @ f contraction)
+            |> maybe_extract_body ~depth ~is_productive
+        in
+        contraction, body)
+  ;;
+
+  let rec reduce ~depth : Term.t -> Term.t step = function
     | Term.Var x -> Var x
     | Term.Const const -> Const const
-    | Term.Call (op, args) when Symbol.is_lazy op -> reduce_call ~op (Symbol.kind op, args)
-    | Term.Call (op, args) -> reduce_args (op, args)
+    | Term.Call (op, args) when Symbol.is_lazy op ->
+      reduce_call ~depth ~op (Symbol.kind op, args)
+    | Term.Call (op, args) -> reduce_args ~depth (op, args)
 
-  and reduce_args (op, args) =
+  and reduce_args ~depth (op, args) =
       let rec go ~acc = function
-        | [] -> reduce_call ~op (Symbol.kind op, List.rev acc)
+        | [] -> reduce_call ~depth ~op (Symbol.kind op, List.rev acc)
         | t :: rest when Term.is_value t -> go ~acc:(t :: acc) rest
-        | t :: rest -> reduce_amidst ~op (List.rev acc, t, rest)
+        | t :: rest -> reduce_amidst ~depth ~op (List.rev acc, t, rest)
       in
       go ~acc:[] args
 
-  and reduce_amidst ~op (before, t, after) =
-      match reduce t with
+  and reduce_amidst ~depth ~op (before, t, after) =
+      match reduce ~depth:(depth + 1) t with
       | Var x -> Unfold Term.(Call (op, before @ [ Var x ] @ after))
       | Const const -> Unfold Term.(Call (op, before @ [ Const const ] @ after))
       | Decompose (c, [ _ ]) as step when c = symbol "Panic" -> step
@@ -78,12 +121,13 @@ struct
       | Unfold t -> Unfold (Term.Call (op, before @ [ t ] @ after))
       | Analyze (x, t, variants) ->
         variants
-        |> List.map (fun (contraction, t) ->
+        |> List.map (fun (contraction, (binding, u)) ->
           let unify list = unify ~x:(Some x) ~contraction list in
-          contraction, Term.Call (op, unify before @ [ t ] @ unify after))
+          let u = Term.Call (op, unify before @ [ u ] @ unify after) in
+          contraction, (binding, u))
         |> fun variants -> Analyze (x, t, variants)
 
-  and reduce_call ~op = function
+  and reduce_call ~depth ~op = function
     | `CCall, args -> Decompose (op, args)
     | `FCall, [ t ] when Symbol.is_op1 op -> step_of_term (Simplifier.handle_op1 ~op t)
     | `FCall, [ t1; t2 ] when Symbol.is_op2 op ->
@@ -94,12 +138,12 @@ struct
       Unfold (Simplifier.handle_term ~params ~args body)
     | `GCall, (([] | Term.Const _ :: _) as args) -> invalid_arg_list ~op args
     | `GCall, Term.Var x :: args ->
-      Analyze (x, Term.Var x, unfold_g_rules ~x:(Some x) ~args op)
+      Analyze (x, Term.Var x, unfold_g_rules ~depth ~x:(Some x) ~args op)
     | `GCall, Term.Call (op', args') :: args ->
-      reduce_g_call ~op (Symbol.kind op', (op', args'), args)
+      reduce_g_call ~depth ~op (Symbol.kind op', (op', args'), args)
 
   (* Reduces a g-function call where the first argument is also a call. *)
-  and reduce_g_call ~op = function
+  and reduce_g_call ~depth ~op = function
     | `CCall, (c, c_args), args ->
       let c_params, params, body = Program.find_g_rule ~program (op, c) in
       Unfold
@@ -107,37 +151,29 @@ struct
     (* TODO: handle [!=]. *)
     | _, (op', (([ Var x; t ] | [ t; Var x ]) as args')), args when op' = symbol "=" ->
       let scrutinee = Term.Call (op', args') in
-      let variants = unfold_g_rules_t_f ~test:(x, t) ~args op in
+      let variants = unfold_g_rules_t_f ~depth ~test:(x, t) ~args op in
       Analyze (Gensym.emit gensym, scrutinee, variants)
     | _, (op', args'), args ->
       let scrutinee = Term.Call (op', args') in
-      let variants = unfold_g_rules ~x:None ~args op in
+      let variants = unfold_g_rules ~depth ~x:None ~args op in
       Analyze (Gensym.emit gensym, scrutinee, variants)
 
-  and unfold_g_rules ~x ~args g =
-      Program.(G_rules_by_name.bindings (find_g_rule_list ~program g))
-      |> List.map (fun (c, (c_params, params, body)) ->
-        let fresh_vars = Gensym.emit_list ~length_list:c_params gensym in
-        let contraction = c, fresh_vars in
-        let t =
-            Simplifier.handle_term
-              ~params:(c_params @ params)
-              ~args:(Term.var_list fresh_vars @ unify ~x ~contraction args)
-              body
-        in
-        contraction, t)
+  and unfold_g_rules ~depth ~x ~args g =
+      analyze_g_rules ~depth ~f:(fun contraction -> unify ~x ~contraction args) g
 
-  and unfold_g_rules_t_f ~test:(x, unifier) ~args g =
+  and unfold_g_rules_t_f ~depth ~test:(x, unifier) ~args g =
       let unify t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
-      Program.(G_rules_by_name.bindings (find_g_rule_list ~program g))
-      |> List.map (fun (c, (_c_params, params, body)) ->
-        match Symbol.to_string c with
-        | "T" -> (c, []), Simplifier.handle_term ~params ~args:(List.map unify args) body
-        | "F" -> (c, []), Simplifier.handle_term ~params ~args body
-        | _ -> Util.panic "Impossible")
+      analyze_g_rules
+        ~depth
+        ~f:(fun (* Partial pattern matching is intentional. *)
+                [@warning "-8"] (c, []) ->
+          match Symbol.to_string c with
+          | "T" -> List.map unify args
+          | "F" -> args)
+        g
   ;;
 
-  let run ~f t = map ~f (reduce t)
+  let run ~f t = map ~f (reduce ~depth:0 t)
 
   let try_run ~f t =
       try run ~f t with

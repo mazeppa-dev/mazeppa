@@ -1,32 +1,34 @@
-main(stmt) := f1(stmt);
+main(stmt) := f0(stmt);
 
-f0(x0, x1) := match x0 {
-    Cell(x2, x3, x4) -> match =(x1, x2) {
-        F() -> f0(x4, x1),
-        T() -> x3
+f0(x0) := match x0 {
+    If1(x1, x2, x3) -> match x1 {
+        F() -> f1(x3),
+        T() -> f1(x2),
+        Var(x4, x5) ->
+        let x6 := f2(x4, x5);
+        match x6 {
+            F() -> f1(x3),
+            T() -> f1(x2)
+        }
     },
-    Nil() -> Panic(++("the variable is unbound: ", x1))
-};
-
-f1(x0) := match x0 {
-    If1(x1, x2, x3) ->
-    let x4 := f3(x1);
-    match x4 {
-        F() -> f2(x3),
-        T() -> f2(x2)
-    },
-    If2(x5, x6, x7) ->
-    let x8 := f3(x5);
-    match x8 {
-        F() -> f2(x7),
-        T() -> f2(x6)
+    If2(x7, x8, x9) -> match x7 {
+        F() -> f1(x9),
+        T() -> f1(x8),
+        Var(x10, x11) ->
+        let x12 := f2(x10, x11);
+        match x12 {
+            F() -> f1(x9),
+            T() -> f1(x8)
+        }
     }
 };
 
-f2(x0) := f1(x0);
+f1(x0) := f0(x0);
 
-f3(x0) := match x0 {
-    F() -> F(),
-    T() -> T(),
-    Var(x1, x2) -> f0(x1, x2)
+f2(x0, x1) := match x0 {
+    Cell(x2, x3, x4) -> match =(x1, x2) {
+        F() -> f2(x4, x1),
+        T() -> x3
+    },
+    Nil() -> Panic(++("the variable is unbound: ", x1))
 };
