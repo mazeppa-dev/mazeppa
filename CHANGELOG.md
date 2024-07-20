@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.1.2 - 2024-07-20
+
 ### Added
 
  - Function productivity analysis for preventing unneeded specializations ([issue #2](https://github.com/mazeppa-dev/mazeppa/issues/2)).
@@ -13,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Simplify horizontal configuration analysis by only checking for renamings (previously, we tried to detect arbitrary safe instances).
+ - Simplify horizontal configuration analysis by only checking for renamings instead of matching arbitrary safe instances.
  - Do not emit 1) linear let-bindings for redexes, 2) unused let-bindings for immediate terms.
 
 ## 0.1.1 - 2024-07-15
