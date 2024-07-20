@@ -2,5 +2,5 @@ main(x, y) := Pair(f0(x), f0(y));
 
 f0(x0) := match x0 {
     A(x1) -> B(x1),
-    C(x2) -> D(x2)
+    C(x1) -> D(x1)
 };

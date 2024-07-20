@@ -9,12 +9,12 @@ f0(x0) := match x0 {
             T() -> f1(x2)
         }
     },
-    If2(x6, x7, x8) -> match x6 {
-        F() -> f1(x8),
-        T() -> f1(x7),
-        Var(x9, x10) -> match f2(x9, x10) {
-            F() -> f1(x8),
-            T() -> f1(x7)
+    If2(x1, x2, x3) -> match x1 {
+        F() -> f1(x3),
+        T() -> f1(x2),
+        Var(x4, x5) -> match f2(x4, x5) {
+            F() -> f1(x3),
+            T() -> f1(x2)
         }
     }
 };

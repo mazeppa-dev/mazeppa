@@ -2,7 +2,7 @@ main(xs) := f0(xs);
 
 f0(x0) := match x0 {
     Branch(x1, x2) -> +(f1(x1), f1(x2)),
-    Leaf(x3) -> *(x3, x3)
+    Leaf(x1) -> *(x1, x1)
 };
 
 f1(x0) := f0(x0);
