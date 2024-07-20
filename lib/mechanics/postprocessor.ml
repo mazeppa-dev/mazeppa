@@ -60,46 +60,6 @@ let share_args ~gensym (op, initial_args) =
     else go initial_args
 ;;
 
-let eliminate_match ~gensym_backup ~gensym (t, cases) =
-    let exception Found of t in
-    let try_alternatives = function
-      (* Before: [match Ci() { C1(...) -> t1, ..., Ci() -> tI, ..., Cn(...) -> tN }] *)
-      (* After: [tI] *)
-      | Call (c, []), cases
-        when List.exists
-               (function
-                 | (c', []), t when c = c' -> raise_notrace (Found t)
-                 | _ -> false)
-               cases -> ()
-      (* Before: [match x { C1(...) -> op(), ..., Cn(...) -> op() }] *)
-      (* After: [op()] *)
-      | Var _x, (_pattern, Call (op, [])) :: rest
-        when List.for_all
-               (function
-                 | _pattern', Call (op', []) when op = op' -> true
-                 | _ -> false)
-               rest -> raise_notrace (Found (Call (op, [])))
-      (* Before: [match t { C1(x1...) -> C1(x1...), ..., Cn(xN...) -> Cn(xN...) }] *)
-      (* After: [t] *)
-      | t, cases
-        when List.for_all
-               (function
-                 | (c, c_params), Call (c', c_params') when c = c' ->
-                   List.for_all2 (fun x y -> equal (Var x) y) c_params c_params'
-                 | _ -> false)
-               cases -> raise_notrace (Found t)
-      (* Nothing above applies. *)
-      | _ -> ()
-    in
-    match try_alternatives (t, cases) with
-    | exception Found better ->
-      (* To avoid "hidden" variable symbols, restore the state of [gensym] before
-         postprocessing the subterms. *)
-      Gensym.assign ~other:gensym_backup gensym;
-      better
-    | () -> Match (t, cases)
-;;
-
 let query_env ~env x = Option.value ~default:x (Symbol_map.find_opt x env)
 
 (* TODO: handle other types of restrictions as well. *)
@@ -116,6 +76,7 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
          | _ -> false)
       | _ -> false
     in
+    let exception Select of Raw_term.t in
     let rec go ~env = function
       | Var x -> Var (query_env ~env x)
       | Const const -> Const const
@@ -131,38 +92,27 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
         share_args ~gensym (op, List.map (go_subterm ~env) args)
       | Match
           ( (Call (op, ([ Var x; negation ] | [ negation; Var x ])) as t)
-          , [ ((c_f, []), case_f); ((c_t, []), case_t) ] )
+          , ([ ((c_f, []), case_f); ((c_t, []), case_t) ] as cases) )
         when op = symbol "=" && c_f = symbol "F" && c_t = symbol "T" ->
-        let gensym_backup = Gensym.clone gensym in
-        let t = go ~env t in
-        let case_f = (c_f, []), go_restrict ~env ~x ~negation case_f in
-        let case_t = (c_t, []), go ~env case_t in
-        let cases = [ case_f; case_t ] in
-        eliminate_match ~gensym_backup ~gensym (t, cases)
+        (try
+           let t = go_scrutinee ~env ~cases t in
+           let case_f = (c_f, []), go_restrict ~env ~x ~negation case_f in
+           let case_t = (c_t, []), go ~env case_t in
+           Raw_term.Match (t, [ case_f; case_t ])
+         with
+         | Select t -> t)
       | Match (t, cases) ->
-        let gensym_backup = Gensym.clone gensym in
-        let t = go ~env t in
-        let cases = List.map (go_case ~env) cases in
-        eliminate_match ~gensym_backup ~gensym (t, cases)
+        (try
+           let t = go_scrutinee ~env ~cases t in
+           let cases = List.map (go_case ~env) cases in
+           Raw_term.Match (t, cases)
+         with
+         | Select t -> t)
       | Let (x, t, u) ->
         let t = go_subterm ~env t in
-        let gensym_backup = Gensym.clone gensym in
         let x' = Gensym.emit gensym in
         let u = go_extend ~env (([ x ], [ x' ]), u) in
-        (* We could generalize the following rewriting rules for any operator arity, but
-           it is enough to handle arities 1 and 2 for now. *)
-        (match u with
-         | Call (op, [ Var y ]) when x' = y && not (Symbol.is_lazy op) ->
-           Gensym.assign ~other:gensym_backup gensym;
-           Call (op, [ t ])
-         | Let (y, s, Call (op, [ Var v1; Var v2 ]))
-           when x' = v1 && y = v2 && not (Symbol.is_lazy op) ->
-           Gensym.assign ~other:gensym_backup gensym;
-           Call (op, [ t; s ])
-         | Var y when x' = y ->
-           Gensym.assign ~other:gensym_backup gensym;
-           t
-         | _ -> Let (x', t, u))
+        Let (x', t, u)
     and go_subterm ~env t =
         let gensym_backup = Gensym.clone gensym in
         let t = go ~env t in
@@ -183,6 +133,20 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
     and go_case ~env ((c, c_params), t) =
         let c_params' = Gensym.emit_list ~length_list:c_params gensym in
         (c, c_params'), go_extend ~env ((c_params, c_params'), t)
+    and go_scrutinee ~env ~cases t =
+        let gensym_backup = Gensym.clone gensym in
+        let t = go ~env t in
+        (match t with
+         | Call (c, []) ->
+           List.iter
+             (function
+               | (c', []), t when c = c' ->
+                 Gensym.assign ~other:gensym_backup gensym;
+                 raise_notrace (Select (go ~env t))
+               | _ -> ())
+             cases
+         | _ -> ());
+        t
     in
     go ~env t
 ;;

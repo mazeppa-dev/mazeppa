@@ -9,6 +9,97 @@
 (* This is the environment for efficient explicit substitutions. *)
 type environment = Raw_term.t Symbol_map.t
 
+let match' (t, cases) =
+    let open Raw_term in
+    let exception Replace of Raw_term.t in
+    let go = function
+      (* Before: [match Ci() { C1(...) -> t1, ..., Ci() -> tI, ..., Cn(...) -> tN }] *)
+      (* After: [tI] *)
+      | Call (c, []), cases
+        when List.exists
+               (function
+                 | (c', []), t when c = c' -> raise_notrace (Replace t)
+                 | _ -> false)
+               cases -> ()
+      (* Before: [match x { C1(...) -> op(), ..., Cn(...) -> op() }] *)
+      (* After: [op()] *)
+      | Var _x, (_pattern, Call (op, [])) :: rest
+        when List.for_all
+               (function
+                 | _pattern', Call (op', []) when op = op' -> true
+                 | _ -> false)
+               rest -> raise_notrace (Replace (Call (op, [])))
+      (* Before: [match t { C1(x1...) -> C1(x1...), ..., Cn(xN...) -> Cn(xN...) }] *)
+      (* After: [t] *)
+      | t, cases
+        when List.for_all
+               (function
+                 | (c, c_params), Call (c', c_params') when c = c' ->
+                   List.for_all2 (fun x y -> equal (Var x) y) c_params c_params'
+                 | _ -> false)
+               cases -> raise_notrace (Replace t)
+      (* Nothing above applies. *)
+      | _ -> ()
+    in
+    try
+      go (t, cases);
+      Match (t, cases)
+    with
+    | Replace better -> better
+;;
+
+(* Since all fresh variables in the process graph are distinct, there is no need to worry
+   about potential shadowing. *)
+let count_occurences ~x =
+    let open Raw_term in
+    let rec go = function
+      | Var y when x = y -> 1
+      | Var _y -> 0
+      | Const _const -> 0
+      | Call (_op, args) -> List.fold_left (fun acc t -> acc + go t) 0 args
+      | Match (t, cases) ->
+        go t + List.fold_left (fun acc (_pattern, t) -> acc + go t) 0 cases
+      | Let (_x, t, u) -> go t + go u
+    in
+    go
+;;
+
+(* We count how many times variables occur in their scopes. If a certain variable occurs
+   only once (i.e., it is linear), and occurs in a redex position, the associated
+   let-binding is substituted into the body. If the variable occurs zero times and it
+   binds an immediate term, the binding is removed. *)
+let let' (x, t, u) =
+    let open Raw_term in
+    let exception Replace of Raw_term.t in
+    let rec go = function
+      | Var y -> if x = y then raise_notrace (Replace t)
+      | Const _const -> ()
+      | Call (op, _args) when Symbol.is_lazy op -> ()
+      | Call (op, args) -> go_call ~op ~acc:[] args
+      | Match (t, cases) -> reconstruct ~f:(fun better -> Match (better, cases)) t
+      | Let (x', t, u) -> reconstruct ~f:(fun better -> Let (x', better, u)) t
+    and go_call ~op ~acc = function
+      | [] -> ()
+      | t :: rest ->
+        reconstruct
+          ~f:(fun better ->
+            let args = List.rev acc @ [ better ] @ rest in
+            Call (op, args))
+          t;
+        go_call ~op ~acc:(t :: acc) rest
+    and reconstruct ~f t =
+        try go t with
+        | Replace better -> raise_notrace (Replace (f better))
+    in
+    let occurs = count_occurences ~x u in
+    try
+      if occurs = 1 then go u;
+      if occurs = 0 && is_immediate t then raise_notrace (Replace u);
+      Let (x, t, u)
+    with
+    | Replace better -> better
+;;
+
 let query_env ~env x = Option.value ~default:(Raw_term.Var x) (Symbol_map.find_opt x env)
 
 module Memoizer (S : sig
@@ -18,13 +109,15 @@ module Memoizer (S : sig
 
   val finalize : unit -> Raw_program.t
 end = struct
+  open S
+
   let node_gensym = Gensym.create ~prefix:"n" ()
 
   let f_rules : Raw_program.t ref = ref []
 
   let bind env k =
       let node_id = Gensym.emit node_gensym in
-      match Symbol_map.find_opt node_id S.symbol_table with
+      match Symbol_map.find_opt node_id symbol_table with
       | Some (f, params) ->
         (* This will be the body of [f]; do not make any substitution. *)
         let t_res = k Symbol_map.empty in
@@ -61,7 +154,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
     and go_extract ~env ((x, call), graph) =
         let call_res = go ~env call in
         let t_res = go ~env graph in
-        Raw_term.Let (x, call_res, t_res)
+        let' (x, call_res, t_res)
     and go_step ~(env : environment) = function
       | Driver.Var x -> query_env ~env x
       | Driver.Const const -> Raw_term.Const const
@@ -78,7 +171,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
               | Some binding -> contraction, go_extract ~env (binding, graph)
               | None -> contraction, go ~env graph)
         in
-        Raw_term.Match (t_res, cases_res)
+        match' (t_res, cases_res)
     and go_binder ~(env : environment) ~bindings = function
       | Process_graph.Fold node_id ->
         let f, _f_params = Symbol_map.find node_id symbol_table in
@@ -94,7 +187,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
         let env = Symbol_map.extend ~bindings:immediate_bindings_res env in
         let t_res = go ~env graph in
         List.fold_right
-          (fun (x, t_res) res -> Raw_term.Let (x, t_res, res))
+          (fun (x, t_res) res -> let' (x, t_res, res))
           other_bindings_res
           t_res
     (* We need to preserve the original semantics: evaluating arguments before unfolding a

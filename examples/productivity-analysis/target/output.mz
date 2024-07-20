@@ -4,21 +4,17 @@ f0(x0) := match x0 {
     If1(x1, x2, x3) -> match x1 {
         F() -> f1(x3),
         T() -> f1(x2),
-        Var(x4, x5) ->
-        let x6 := f2(x4, x5);
-        match x6 {
+        Var(x4, x5) -> match f2(x4, x5) {
             F() -> f1(x3),
             T() -> f1(x2)
         }
     },
-    If2(x7, x8, x9) -> match x7 {
-        F() -> f1(x9),
-        T() -> f1(x8),
-        Var(x10, x11) ->
-        let x12 := f2(x10, x11);
-        match x12 {
-            F() -> f1(x9),
-            T() -> f1(x8)
+    If2(x6, x7, x8) -> match x6 {
+        F() -> f1(x8),
+        T() -> f1(x7),
+        Var(x9, x10) -> match f2(x9, x10) {
+            F() -> f1(x8),
+            T() -> f1(x7)
         }
     }
 };

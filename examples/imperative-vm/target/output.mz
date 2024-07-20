@@ -1,25 +1,16 @@
-main(a) :=
-    let x0 := f0("i", Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32),
-    Cell("i", Int(7u32), Nil())))));
-    let x1 := f1(x0);
-    let x2 := match >(x1, 0u32) {
+main(a) := f0("out", match >(f1(f0("i", Cell("a", a, Cell("x", Int(7u32), Cell(
+    "out", Int(1i32), Cell("i", Int(7u32), Nil())))))), 0u32) {
         F() -> Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32), Cell("i"
         , Int(7u32), Nil())))),
-        T() ->
-        let x2 := f0("out", Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(
-        1i32), Cell("i", Int(7u32), Nil())))));
-        let x3 := f1(x2);
-        let x4 := f0("a", Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32
-        ), Cell("i", Int(7u32), Nil())))));
-        let x5 := f1(x4);
-        f11(While(GreaterThan(Var("i"), Int(0u32)), Cons(Assign("out", Mul(Var(
-        "out"), Var("a"))), Cons(Assign("i", Sub(Var("i"), Int(1u32))), Nil())))
-        , let x7 := Cons(Assign("i", Sub(Var("i"), Int(1u32))), Nil());
-        let x8 := f2("out", x3, x5, Cell("a", a, Cell("x", Int(7u32), Cell("out"
-        , Int(1i32), Cell("i", Int(7u32), Nil())))));
-        f6(x8, x7))
-    };
-    f0("out", x2);
+        T() -> f11(While(GreaterThan(Var("i"), Int(0u32)), Cons(Assign("out",
+        Mul(Var("out"), Var("a"))), Cons(Assign("i", Sub(Var("i"), Int(1u32))),
+        Nil()))), f6(f2("out", f1(f0("out", Cell("a", a, Cell("x", Int(7u32),
+        Cell("out", Int(1i32), Cell("i", Int(7u32), Nil())))))), f1(f0("a", Cell
+        ("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32), Cell("i", Int(7u32)
+        , Nil())))))), Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32),
+        Cell("i", Int(7u32), Nil()))))), Cons(Assign("i", Sub(Var("i"), Int(1u32
+        ))), Nil())))
+    });
 
 f0(x0, x1) := match x1 {
     Cell(x2, x3, x4) -> match =(x0, x2) {
@@ -36,14 +27,13 @@ f1(x0) := match x0 {
 
 f10(x0, x1, x2, x3) := match x0 {
     F() -> x1,
-    T() -> let x4 := f7(x2, x1); f11(x3, x4)
+    T() -> f11(x3, f7(x2, x1))
 };
 
 f11(x0, x1) := match x0 {
-    Assign(x2, x3) -> let x4 := f3(x1, x3); f5(x1, x2, x4),
-    If(x5, x6, x7) -> let x8 := f8(f3(x1, x5)); f9(x8, x7, x1, x6),
-    While(x9, x10) ->
-    let x11 := f8(f3(x1, x9)); let x12 := While(x9, x10); f10(x11, x1, x10, x12)
+    Assign(x2, x3) -> f5(x1, x2, f3(x1, x3)),
+    If(x4, x5, x6) -> f9(f8(f3(x1, x4)), x6, x1, x5),
+    While(x7, x8) -> f10(f8(f3(x1, x7)), x1, x8, While(x7, x8))
 };
 
 f2(x0, x1, x2, x3) := match x3 {
@@ -78,14 +68,9 @@ f5(x0, x1, x2) := match x0 {
 
 f6(x0, x1) := match x1 {
     Cons(x2, x3) -> match x2 {
-        Assign(x4, x5) ->
-        let x6 := let x6 := f3(x0, x5); f5(x0, x4, x6); f7(x3, x6),
-        If(x7, x8, x9) ->
-        let x10 := let x10 := f8(f3(x0, x7)); f9(x10, x9, x0, x8); f7(x3, x10),
-        While(x11, x12) ->
-        let x13 := let x13 := f8(f3(x0, x11));
-        let x14 := While(x11, x12); f10(x13, x0, x12, x14);
-        f7(x3, x13)
+        Assign(x4, x5) -> f7(x3, f5(x0, x4, f3(x0, x5))),
+        If(x6, x7, x8) -> f7(x3, f9(f8(f3(x0, x6)), x8, x0, x7)),
+        While(x9, x10) -> f7(x3, f10(f8(f3(x0, x9)), x0, x10, While(x9, x10)))
     },
     Nil() -> x0
 };

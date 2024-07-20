@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
  - Simplify horizontal configuration analysis by only checking for renamings (previously, we tried to detect arbitrary safe instances).
+ - Do not emit 1) linear let-bindings for redexes, 2) unused let-bindings for immediate terms.
 
 ## 0.1.1 - 2024-07-15
 
