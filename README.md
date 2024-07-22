@@ -502,6 +502,14 @@ Run `dune exec my_compiler` to see the desired residual program:
 
 You can call Mazeppa as many times as you want, including in parallel. Note that we expose a limited interface that can only transform a value of type `Raw_program.t` into an optimized `Raw_program.t`, and nothing more.
 
+Besides supercompilation, we also provide a built-in evaluator:
+
+```ocaml
+val eval : Raw_program.t -> Raw_term.t
+```
+
+It can only be called on programs whose `main` functions do not accept parameters. Unlike `supercompile`, it produces an evaluated term of type `Raw_term.t` and can possibly diverge.
+
 ## Usage considerations
 
  - Consider building Mazeppa with an [Flambda]-enabled OCaml compiler; to check, run `ocamlopt -config | grep flambda`.
