@@ -6,10 +6,12 @@ open Mazeppa.Internals
 module T = Term
 module R = Raw_term
 
-let u8, u16, i32, i64, i128 =
+let u8, u16, u32, u64, i32, i64, i128 =
     let open Checked_oint in
     ( (fun x -> U8 (U8.of_int_exn x))
     , (fun x -> U16 (U16.of_int_exn x))
+    , (fun x -> U32 (U32.of_int_exn x))
+    , (fun x -> U64 (U64.of_int_exn x))
     , (fun x -> I32 (I32.of_int_exn x))
     , (fun x -> I64 (I64.of_int_exn x))
     , fun x -> I128 (I128.of_int_exn x) )
@@ -407,6 +409,54 @@ let eval_errors () =
 
 let evaluation_errors_cases = [ "Tests", eval_errors ]
 
+(* Adopted from <https://wiki.haskell.org/Haskell/Lazy_evaluation>. *)
+let lazy_eval () =
+    let open Raw_term in
+    let rules =
+        [ ( []
+          , symbol "main"
+          , []
+          , call ("getIt", [ call ("magic", [ int (u32 1); int (u32 1) ]); int (u64 3) ])
+          )
+        ; ( []
+          , symbol "magic"
+          , [ symbol "m"; symbol "n" ]
+          , Match
+              ( call ("=", [ var "m"; int (u32 0) ])
+              , [ (symbol "T", []), call ("Nil", [])
+                ; ( (symbol "F", [])
+                  , call
+                      ( "Cons"
+                      , [ var "m"
+                        ; call ("magic", [ var "n"; call ("+", [ var "m"; var "n" ]) ])
+                        ] ) )
+                ] ) )
+        ; ( []
+          , symbol "getIt"
+          , [ symbol "xs"; symbol "n" ]
+          , Match
+              ( var "xs"
+              , [ (symbol "Nil", []), call ("Panic", [ string "undefined" ])
+                ; ( (symbol "Cons", [ symbol "x"; symbol "xs" ])
+                  , Match
+                      ( call ("=", [ var "n"; int (u64 1) ])
+                      , [ (symbol "T", []), var "x"
+                        ; ( (symbol "F", [])
+                          , call
+                              ("getIt", [ var "xs"; call ("-", [ var "n"; int (u64 1) ]) ])
+                          )
+                        ] ) )
+                ] ) )
+        ]
+    in
+    Alcotest.(check' (module Raw_term))
+      ~msg:"Lazy evaluation"
+      ~actual:(Mazeppa.eval rules)
+      ~expected:(int (u32 2))
+;;
+
+let lazy_evaluation_cases = [ "Tests", lazy_eval ]
+
 let make_test_case (name, f) = Alcotest.test_case name `Quick f
 
 let make_test (name, test_cases) = name, List.map make_test_case test_cases
@@ -424,6 +474,7 @@ let () =
        ; "Supercompilation", supercompilation_cases
        ; "Evaluation", evaluation_cases
        ; "Evaluation errors", evaluation_errors_cases
+       ; "Lazy evaluation", lazy_evaluation_cases
        ]
        |> List.map make_test)
 ;;

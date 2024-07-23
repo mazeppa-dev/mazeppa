@@ -421,6 +421,44 @@ Finally, note that `@extract` is only a low-level mechanism; a compiler front-en
 
 Both methods can be combined to achieve a desired effect.
 
+## Lazy evaluation
+
+Mazeppa employs an interesting design choice to have eager functions and lazy constructors. The following example, where `magic(1u32, 1u32)` generates Fibonacci numbers, was [adopted from Haskell]:
+
+[adopted from Haskell]: https://wiki.haskell.org/Haskell/Lazy_evaluation
+
+```
+main() := getIt(magic(1u32, 1u32), 3u64);
+
+magic(m, n) := match =(m, 0u32) {
+    T() -> Nil(),
+    F() -> Cons(m, magic(n, +(m, n)))
+};
+
+getIt(xs, n) := match xs {
+    Nil() -> Panic("undefined"),
+    Cons(x, xs) -> match =(n, 1u64) {
+        T() -> x,
+        F() -> getIt(xs, -(n, 1u64))
+    }
+};
+```
+
+<!---
+This example is covered in the unit tests.
+-->
+
+If constructors were eager, `magic(1u32, 1u32)` would never terminate. However, `Cons` does not evaluate its arguments! Since `getIt` only consumes a finite portion of the infinite list, the program terminates and prints `2u32`:
+
+```
+$ mazeppa eval
+2u32
+```
+
+Lazy constructors enable effortless deforestation, as discussed [below].
+
+[below]: #technical-decisions
+
 ## Mazeppa as a library
 
 After running `./scripts/install.sh`, Mazeppa is available as an OCaml library!
