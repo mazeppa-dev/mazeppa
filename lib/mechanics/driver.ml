@@ -90,7 +90,7 @@ struct
             body
             |> Simplifier.handle_term
                  ~params:(c_params @ params)
-                 ~args:(Term.var_list fresh_vars @ f contraction)
+                 ~args:(Term.var_list fresh_vars @ f ~c_params contraction)
             |> maybe_extract_body ~depth ~is_productive
         in
         contraction, body)
@@ -159,19 +159,23 @@ struct
       Analyze (Gensym.emit gensym, scrutinee, variants)
 
   and unfold_g_rules ~depth ~x ~args g =
-      analyze_g_rules ~depth ~f:(fun contraction -> unify ~x ~contraction args) g
+      analyze_g_rules
+        ~depth
+        ~f:(fun ~c_params:_ contraction -> unify ~x ~contraction args)
+        g
 
   and unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
       let unify t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
       analyze_g_rules
         ~depth
-        ~f:(function
+        ~f:(fun ~c_params ->
+          function
           | c, [] ->
             (match Symbol.(to_string c, to_string op') with
              | "T", "=" | "F", "!=" -> List.map unify args
              | ("T" | "F"), _ -> args
              | _ -> Util.panic "Expected either `T` or `F`, got %s" (Symbol.verbatim c))
-          | c, c_params ->
+          | c, _fresh_vars ->
             Util.panic
               "Unexpected pattern %s"
               Term.(verbatim (Call (c, var_list c_params))))
