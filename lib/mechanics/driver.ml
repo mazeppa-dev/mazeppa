@@ -148,10 +148,10 @@ struct
       let c_params, params, body = Program.find_g_rule ~program (op, c) in
       Unfold
         (Simplifier.handle_term ~params:(c_params @ params) ~args:(c_args @ args) body)
-    (* TODO: handle [!=]. *)
-    | _, (op', (([ Var x; t ] | [ t; Var x ]) as args')), args when op' = symbol "=" ->
+    | _, (op', (([ Var x; t ] | [ t; Var x ]) as args')), args
+      when op' = symbol "=" || op' = symbol "!=" ->
       let scrutinee = Term.Call (op', args') in
-      let variants = unfold_g_rules_t_f ~depth ~test:(x, t) ~args op in
+      let variants = unfold_g_rules_t_f ~depth ~test:(x, op', t) ~args op in
       Analyze (Gensym.emit gensym, scrutinee, variants)
     | _, (op', args'), args ->
       let scrutinee = Term.Call (op', args') in
@@ -161,15 +161,15 @@ struct
   and unfold_g_rules ~depth ~x ~args g =
       analyze_g_rules ~depth ~f:(fun contraction -> unify ~x ~contraction args) g
 
-  and unfold_g_rules_t_f ~depth ~test:(x, unifier) ~args g =
+  and unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
       let unify t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
       analyze_g_rules
         ~depth
         ~f:(function
           | c, [] ->
-            (match Symbol.to_string c with
-             | "T" -> List.map unify args
-             | "F" -> args
+            (match Symbol.(to_string c, to_string op') with
+             | "T", "=" | "F", "!=" -> List.map unify args
+             | ("T" | "F"), _ -> args
              | _ -> Util.panic "Expected either `T` or `F`, got %s" (Symbol.verbatim c))
           | c, c_params ->
             Util.panic

@@ -1,0 +1,13 @@
+main(x) := match =(x, 0i32) {
+    T() -> match =(x, 5i32) {
+        T() -> Panic("impossible"),
+        F() -> "Good 1"
+    },
+    F() -> match !=(x, 10i32) {
+        T() -> "Good 2",
+        F() -> match =(x, 10i32) {
+            T() -> "Good 3",
+            F() -> Panic("impossible")
+        }
+    }
+};
