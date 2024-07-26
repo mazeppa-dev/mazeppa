@@ -165,11 +165,16 @@ struct
       let unify t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
       analyze_g_rules
         ~depth
-        ~f:(fun (* Partial pattern matching is intentional. *)
-                [@warning "-8"] (c, []) ->
-          match Symbol.to_string c with
-          | "T" -> List.map unify args
-          | "F" -> args)
+        ~f:(function
+          | c, [] ->
+            (match Symbol.to_string c with
+             | "T" -> List.map unify args
+             | "F" -> args
+             | _ -> Util.panic "Expected either `T` or `F`, got %s" (Symbol.verbatim c))
+          | c, c_params ->
+            Util.panic
+              "Unexpected pattern %s"
+              Term.(verbatim (Call (c, var_list c_params))))
         g
   ;;
 
