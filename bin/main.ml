@@ -211,12 +211,16 @@ let () =
     | Util.Panic { msg; reduction_path } -> its_over ~reduction_path msg
     | Mazeppa.Panic msg | Sys_error msg -> its_over msg
     | e ->
+      let description, backtrace = Printexc.(to_string_default e, get_backtrace ()) in
       Spectrum.Simple.eprintf
         "@{<bold,red>internal compiler error:@} %s\n\n\
          @{<bold>Please, file an issue in <%s/issues>. Include the compiler's version \
-         and a Minimal Reproducible Example (MRE).@}\n\n"
-        (Printexc.to_string e)
-        github_repo;
-      Printexc.print_backtrace stderr;
+         and a Minimal Reproducible Example (MRE).@}\n\n\
+         %s\n"
+        description
+        github_repo
+        (* Since it is unspecified whether the backtrace contains leading/trailing
+           whitespace, it is safer to trim it. *)
+        (String.trim backtrace);
       exit 1
 ;;
