@@ -1,3 +1,4 @@
+// See <https://github.com/mazeppa-dev/mazeppa/issues/9>.
 main() := f(A());
 
 f(x) := match x {
