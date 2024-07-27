@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
  - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages ([issue #6](https://github.com/mazeppa-dev/mazeppa/issues/6)).
+ - Incorrect exception backtraces ([issue #8](https://github.com/mazeppa-dev/mazeppa/issues/8)).
 
 ## 0.1.2 - 2024-07-20
 
