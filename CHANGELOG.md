@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - Propagate positive information for inequality (`!=`) tests ([issue #7](https://github.com/mazeppa-dev/mazeppa/issues/7)).
+ - Simplify _string(string(t))_ into _string(t)_.
 
 ### Fixed
 

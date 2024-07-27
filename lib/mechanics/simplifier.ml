@@ -117,6 +117,9 @@ let handle_op1 ~(op : Symbol.t) : t -> t = function
   | Const (Const.String s) -> do_string_op1 ~op s
   (* ~(~(t)) -> t *)
   | Call (op', [ t ]) when op = symbol "~" && op' = symbol "~" -> t
+  (* string(string(t)) -> string(t) *)
+  | Call (op', [ t ]) when op = symbol "string" && op' = symbol "string" ->
+    Call (op', [ t ])
   (* The catch-call rule. *)
   | t -> Call (op, [ t ])
 ;;
