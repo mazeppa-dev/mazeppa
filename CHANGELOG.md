@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Do not whistle on terms having different redex operators ([issue #9](https://github.com/mazeppa-dev/mazeppa/issues/9)).
+ - Avoid some over-generalizations by whistling on terms with the same redex operator ([issue #9](https://github.com/mazeppa-dev/mazeppa/issues/9)).
 
 ## 0.1.2 - 2024-07-20
 
