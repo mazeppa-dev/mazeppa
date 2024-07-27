@@ -94,13 +94,13 @@ let run_exn (input : Raw_program.t) =
         (let$ t_val = go ~env t in
          go ~env:(Symbol_map.add x t_val env) u) [@coverage off]
     and go_args ~env ~f ~acc = function
-      | [] -> go_call ~env ~f (List.rev acc)
+      | [] -> go_call ~f (List.rev acc)
       | t :: rest ->
         let$ t_val = go ~env t in
         go_args ~env ~f ~acc:(t_val :: acc) rest
-    and go_call ~env ~f args =
+    and go_call ~f args =
         let params, body = find_rule ~program f in
-        let env = Symbol_map.extend2 ~keys:params ~values:args env in
+        let env = Symbol_map.setup2 (params, args) in
         go ~env body
     in
     let main_params, t = find_rule ~program (Symbol.of_string "main") in

@@ -719,7 +719,7 @@ Suppose that _t_ is a well-formed term closed under environment _env_ (defined b
    - `t1Val ^= eval(env, t1)`
    - _..._
    - `tNVal ^= eval(env, tN)`
-   - `eval(env[x1 -> t1Val, ..., xN -> tNVal], body)`, where `f(x1, ..., xN) := body;` is in _program_.
+   - `eval({ x1 -> t1Val, ..., xN -> tNVal }, body)`, where `f(x1, ..., xN) := body;` is in _program_.
  - `eval(env, C(t1, ..., tN)) = C(t1[env], ..., tN[env])`, where `C` starts with an uppercase letter.
  - `eval(env, op(t)) =`
    - `tVal ^= eval(env, t)`
