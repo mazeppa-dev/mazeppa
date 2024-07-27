@@ -44,8 +44,8 @@ let empty = { locals = []; globals = [] }
 
 let redex_op =
     let rec go = function
-      | Term.(Var _ | Const _) -> Util.panic "Impossible"
-      | Term.Call (op, _args) when Symbol.is_lazy op -> Util.panic "Impossible"
+      | Term.(Var _ | Const _) -> failwith "Impossible"
+      | Term.Call (op, _args) when Symbol.is_lazy op -> failwith "Impossible"
       | Term.Call (op, args) -> go_args ~op args
     and go_args ~op = function
       | [] -> `Op op

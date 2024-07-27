@@ -211,7 +211,7 @@ end = struct
       let bindings_sup = List.map2 (fun x t -> x, run ~history t) fresh_vars args in
       let g_sup = run ~history Term.(Call (op, var_list fresh_vars)) in
       Bind (bindings_sup, Split g_sup)
-    | _ -> Util.panic "Impossible"
+    | _ -> failwith "Impossible"
 
   and extract ~history ((x, call), shell) =
       let call_sup = run ~history call in
