@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages ([issue #6](https://github.com/mazeppa-dev/mazeppa/issues/6)).
  - Incorrect exception backtraces ([issue #8](https://github.com/mazeppa-dev/mazeppa/issues/8)).
+ - Require constructor symbols to be called and matched with the same number of arguments ([issue #10](https://github.com/mazeppa-dev/mazeppa/issues/10)).
 
 ### Changed
 

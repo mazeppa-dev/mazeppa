@@ -694,7 +694,7 @@ Furthermore, `<op2>` has the following subclasses:
 
 ### Restrictions
 
- - **Per-program:** 1) No symbol can be called with a different number of arguments. 2) If some function is defined with _N_ parameters, it must be called with exactly _N_ arguments. 3) No two functions can define the same symbol.
+ - **Per-program:** 1) No symbol can be called with a different number of arguments. 2) No constructor symbol _X_ can be called with _N_ arguments but matched with _M_ arguments, where _N != M_. 3) If some function is defined with _N_ parameters, it must be called with exactly _N_ arguments. 4) No two functions can define the same symbol.
  - **Per-function:** 1) No function can redefine a primitive operator `<op1>` or `<op2>`. 2) A function must define a symbol starting with a lowercase letter. 3) No duplicate symbols can occur among function parameters. 4) Every free variable inside a function body must be bound by a corresponding parameter in the function definition.
  - **Per-term:** 1) The sequence of cases in `match { ... }` must not be empty. 2) No duplicate constructors can occur among case patterns in `match { ... }`. 3) No duplicate symbols can occur among pattern parameters `C(x1, ..., xN)`. 4) No let-binding can bind `<op1>` or `<op2>`. 5) `Panic` must be called with only one argument; `T` and `F` with zero arguments.
 

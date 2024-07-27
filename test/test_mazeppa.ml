@@ -291,6 +291,13 @@ let raw_program_errors () =
         , symbol "g"
         , [ symbol "x"; symbol "y" ]
         , R.(call ("Foo", [ var "x"; var "y" ])) )
+      ];
+    check
+      ~expected:"`A` has an ambiguous arity: first `A()`, then `A(x)`"
+      [ ( []
+        , symbol "f"
+        , []
+        , R.(Match (call ("A", []), [ (symbol "A", [ symbol "x" ]), var "x" ])) )
       ]
 ;;
 

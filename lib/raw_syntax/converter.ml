@@ -159,6 +159,9 @@ let to_program (input : t) : Program.t =
             cases_raw
             |> Symbol_set.decouple_map ~f:(fun (((c, c_params) as pattern), t_raw) ->
               check_duplicate_symbols ~op:c c_params;
+              Arity_table.record
+                ~scrutinee:Raw_term.(Call (c, var_list c_params))
+                (c, List.length c_params);
               let t, t_fv = to_term t_raw in
               (pattern, t), Symbol_set.(diff t_fv (of_list c_params)))
         in
