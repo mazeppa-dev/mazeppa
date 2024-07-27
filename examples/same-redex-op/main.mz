@@ -1,0 +1,8 @@
+main() := f(A());
+
+f(x) := match x {
+    A() -> f(g(B(x))),
+    C() -> Good()
+};
+
+g(_x) := C();

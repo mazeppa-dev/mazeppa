@@ -18,6 +18,9 @@
    contents of local nodes before the last global node: when a global node is added, all
    previous local nodes are "forgotten".
 
+   The whistle is only tested on terms with different redex operators. For the discussion,
+   see <https://github.com/mazeppa-dev/mazeppa/issues/9>.
+
    [1] Morten Heine Sørensen. 1998. Convergence of Program Transformers in the Metric
    Space of Trees. In Proceedings of the Mathematics of Program Construction (MPC '98).
    Springer-Verlag, Berlin, Heidelberg, 315–337.
@@ -27,20 +30,41 @@
 
 type node = Symbol.t * Term.t
 
+type internal_node =
+  { redex_op : [ `Op of Symbol.t | `Undefined ]
+  ; contents : node
+  }
+
 type t =
-  { locals : node list
-  ; globals : node list
+  { locals : internal_node list
+  ; globals : internal_node list
   }
 
 let empty = { locals = []; globals = [] }
+
+let redex_op =
+    let rec go = function
+      | Term.(Var _ | Const _) -> Util.panic "Impossible"
+      | Term.Call (op, _args) when Symbol.is_lazy op -> Util.panic "Impossible"
+      | Term.Call (op, args) -> go_args ~op args
+    and go_args ~op = function
+      | [] -> `Op op
+      | t :: rest when Term.is_value t -> go_args ~op rest
+      | Term.Call (c, [ _ ]) :: _rest when c = Symbol.of_string "Panic" -> `Undefined
+      | t :: _rest -> go t
+    in
+    go
+;;
 
 exception Whistle of node
 
 (* Prepends [suspect] to [history] or raises [Whistle] on homeomorphic embedding. *)
 let scan ~suspect:(n_id, n) history =
+    let n_redex_op = redex_op n in
     let rec go = function
-      | [] -> (n_id, n) :: history
-      | (m_id, m) :: _rest when Homeomorphic_emb.decide (m, n) ->
+      | [] -> { redex_op = n_redex_op; contents = n_id, n } :: history
+      | { redex_op = m_redex_op; contents = m_id, m } :: _rest
+        when m_redex_op = n_redex_op && Homeomorphic_emb.decide (m, n) ->
         raise_notrace (Whistle (m_id, m))
       | _ :: rest -> go rest
     in

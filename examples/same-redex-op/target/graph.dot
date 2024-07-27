@@ -1,0 +1,17 @@
+digraph {
+    node [fontname="bold helvetica"];
+    edge [fontname="bold helvetica"];
+    n0 [label="n0: <unfold>"];
+    n1 [label="n1: <unfold>"];
+    n0 -> n1;
+    n2 [label="n2: <unfold>"];
+    n1 -> n2;
+    n3 [label="n3: <unfold>"];
+    n2 -> n3;
+    n4 [label="n4: <unfold>"];
+    n3 -> n4;
+    n5 [label="n5: <unfold>"];
+    n4 -> n5;
+    n6 [label="n6: Good"];
+    n5 -> n6;
+}
