@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - Propagate positive information for inequality (`!=`) tests ([issue #7](https://github.com/mazeppa-dev/mazeppa/issues/7)).
- - Simplify _string(string(t))_ into _string(t)_.
+ - Simplification rules for idempotent operators: _op(op(t)) -> op(t)_, where _op_ is one of `u8`, `u16`, `u32`, `u64`, `u128`, `i8`, `i16`, `i32`, `i64`, `i128`, `string`.
+ - Expose the `Symbol.list` function in the public API.
 
 ### Fixed
 

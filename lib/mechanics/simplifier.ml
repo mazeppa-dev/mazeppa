@@ -107,21 +107,28 @@ let do_string_op2 ~op (s1, s2) =
     | _ -> Util.panic "Unexpected string binary operator: %s" (Symbol.verbatim op)
 ;;
 
-let handle_op1 ~(op : Symbol.t) : t -> t = function
-  | Const (Const.Int (U8 value)) when op = symbol "#" ->
-    let c = char_of_int (to_int (U8 value)) in
-    string (String.make 1 c)
-  | Const (Const.Int n) ->
-    let (module Singleton) = Checked_oint.singleton n in
-    do_int_op1 ~op (module Singleton)
-  | Const (Const.String s) -> do_string_op1 ~op s
-  (* ~(~(t)) -> t *)
-  | Call (op', [ t ]) when op = symbol "~" && op' = symbol "~" -> t
-  (* string(string(t)) -> string(t) *)
-  | Call (op', [ t ]) when op = symbol "string" && op' = symbol "string" ->
-    Call (op', [ t ])
-  (* The catch-call rule. *)
-  | t -> Call (op, [ t ])
+let handle_op1 ~(op : Symbol.t) : t -> t =
+    let involutory_ops, idempotent_ops =
+        ( [ "~" ] |> Symbol.list
+        , [ "u8"; "u16"; "u32"; "u64"; "u128" ]
+          @ [ "i8"; "i16"; "i32"; "i64"; "i128" ]
+          @ [ "string" ]
+          |> Symbol.list )
+    in
+    function
+    | Const (Const.Int (U8 value)) when op = symbol "#" ->
+      let c = char_of_int (to_int (U8 value)) in
+      string (String.make 1 c)
+    | Const (Const.Int n) ->
+      let (module Singleton) = Checked_oint.singleton n in
+      do_int_op1 ~op (module Singleton)
+    | Const (Const.String s) -> do_string_op1 ~op s
+    (* op(op(t)) -> t *)
+    | Call (op', [ t ]) when List.mem op involutory_ops && op = op' -> t
+    (* op(op(t)) -> op(t) *)
+    | Call (op', [ t ]) when List.mem op idempotent_ops && op = op' -> Call (op', [ t ])
+    (* The catch-call rule. *)
+    | t -> Call (op, [ t ])
 ;;
 
 let handle_op2 ~(op : Symbol.t) : t * t -> t = function

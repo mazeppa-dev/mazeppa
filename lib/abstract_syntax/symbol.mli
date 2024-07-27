@@ -2,6 +2,8 @@ type t [@@deriving eq, show, ord, yojson_of]
 
 val of_string : string -> t
 
+val list : string list -> t list
+
 val to_string : t -> string
 
 val verbatim : t -> string

@@ -6,6 +6,8 @@ type t = string [@@deriving eq, show, ord, yojson_of]
 
 let of_string x = x
 
+let list xs = xs
+
 let to_string x = x
 
 let verbatim x = "`" ^ x ^ "`"
