@@ -8,15 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - Propagate positive information for inequality (`!=`) tests ([issue #7](https://github.com/mazeppa-dev/mazeppa/issues/7)).
+ - Propagate positive information for inequality (`!=`) tests (issue https://github.com/mazeppa-dev/mazeppa/issues/7).
  - Simplification rules for idempotent operators: _op(op(t)) -> op(t)_, where _op_ is one of `u8`, `u16`, `u32`, `u64`, `u128`, `i8`, `i16`, `i32`, `i64`, `i128`, `string`.
  - Expose the `Symbol.list` function in the public API.
 
 ### Fixed
 
- - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages ([issue #6](https://github.com/mazeppa-dev/mazeppa/issues/6)).
- - Incorrect exception backtraces ([issue #8](https://github.com/mazeppa-dev/mazeppa/issues/8)).
- - Require constructor symbols to be called and matched with the same number of arguments ([issue #10](https://github.com/mazeppa-dev/mazeppa/issues/10)).
+ - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages (issue https://github.com/mazeppa-dev/mazeppa/issues/6).
+ - Incorrect exception backtraces (issue https://github.com/mazeppa-dev/mazeppa/issues/8).
+ - Require constructor symbols to be called and matched with the same number of arguments (issue https://github.com/mazeppa-dev/mazeppa/issues/10).
 
 ### Changed
 
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - Function productivity analysis for preventing unneeded specializations ([issue #2](https://github.com/mazeppa-dev/mazeppa/issues/2)).
+ - Function productivity analysis for preventing unneeded specializations (issue https://github.com/mazeppa-dev/mazeppa/issues/2).
  - `pattern_to_string` and `pattern_verbatim` (`Raw_term`).
 
 ### Changed
@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - `mazeppa eval`: A built-in evaluator for the Mazeppa language ([issue #5](https://github.com/mazeppa-dev/mazeppa/issues/5)).
+ - `mazeppa eval`: A built-in evaluator for the Mazeppa language (issue https://github.com/mazeppa-dev/mazeppa/issues/5).
  - Expose the `Const` module in the public API.
 
 ### Changed
