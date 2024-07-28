@@ -427,6 +427,7 @@ Mazeppa employs an interesting design choice to have eager functions and lazy co
 
 [adopted from Haskell]: https://wiki.haskell.org/Haskell/Lazy_evaluation
 
+[[`examples/lazy-fibonacci/main.mz`](examples/lazy-fibonacci/main.mz)]
 ```
 main() := getIt(magic(1u32, 1u32), 3u64);
 

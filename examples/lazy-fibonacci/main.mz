@@ -1,0 +1,14 @@
+main() := getIt(magic(1u32, 1u32), 3u64);
+
+magic(m, n) := match =(m, 0u32) {
+    T() -> Nil(),
+    F() -> Cons(m, magic(n, +(m, n)))
+};
+
+getIt(xs, n) := match xs {
+    Nil() -> Panic("undefined"),
+    Cons(x, xs) -> match =(n, 1u64) {
+        T() -> x,
+        F() -> getIt(xs, -(n, 1u64))
+    }
+};
