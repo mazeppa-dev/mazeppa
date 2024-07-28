@@ -1,3 +1,4 @@
+// See <https://github.com/mazeppa-dev/mazeppa/issues/12>.
 main() := Combine(
     mc91(0i32), mc91(10i32), mc91(100i32),
     mc91(101i32), mc91(102i32), mc91(103i32)
