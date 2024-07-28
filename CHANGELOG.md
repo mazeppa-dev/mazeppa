@@ -12,15 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Simplification rules for idempotent operators: _op(op(t)) -> op(t)_, where _op_ is one of `u8`, `u16`, `u32`, `u64`, `u128`, `i8`, `i16`, `i32`, `i64`, `i128`, `string`.
  - Expose the `Symbol.list` function in the public API.
 
+### Changed
+
+ - Avoid some over-generalizations by checking redex signatures (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
+
 ### Fixed
 
  - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages (issue https://github.com/mazeppa-dev/mazeppa/issues/6).
  - Incorrect exception backtraces (issue https://github.com/mazeppa-dev/mazeppa/issues/8).
- - Require constructor symbols to be called and matched with the same number of arguments (issue https://github.com/mazeppa-dev/mazeppa/issues/10).
-
-### Changed
-
- - Avoid some over-generalizations by checking redex signatures (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
+ - Require constructors to be called and matched consistently (issue https://github.com/mazeppa-dev/mazeppa/issues/10).
 
 ## 0.1.2 - 2024-07-20
 
