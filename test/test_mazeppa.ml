@@ -78,7 +78,7 @@ let match_against () =
     check ~expected:None T.(string "hello world", string "hello world 123")
 ;;
 
-let term_instance_matching_cases = [ "Tests", match_against ]
+let term_instances_cases = [ "Tests", match_against ]
 
 let rename_against () =
     let check ~expected (t1, t2) =
@@ -100,7 +100,7 @@ let rename_against () =
     check ~expected:None T.(string "hello world", string "hello world 123")
 ;;
 
-let term_renaming_matching_cases = [ "Tests", rename_against ]
+let term_renamings_cases = [ "Tests", rename_against ]
 
 let classify () =
     let module Category = struct
@@ -504,8 +504,8 @@ let () =
     Alcotest.run
       "Mazeppa"
       ([ "Print constants", print_constants_cases
-       ; "Term instance matching", term_instance_matching_cases
-       ; "Term renaming matching", term_renaming_matching_cases
+       ; "Term instances", term_instances_cases
+       ; "Term renamings", term_renamings_cases
        ; "Term classification", term_classification_cases
        ; "Term redex signatures", term_redex_signature_cases
        ; "MSG", msg_cases
