@@ -18,8 +18,10 @@
    contents of local nodes before the last global node: when a global node is added, all
    previous local nodes are "forgotten".
 
-   The whistle is only tested on terms with equal redex signatures. For the discussion,
-   see issue #9 and issue #11.
+   The whistle is only tested on terms with equal redex signatures, which are computed
+   only once for each history item. This allows us to 1) eschew some over-generalizations
+   and 2) reduce the amount of expensive homeomorphic embedding checks. For the
+   discussion, see issue #9 and issue #11.
 
    [1] Morten Heine Sørensen. 1998. Convergence of Program Transformers in the Metric
    Space of Trees. In Proceedings of the Mathematics of Program Construction (MPC '98).
