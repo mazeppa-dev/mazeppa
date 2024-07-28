@@ -14,14 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Avoid some over-generalizations by checking redex signatures for equality before whistling (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
- - Avoid some over-generalizations by only whistling on equal integers (issue https://github.com/mazeppa-dev/mazeppa/issues/12).
+ - Only whistle on terms with equal redex signatures (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
+ - Only whistle on equal integers (issue https://github.com/mazeppa-dev/mazeppa/issues/12).
 
 ### Fixed
 
  - Internal compiler errors when analyzing `T`/`F`-patterns during driving. Instead, show proper error messages (issue https://github.com/mazeppa-dev/mazeppa/issues/6).
  - Incorrect exception backtraces (issue https://github.com/mazeppa-dev/mazeppa/issues/8).
- - Require constructors to be called and matched consistently (issue https://github.com/mazeppa-dev/mazeppa/issues/10).
+ - Require constructors to be used consistently (issue https://github.com/mazeppa-dev/mazeppa/issues/10).
 
 ## 0.1.2 - 2024-07-20
 
