@@ -233,12 +233,15 @@ let he () =
     check ~expected:true T.(var "x", call ("f", [ var "y"; call ("g", []) ]));
     check ~expected:false T.(var "x", call ("f", [ call ("g", []) ]));
     check ~expected:false T.(call ("f", []), var "x");
-    (* Integers are almost like Peano numbers. *)
-    for i = 0 to 100 do
-      check ~expected:(i <= 10) T.(int (u8 i), int (u8 10))
+    (* Integers are treated as unique constructors. *)
+    for i = -100 to 100 do
+      for j = -100 to 100 do
+        check ~expected:(i = j) T.(int (i32 i), int (i32 j))
+      done
     done;
+    (* Integers of distinct types cannot embed into each other -- even if they have the
+       same numeric value. *)
     check ~expected:false T.(int (u8 10), int (u16 10));
-    check ~expected:false T.(int (i32 10), int (i32 (-10)));
     (* Strings are cons lists of characters. *)
     check ~expected:true T.(string "octopus", string "octopus");
     check ~expected:true T.(string "otus", string "octopus");

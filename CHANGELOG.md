@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Avoid some over-generalizations by checking redex signatures (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
+ - Avoid some over-generalizations by checking redex signatures for equality before whistling (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
+ - Avoid some over-generalizations by only whistling on equal integers (issue https://github.com/mazeppa-dev/mazeppa/issues/12).
 
 ### Fixed
 

@@ -2,19 +2,9 @@
 
 open Term
 
-(* Integers' absolute values are regarded as Peano numbers: [S(S(Z()))] is embedded into
-   itself and [S(S(S(Z())))] but not into [S(Z())]. Integers of different types and/or
-   signs are not compared: they are conceptually put into different top-level
-   constructors. For example, while [2i32] is considered to be [I32(Plus(S(S(Z()))))],
-   [-2i64] is considered [I64(Minus(S(S(Z()))))]. *)
-let decide_ints (x, y) =
-    match Checked_oint.pair_exn (x, y) with
-    | (module Pair) ->
-      let x, y = Pair.value in
-      let same_sign = Pair.(compare x zero >= 0 = (compare y zero >= 0)) in
-      same_sign && Pair.compare x y <= 0
-    | exception Invalid_argument _ -> false
-;;
+(* Since the set of all Mazeppa integers is finite, we can treat each integer as a unique
+   constructor. See issue #12 for more discussion. *)
+let decide_ints (x, y) = Checked_oint.equal_generic x y
 
 (* Strings are compared as sequences (lazy lists) of single-arity constructors: e.g.,
    "abc" is broken up into [A(B(C(Nil())))]. *)
