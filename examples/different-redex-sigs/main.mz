@@ -1,0 +1,9 @@
+// See <https://github.com/mazeppa-dev/mazeppa/issues/11>.
+main() := f(A(Good()));
+
+f(x) := match x {
+    A(x) -> f(f(f(B(A(x))))),
+    B(x) -> C(x),
+    C(x) -> D(x),
+    D(x) -> x
+};

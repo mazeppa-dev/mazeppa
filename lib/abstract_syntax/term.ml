@@ -12,6 +12,14 @@ type category =
   | Trivial
 [@@deriving eq, show]
 
+type value_category =
+  | VConst
+  | VCCall of Symbol.t
+  | VNeutral
+[@@deriving eq, show]
+
+type redex_sig = (Symbol.t * value_category list) option [@@deriving eq, show]
+
 let var x = Var (Symbol.of_string x)
 
 let int x = Const (Const.Int x)
@@ -129,6 +137,23 @@ let classify : t -> category =
         (match go t with
          | Global -> Global
          | Local | Trivial -> go_args rest)
+    in
+    go
+;;
+
+let redex_sig : t -> redex_sig =
+    let rec go = function
+      | Var _ | Const _ -> None
+      | Call (op, _args) when Symbol.is_lazy op -> None
+      | Call (op, args) -> go_args ~op ~acc:[] args
+    and go_args ~op ~acc = function
+      | [] -> Some (op, List.rev acc)
+      | Call (c, [ _ ]) :: _rest when c = Symbol.of_string "Panic" -> None
+      | Const _ :: rest -> go_args ~op ~acc:(VConst :: acc) rest
+      | Call (c, _args) :: rest when Symbol.kind c = `CCall ->
+        go_args ~op ~acc:(VCCall c :: acc) rest
+      | t :: rest when is_neutral t -> go_args ~op ~acc:(VNeutral :: acc) rest
+      | t :: _rest -> go t
     in
     go
 ;;

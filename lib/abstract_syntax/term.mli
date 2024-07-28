@@ -10,6 +10,14 @@ type category =
   | Trivial
 [@@deriving eq, show]
 
+type value_category =
+  | VConst
+  | VCCall of Symbol.t
+  | VNeutral
+[@@deriving eq, show]
+
+type redex_sig = (Symbol.t * value_category list) option [@@deriving eq, show]
+
 val var : string -> t
 
 val int : Checked_oint.generic -> t
@@ -46,6 +54,8 @@ val is_value : t -> bool
 val is_neutral : t -> bool
 
 val classify : t -> category
+
+val redex_sig : t -> redex_sig
 
 val to_string : t -> string
 

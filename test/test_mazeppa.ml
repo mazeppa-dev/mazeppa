@@ -131,6 +131,38 @@ let classify () =
 
 let term_classification_cases = [ "Tests", classify ]
 
+let redex_sig () =
+    let module Redex_sig = struct
+      type t = T.redex_sig
+
+      let pp = T.pp_redex_sig
+
+      let equal = T.equal_redex_sig
+    end
+    in
+    let check ~expected t =
+        Alcotest.(check' (module Redex_sig))
+          ~msg:"Redex signature"
+          ~actual:(T.redex_sig t)
+          ~expected
+    in
+    check ~expected:None (T.var "x");
+    check ~expected:None (T.string "hello world");
+    check ~expected:None T.(call ("Foo", [ call ("f", []); call ("g", []) ]));
+    check ~expected:None T.(call ("f", [ call ("Panic", [ var "x" ]) ]));
+    let redex, redex_sig =
+        ( T.(call ("f", [ var "x"; string "hello world"; call ("Foo", []) ]))
+        , Some (symbol "f", T.[ VNeutral; VConst; VCCall (symbol "Foo") ]) )
+    in
+    let redex = ref redex in
+    for _i = 0 to 9 do
+      check ~expected:redex_sig !redex;
+      redex := T.call ("f", [ !redex ])
+    done
+;;
+
+let term_redex_signature_cases = [ "Tests", redex_sig ]
+
 let msg () =
     let check ~expected (t1, t2) =
         let gensym = Gensym.create ~prefix:".v" () in
@@ -475,6 +507,7 @@ let () =
        ; "Term instance matching", term_instance_matching_cases
        ; "Term renaming matching", term_renaming_matching_cases
        ; "Term classification", term_classification_cases
+       ; "Term redex signatures", term_redex_signature_cases
        ; "MSG", msg_cases
        ; "Homeomorphic embedding", he_cases
        ; "Raw program errors", raw_program_errors_cases

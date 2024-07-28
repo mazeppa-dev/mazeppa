@@ -18,8 +18,8 @@
    contents of local nodes before the last global node: when a global node is added, all
    previous local nodes are "forgotten".
 
-   The whistle is only tested on terms with different redex operators. For the discussion,
-   see <https://github.com/mazeppa-dev/mazeppa/issues/9>.
+   The whistle is only tested on terms with equal redex signatures. For the discussion,
+   see issue #9 and issue #11.
 
    [1] Morten Heine Sørensen. 1998. Convergence of Program Transformers in the Metric
    Space of Trees. In Proceedings of the Mathematics of Program Construction (MPC '98).
@@ -30,10 +30,7 @@
 
 type node = Symbol.t * Term.t
 
-type internal_node =
-  { redex_op : [ `Op of Symbol.t | `Undefined ]
-  ; contents : node
-  }
+type internal_node = Term.redex_sig * node
 
 type t =
   { locals : internal_node list
@@ -42,30 +39,16 @@ type t =
 
 let empty = { locals = []; globals = [] }
 
-let redex_op =
-    let rec go = function
-      | Term.(Var _ | Const _) -> failwith "Impossible"
-      | Term.Call (op, _args) when Symbol.is_lazy op -> failwith "Impossible"
-      | Term.Call (op, args) -> go_args ~op args
-    and go_args ~op = function
-      | [] -> `Op op
-      | t :: rest when Term.is_value t -> go_args ~op rest
-      | Term.Call (c, [ _ ]) :: _rest when c = Symbol.of_string "Panic" -> `Undefined
-      | t :: _rest -> go t
-    in
-    go
-;;
-
 exception Whistle of node
 
 (* Prepends [suspect] to [history] or raises [Whistle] on homeomorphic embedding. *)
 let scan ~suspect:(n_id, n) history =
-    let n_redex_op = redex_op n in
+    let n_redex_sig = Term.redex_sig n in
     let rec go = function
-      | [] -> { redex_op = n_redex_op; contents = n_id, n } :: history
-      | { redex_op = m_redex_op; contents = m_id, m } :: _rest
-        when m_redex_op = n_redex_op && Homeomorphic_emb.decide (m, n) ->
-        raise_notrace (Whistle (m_id, m))
+      | [] -> (n_redex_sig, (n_id, n)) :: history
+      | (m_redex_sig, (m_id, m)) :: _rest
+        when Term.equal_redex_sig m_redex_sig n_redex_sig && Homeomorphic_emb.decide (m, n)
+        -> raise_notrace (Whistle (m_id, m))
       | _ :: rest -> go rest
     in
     go history

@@ -1,23 +1,40 @@
-main(a) := f0("out", match >(f1(f0("i", Cell("a", a, Cell("x", Int(7u32), Cell(
-    "out", Int(1i32), Cell("i", Int(7u32), Nil())))))), 0u32) {
-        F() -> Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32), Cell("i"
-        , Int(7u32), Nil())))),
-        T() -> f11(While(GreaterThan(Var("i"), Int(0u32)), Cons(Assign("out",
+main(a) :=
+    let x0 := f1(a);
+    let x1 := Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(x0), Cell("i",
+    Int(6u32), Nil()))));
+    f4(match >(f1(f4(x1, "i")), 0u32) {
+        F() -> x1,
+        T() -> f15(While(GreaterThan(Var("i"), Int(0u32)), Cons(Assign("out",
         Mul(Var("out"), Var("a"))), Cons(Assign("i", Sub(Var("i"), Int(1u32))),
-        Nil()))), f6(f2("out", f1(f0("out", Cell("a", a, Cell("x", Int(7u32),
-        Cell("out", Int(1i32), Cell("i", Int(7u32), Nil())))))), f1(f0("a", Cell
-        ("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32), Cell("i", Int(7u32)
-        , Nil())))))), Cell("a", a, Cell("x", Int(7u32), Cell("out", Int(1i32),
-        Cell("i", Int(7u32), Nil()))))), Cons(Assign("i", Sub(Var("i"), Int(1u32
-        ))), Nil())))
-    });
+        Nil()))), f9(Cons(Assign("i", Sub(Var("i"), Int(1u32))), Nil()), f14(x1,
+        "out", f1(f4(x1, "out")), f1(f4(x1, "a")))))
+    }, "out");
 
-f0(x0, x1) := match x1 {
-    Cell(x2, x3, x4) -> match =(x0, x2) {
-        F() -> f0(x0, x4),
-        T() -> x3
-    },
-    Nil() -> Panic(++("the variable is unbound: ", x0))
+f0(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9) := match x9 {
+    Boolean(x10) -> Boolean(x10),
+    GreaterThan(x10, x11) ->
+    let x12 := f5(x10, x0, x1, x2, x3, x4, x5, x6, x7, x8);
+    let x13 := f1(f2(Cell(x0, x1, Cell(x2, Int(x3), Cell(x4, Int(x5), Cell(x6,
+    Int(x8), x7)))), x11));
+    Boolean(>(x12, x13)),
+    Int(x10) -> Int(x10),
+    Mul(x10, x11) -> f6(f5(x10, x0, x1, x2, x3, x4, x5, x6, x7, x8), Cell(x0, x1
+    , Cell(x2, Int(x3), Cell(x4, Int(x5), Cell(x6, Int(x8), x7)))), x11),
+    Sub(x10, x11) -> f7(f5(x10, x0, x1, x2, x3, x4, x5, x6, x7, x8), Cell(x0, x1
+    , Cell(x2, Int(x3), Cell(x4, Int(x5), Cell(x6, Int(x8), x7)))), x11),
+    Var(x10) -> match =(x10, x0) {
+        F() -> match =(x10, x2) {
+            F() -> match =(x10, x4) {
+                F() -> match =(x10, x6) {
+                    F() -> f4(x7, x10),
+                    T() -> Int(x8)
+                },
+                T() -> Int(x5)
+            },
+            T() -> Int(x3)
+        },
+        T() -> x1
+    }
 };
 
 f1(x0) := match x0 {
@@ -25,62 +42,77 @@ f1(x0) := match x0 {
     Int(x1) -> x1
 };
 
-f10(x0, x1, x2, x3) := match x0 {
+f10(x0, x1) := f9(x0, x1);
+
+f11(x0) := match x0 {
+    Boolean(x1) -> x1,
+    Int(x1) -> Panic("want `Boolean(b)`, got `Int(n)`")
+};
+
+f12(x0, x1, x2, x3) := match x0 {
+    F() -> f10(x1, x2),
+    T() -> f10(x3, x2)
+};
+
+f13(x0, x1, x2, x3) := match x0 {
     F() -> x1,
-    T() -> f11(x3, f7(x2, x1))
+    T() -> f15(x3, f10(x2, x1))
 };
 
-f11(x0, x1) := match x0 {
-    Assign(x2, x3) -> f5(x1, x2, f3(x1, x3)),
-    If(x2, x3, x4) -> f9(f8(f3(x1, x2)), x4, x1, x3),
-    While(x2, x3) -> f10(f8(f3(x1, x2)), x1, x3, While(x2, x3))
-};
-
-f2(x0, x1, x2, x3) := match x3 {
-    Cell(x4, x5, x6) -> match =(x0, x4) {
-        F() -> let x7 := f2(x0, x1, x2, x6); Cell(x4, x5, x7),
-        T() -> Cell(x4, Int(*(x1, x2)), x6)
+f14(x0, x1, x2, x3) := match x0 {
+    Cell(x4, x5, x6) -> match =(x1, x4) {
+        F() -> let x7 := f14(x6, x1, x2, x3); Cell(x4, x5, x7),
+        T() -> Cell(x4, Int(*(x2, x3)), x6)
     },
-    Nil() -> Cell(x0, Int(*(x1, x2)), Nil())
+    Nil() -> Cell(x1, Int(*(x2, x3)), Nil())
 };
 
-f3(x0, x1) := match x1 {
+f15(x0, x1) := match x0 {
+    Assign(x2, x3) -> f8(x1, x2, f2(x1, x3)),
+    If(x2, x3, x4) -> f12(f11(f2(x1, x2)), x4, x1, x3),
+    While(x2, x3) -> f13(f11(f2(x1, x2)), x1, x3, While(x2, x3))
+};
+
+f2(x0, x1) := match x1 {
     Boolean(x2) -> Boolean(x2),
     GreaterThan(x2, x3) ->
-    let x4 := f4(x0, x2); let x5 := f4(x0, x3); Boolean(>(x4, x5)),
+    let x4 := f3(x0, x2); let x5 := f3(x0, x3); Boolean(>(x4, x5)),
     Int(x2) -> Int(x2),
-    Mul(x2, x3) -> let x4 := f4(x0, x2); let x5 := f4(x0, x3); Int(*(x4, x5)),
-    Sub(x2, x3) -> let x4 := f4(x0, x2); let x5 := f4(x0, x3); Int(-(x4, x5)),
-    Var(x2) -> f0(x2, x0)
+    Mul(x2, x3) -> f6(f3(x0, x2), x0, x3),
+    Sub(x2, x3) -> f7(f3(x0, x2), x0, x3),
+    Var(x2) -> f4(x0, x2)
 };
 
-f4(x0, x1) := f1(f3(x0, x1));
+f3(x0, x1) := f1(f2(x0, x1));
 
-f5(x0, x1, x2) := match x0 {
+f4(x0, x1) := match x0 {
+    Cell(x2, x3, x4) -> match =(x1, x2) {
+        F() -> f4(x4, x1),
+        T() -> x3
+    },
+    Nil() -> Panic(++("the variable is unbound: ", x1))
+};
+
+f5(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9) := f1(f0(x1, x2, x3, x4, x5, x6, x7,
+    x8, x9, x0));
+
+f6(x0, x1, x2) := let x3 := f3(x1, x2); Int(*(x0, x3));
+
+f7(x0, x1, x2) := let x3 := f3(x1, x2); Int(-(x0, x3));
+
+f8(x0, x1, x2) := match x0 {
     Cell(x3, x4, x5) -> match =(x1, x3) {
-        F() -> let x6 := f5(x5, x1, x2); Cell(x3, x4, x6),
+        F() -> let x6 := f8(x5, x1, x2); Cell(x3, x4, x6),
         T() -> Cell(x3, x2, x5)
     },
     Nil() -> Cell(x1, x2, Nil())
 };
 
-f6(x0, x1) := match x1 {
+f9(x0, x1) := match x0 {
     Cons(x2, x3) -> match x2 {
-        Assign(x4, x5) -> f7(x3, f5(x0, x4, f3(x0, x5))),
-        If(x4, x5, x6) -> f7(x3, f9(f8(f3(x0, x4)), x6, x0, x5)),
-        While(x4, x5) -> f7(x3, f10(f8(f3(x0, x4)), x0, x5, While(x4, x5)))
+        Assign(x4, x5) -> f10(x3, f8(x1, x4, f2(x1, x5))),
+        If(x4, x5, x6) -> f10(x3, f12(f11(f2(x1, x4)), x6, x1, x5)),
+        While(x4, x5) -> f10(x3, f13(f11(f2(x1, x4)), x1, x5, While(x4, x5)))
     },
-    Nil() -> x0
-};
-
-f7(x0, x1) := f6(x1, x0);
-
-f8(x0) := match x0 {
-    Boolean(x1) -> x1,
-    Int(x1) -> Panic("want `Boolean(b)`, got `Int(n)`")
-};
-
-f9(x0, x1, x2, x3) := match x0 {
-    F() -> f7(x1, x2),
-    T() -> f7(x3, x2)
+    Nil() -> x1
 };

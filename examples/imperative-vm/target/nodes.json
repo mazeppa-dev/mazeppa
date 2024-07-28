@@ -185,572 +185,1496 @@
     "n47",
     "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), \"out\")"
   ],
-  [ "n48", "0u32" ],
-  [ "n49", "\"out\"" ],
-  [ "n50", "\"a\"" ],
-  [ "n51", "1u32" ],
-  [ "n52", "\"i\"" ],
+  [
+    "n48",
+    "fetchCell(evalProgram(Nil(), .g7(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n49",
+    "fetchCell(evalProgram(Nil(), .g6(evalBoolean(GreaterThan(Var(\"i\"), Int(0u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n50",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(evalTerm(GreaterThan(Var(\"i\"), Int(0u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n51",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.g8(GreaterThan(Var(\"i\"), Int(0u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n52",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(evalInt(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
   [
     "n53",
-    "Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(evalTerm(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
-  [ "n54", "\"a\"" ],
-  [ "n55", "a" ],
+  [
+    "n54",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g8(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n55",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
   [
     "n56",
-    "Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
-  [ "n57", "\"x\"" ],
-  [ "n58", "Int(7u32)" ],
-  [ "n59", "7u32" ],
-  [ "n60", "Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))" ],
-  [ "n61", "\"out\"" ],
-  [ "n62", "Int(1i32)" ],
-  [ "n63", "1i32" ],
-  [ "n64", "Cell(\"i\", Int(7u32), Nil())" ],
-  [ "n65", "\"i\"" ],
-  [ "n66", "Int(7u32)" ],
-  [ "n67", "7u32" ],
-  [ "n68", "Nil()" ],
+  [
+    "n57",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g0(F(), a, \"i\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n58",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n59",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n60",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g0(F(), Int(7u32), \"i\", Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n61",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n62",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n63",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g0(F(), Int(1i32), \"i\", Cell(\"i\", Int(7u32), Nil()))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n64",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(Cell(\"i\", Int(7u32), Nil()), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n65",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(Cell(\"i\", Int(7u32), Nil()), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n66",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g0(T(), Int(7u32), \"i\", Nil())), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n67",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(Int(7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
+  [
+    "n68",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(7u32, Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(0u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
+  ],
   [
     "n69",
-    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), .v6)), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(evalInt(Int(0u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), 7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n70",
-    "fetchCell(evalProgram(Nil(), .g7(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), .v6, While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(evalTerm(Int(0u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), 7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n71",
-    "fetchCell(evalProgram(Nil(), .g6(evalBoolean(GreaterThan(Var(.v28), Int(.v11)), .v6), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(.g8(Int(0u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), 7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n72",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(evalTerm(GreaterThan(Var(.v28), Int(.v11)), .v6)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(Int(0u32)), 7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n73",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.g8(GreaterThan(Var(.v28), Int(.v11)), .v6)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(0u32, 7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n74",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(evalInt(Var(.v28), .v6), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(.g9(Boolean(T())), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n75",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(evalTerm(Var(.v28), .v6)), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), .g6(T(), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))))), \"out\")"
   ],
   [
     "n76",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g8(Var(.v28), .v6)), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))))), \"out\")"
   ],
   [
     "n77",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(.v6, .v28)), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), .g4(Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil())), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))))), \"out\")"
   ],
   [
     "n78",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(.v6, .v28)), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), evalStmt(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))))), \"out\")"
   ],
-  [ "n79", ".g1(.v6, .v28)" ],
-  [ "n80", ".v6" ],
-  [ "n81", ".g0(=(.v28, .v30), .v31, .v28, .v32)" ],
-  [ "n82", "=(.v28, .v30)" ],
-  [ "n83", ".v28" ],
-  [ "n84", ".v30" ],
-  [ "n85", "fetchCell(.v32, .v28)" ],
-  [ "n86", ".g1(.v32, .v28)" ],
-  [ "n87", ".v28" ],
-  [ "n88", ".v32" ],
-  [ "n89", ".v31" ],
-  [ "n90", "Panic(++(\"the variable is unbound: \", .v28))" ],
-  [ "n91", "++(\"the variable is unbound: \", .v28)" ],
-  [ "n92", "\"the variable is unbound: \"" ],
-  [ "n93", ".v28" ],
+  [
+    "n79",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .g7(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))))))), \"out\")"
+  ],
+  [
+    "n80",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", evalTerm(Mul(Var(\"out\"), Var(\"a\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))))))), \"out\")"
+  ],
+  [
+    "n81",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .g8(Mul(Var(\"out\"), Var(\"a\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))))))), \"out\")"
+  ],
+  [
+    "n82",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(evalInt(Var(\"out\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n83",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(evalTerm(Var(\"out\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n84",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g8(Var(\"out\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n85",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(fetchCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n86",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g1(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n87",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g0(F(), a, \"out\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n88",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(fetchCell(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n89",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g1(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n90",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g0(F(), Int(7u32), \"out\", Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n91",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(fetchCell(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n92",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g1(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"out\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n93",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(.g0(T(), Int(1i32), \"out\", Cell(\"i\", Int(7u32), Nil()))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
   [
     "n94",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.v29), .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(.g10(Int(1i32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
   ],
-  [ "n95", ".g10(.v29)" ],
-  [ "n96", ".v29" ],
-  [ "n97", "Panic(\"want `Int(n)`, got `Boolean(b)`\")" ],
-  [ "n98", "\"want `Int(n)`, got `Boolean(b)`\"" ],
-  [ "n99", ".v36" ],
+  [
+    "n95",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f5(1i32, Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Var(\"a\")))))), \"out\")"
+  ],
+  [
+    "n96",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(evalInt(Var(\"a\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), 1i32))))), \"out\")"
+  ],
+  [
+    "n97",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(evalTerm(Var(\"a\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), 1i32))))), \"out\")"
+  ],
+  [
+    "n98",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(.g8(Var(\"a\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))))), 1i32))))), \"out\")"
+  ],
+  [
+    "n99",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(fetchCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"a\")), 1i32))))), \"out\")"
+  ],
   [
     "n100",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.v34, .v6, Int(.v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(.g1(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"a\")), 1i32))))), \"out\")"
   ],
   [
     "n101",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(evalInt(Int(.v11), .v6), .v34)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(.g0(T(), a, \"a\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))))), 1i32))))), \"out\")"
   ],
   [
     "n102",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(evalTerm(Int(.v11), .v6)), .v34)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.g10(a), 1i32))))), \"out\")"
   ],
-  [
-    "n103",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(.g8(Int(.v11), .v6)), .v34)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
-  ],
-  [
-    "n104",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(Int(.v11)), .v34)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
-  ],
-  [
-    "n105",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.v11, .v34)), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
-  ],
-  [
-    "n106",
-    "fetchCell(evalProgram(Nil(), .g6(.g9(Boolean(>(.v34, .v11))), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
-  ],
-  [
-    "n107",
-    "fetchCell(evalProgram(Nil(), .g6(>(.v34, .v11), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))), .v22)"
-  ],
+  [ "n103", ".g10(a)" ],
+  [ "n104", "a" ],
+  [ "n105", "Panic(\"want `Int(n)`, got `Boolean(b)`\")" ],
+  [ "n106", "\"want `Int(n)`, got `Boolean(b)`\"" ],
+  [ "n107", ".v2" ],
   [
     "n108",
-    ".g6(>(.v34, .v11), .v6, Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", .f4(.v0, 1i32))))), \"out\")"
   ],
-  [ "n109", ">(.v34, .v11)" ],
-  [ "n110", ".v34" ],
-  [ "n111", ".v11" ],
-  [ "n112", ".v6" ],
+  [
+    "n109",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), \"out\", Int(.v0))))), \"out\")"
+  ],
+  [
+    "n110",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .g3(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())))), Int(.v0), \"out\")))), \"out\")"
+  ],
+  [
+    "n111",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .g2(F(), Int(.v0), a, \"out\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"a\")))), \"out\")"
+  ],
+  [
+    "n112",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(updateCell(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), \"out\", Int(.v0)), a, \"a\")))), \"out\")"
+  ],
   [
     "n113",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), .v6))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.g3(Cell(\"x\", Int(7u32), Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil()))), Int(.v0), \"out\"), a, \"a\")))), \"out\")"
   ],
   [
     "n114",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), .g4(Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())), .v6))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.g2(F(), Int(.v0), Int(7u32), \"out\", Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"x\"), a, \"a\")))), \"out\")"
   ],
   [
     "n115",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), evalStmt(Assign(.v22, Mul(Var(.v22), Var(.v23))), .v6)))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.f1(updateCell(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), \"out\", Int(.v0)), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
   ],
   [
     "n116",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), .g7(Assign(.v22, Mul(Var(.v22), Var(.v23))), .v6, Assign(.v22, Mul(Var(.v22), Var(.v23))))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.f1(.g3(Cell(\"out\", Int(1i32), Cell(\"i\", Int(7u32), Nil())), Int(.v0), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
   ],
   [
     "n117",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, evalTerm(Mul(Var(.v22), Var(.v23)), .v6))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.f1(.g2(T(), Int(.v0), Int(1i32), \"out\", Cell(\"i\", Int(7u32), Nil()), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
   ],
   [
     "n118",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .g8(Mul(Var(.v22), Var(.v23)), .v6))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(.f1(Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
   ],
   [
     "n119",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(evalInt(Var(.v22), .v6), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), .f1(Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), a, \"a\")))), \"out\")"
   ],
   [
     "n120",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.g10(evalTerm(Var(.v22), .v6)), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))))), \"out\")"
   ],
   [
     "n121",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.g10(.g8(Var(.v22), .v6)), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), .g4(Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))))), \"out\")"
   ],
   [
     "n122",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.g10(fetchCell(.v6, .v22)), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), evalStmt(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))))))), \"out\")"
   ],
   [
     "n123",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.g10(.g1(.v6, .v22)), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .g7(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Assign(\"i\", Sub(Var(\"i\"), Int(1u32))))))), \"out\")"
   ],
-  [ "n124", ".g1(.v6, .v22)" ],
-  [ "n125", ".v22" ],
-  [ "n126", ".v6" ],
+  [
+    "n124",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", evalTerm(Sub(Var(\"i\"), Int(1u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))))))), \"out\")"
+  ],
+  [
+    "n125",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .g8(Sub(Var(\"i\"), Int(1u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))))))), \"out\")"
+  ],
+  [
+    "n126",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(evalInt(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
   [
     "n127",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.g10(.v39), .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(evalTerm(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
-  [ "n128", ".g10(.v39)" ],
-  [ "n129", ".v39" ],
+  [
+    "n128",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g8(Var(\"i\"), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
+  [
+    "n129",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(fetchCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
   [
     "n130",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f5(.v40, .v6, Var(.v23)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g1(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n131",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(evalInt(Var(.v23), .v6), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g0(F(), a, \"i\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n132",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.g10(evalTerm(Var(.v23), .v6)), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(fetchCell(Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n133",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.g10(.g8(Var(.v23), .v6)), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g1(Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n134",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.g10(fetchCell(.v6, .v23)), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g0(F(), Int(7u32), \"i\", Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n135",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.g10(.g1(.v6, .v23)), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(fetchCell(Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
-  [ "n136", ".g1(.v6, .v23)" ],
-  [ "n137", ".v23" ],
-  [ "n138", ".v6" ],
+  [
+    "n136",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g1(Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
+  [
+    "n137",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g0(F(), Int(.v0), \"i\", Cell(\"i\", Int(7u32), Nil()))), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
+  [
+    "n138",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(fetchCell(Cell(\"i\", Int(7u32), Nil()), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
   [
     "n139",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.g10(.v41), .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g1(Cell(\"i\", Int(7u32), Nil()), \"i\")), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
-  [ "n140", ".g10(.v41)" ],
-  [ "n141", ".v41" ],
+  [
+    "n140",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(.g0(T(), Int(7u32), \"i\", Nil())), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
+  [
+    "n141",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(.g10(Int(7u32)), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
+  ],
   [
     "n142",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, .f4(.v42, .v40))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f3(7u32, Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(1u32)))))), \"out\")"
   ],
   [
     "n143",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), updateCell(.v6, .v22, Int(*(.v40, .v42)))))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f2(evalInt(Int(1u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))))), 7u32))))), \"out\")"
   ],
   [
     "n144",
-    "evalStmt(While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))), evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), .g3(.v6, Int(*(.v40, .v42)), .v22)))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f2(.g10(evalTerm(Int(1u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))))), 7u32))))), \"out\")"
   ],
   [
     "n145",
-    "While(GreaterThan(Var(.v28), Int(.v11)), Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f2(.g10(.g8(Int(1u32), Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))))), 7u32))))), \"out\")"
   ],
-  [ "n146", "GreaterThan(Var(.v28), Int(.v11))" ],
-  [ "n147", "Var(.v28)" ],
-  [ "n148", ".v28" ],
-  [ "n149", "Int(.v11)" ],
-  [ "n150", ".v11" ],
+  [
+    "n146",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f2(.g10(Int(1u32)), 7u32))))), \"out\")"
+  ],
+  [
+    "n147",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", .f2(1u32, 7u32))))), \"out\")"
+  ],
+  [
+    "n148",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), updateCell(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), \"i\", Int(6u32))))), \"out\")"
+  ],
+  [
+    "n149",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .g3(Cell(\"a\", a, Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())))), Int(6u32), \"i\")))), \"out\")"
+  ],
+  [
+    "n150",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .g2(F(), Int(6u32), a, \"i\", Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), \"a\")))), \"out\")"
+  ],
   [
     "n151",
-    "Cons(Assign(.v22, Mul(Var(.v22), Var(.v23))), Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()))"
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(updateCell(Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), \"i\", Int(6u32)), a, \"a\")))), \"out\")"
   ],
-  [ "n152", "Assign(.v22, Mul(Var(.v22), Var(.v23)))" ],
-  [ "n153", ".v22" ],
-  [ "n154", "Mul(Var(.v22), Var(.v23))" ],
-  [ "n155", "Var(.v22)" ],
-  [ "n156", ".v22" ],
-  [ "n157", "Var(.v23)" ],
-  [ "n158", ".v23" ],
-  [ "n159", "Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())" ],
-  [ "n160", "Assign(.v28, Sub(Var(.v28), Int(.v27)))" ],
-  [ "n161", ".v28" ],
-  [ "n162", "Sub(Var(.v28), Int(.v27))" ],
-  [ "n163", "Var(.v28)" ],
-  [ "n164", ".v28" ],
-  [ "n165", "Int(.v27)" ],
-  [ "n166", ".v27" ],
-  [ "n167", "Nil()" ],
   [
-    "n168",
-    "evalProgram(Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil()), .g3(.v6, Int(*(.v40, .v42)), .v22))"
+    "n152",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.g3(Cell(\"x\", Int(7u32), Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil()))), Int(6u32), \"i\"), a, \"a\")))), \"out\")"
   ],
-  [ "n169", "Cons(Assign(.v28, Sub(Var(.v28), Int(.v27))), Nil())" ],
-  [ "n170", "Assign(.v28, Sub(Var(.v28), Int(.v27)))" ],
-  [ "n171", ".v28" ],
-  [ "n172", "Sub(Var(.v28), Int(.v27))" ],
-  [ "n173", "Var(.v28)" ],
-  [ "n174", ".v28" ],
-  [ "n175", "Int(.v27)" ],
-  [ "n176", ".v27" ],
-  [ "n177", "Nil()" ],
-  [ "n178", ".g3(.v6, Int(*(.v40, .v42)), .v22)" ],
-  [ "n179", ".v6" ],
   [
-    "n180",
-    ".g2(=(.v22, .v101), Int(*(.v40, .v42)), .v102, .v22, .v103, .v101)"
+    "n153",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.g2(F(), Int(6u32), Int(7u32), \"i\", Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), \"x\"), a, \"a\")))), \"out\")"
   ],
-  [ "n181", "=(.v22, .v101)" ],
+  [
+    "n154",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(updateCell(Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), \"i\", Int(6u32)), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n155",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.g3(Cell(\"out\", Int(.v0), Cell(\"i\", Int(7u32), Nil())), Int(6u32), \"i\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n156",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.g2(F(), Int(6u32), Int(.v0), \"i\", Cell(\"i\", Int(7u32), Nil()), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n157",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.f1(updateCell(Cell(\"i\", Int(7u32), Nil()), \"i\", Int(6u32)), Int(.v0), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n158",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.f1(.g3(Cell(\"i\", Int(7u32), Nil()), Int(6u32), \"i\"), Int(.v0), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n159",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.f1(.g2(T(), Int(6u32), Int(7u32), \"i\", Nil(), \"i\"), Int(.v0), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n160",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(.f1(Cell(\"i\", Int(6u32), Nil()), Int(.v0), \"out\"), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [
+    "n161",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(\"i\"), Int(0u32)), Cons(Assign(\"out\", Mul(Var(\"out\"), Var(\"a\"))), Cons(Assign(\"i\", Sub(Var(\"i\"), Int(1u32))), Nil()))), evalProgram(Nil(), .f1(.f1(Cell(\"out\", Int(.v0), Cell(\"i\", Int(6u32), Nil())), Int(7u32), \"x\"), a, \"a\")))), \"out\")"
+  ],
+  [ "n162", "Nil()" ],
+  [ "n163", "a" ],
+  [ "n164", "\"x\"" ],
+  [ "n165", "7u32" ],
+  [ "n166", ".v0" ],
+  [ "n167", "6u32" ],
+  [ "n168", "0u32" ],
+  [ "n169", "\"a\"" ],
+  [ "n170", "\"i\"" ],
+  [ "n171", "1u32" ],
+  [ "n172", "\"out\"" ],
+  [
+    "n173",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(.v11, .f1(.f1(Cell(.v6, Int(.v23), Cell(.v48, Int(.v27), Nil())), Int(.v22), .v18), .v14, .v45)))), .v6)"
+  ],
+  [
+    "n174",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(.v11, .f1(Cell(.v18, Int(.v22), Cell(.v6, Int(.v23), Cell(.v48, Int(.v27), Nil()))), .v14, .v45)))), .v6)"
+  ],
+  [
+    "n175",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(.v11, Cell(.v45, .v14, Cell(.v18, Int(.v22), Cell(.v6, Int(.v23), Cell(.v48, Int(.v27), Nil()))))))), .v6)"
+  ],
+  [
+    "n176",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), .g4(.v11, Cell(.v45, .v14, Cell(.v18, Int(.v22), Cell(.v6, Int(.v23), Cell(.v48, Int(.v27), Nil()))))))), .v6)"
+  ],
+  [
+    "n177",
+    ".g4(.v11, Cell(.v45, .v14, Cell(.v18, Int(.v22), Cell(.v6, Int(.v23), Cell(.v48, Int(.v27), Nil())))))"
+  ],
+  [ "n178", ".v11" ],
+  [ "n179", ".v45" ],
+  [ "n180", ".v14" ],
+  [ "n181", ".v18" ],
   [ "n182", ".v22" ],
-  [ "n183", ".v101" ],
+  [ "n183", ".v6" ],
+  [ "n184", ".v23" ],
+  [ "n185", ".v48" ],
+  [ "n186", "Nil()" ],
+  [ "n187", ".v27" ],
   [
-    "n184", ".f1(updateCell(.v103, .v22, Int(*(.v40, .v42))), .v102, .v101)"
+    "n188",
+    ".g4(.v77, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))"
   ],
-  [ "n185", ".f1(.g3(.v103, Int(*(.v40, .v42)), .v22), .v102, .v101)" ],
-  [ "n186", ".g3(.v103, Int(*(.v40, .v42)), .v22)" ],
-  [ "n187", ".v22" ],
-  [ "n188", ".v40" ],
-  [ "n189", ".v42" ],
-  [ "n190", ".v103" ],
-  [ "n191", ".v102" ],
-  [ "n192", ".v101" ],
-  [ "n193", ".f1(.v106, .v107, .v108)" ],
-  [ "n194", "Cell(.v108, .v107, .v106)" ],
-  [ "n195", ".v108" ],
-  [ "n196", ".v107" ],
-  [ "n197", ".v106" ],
-  [ "n198", "Cell(.v101, Int(*(.v40, .v42)), .v103)" ],
-  [ "n199", ".v101" ],
-  [ "n200", "Int(*(.v40, .v42))" ],
-  [ "n201", "*(.v40, .v42)" ],
-  [ "n202", ".v40" ],
-  [ "n203", ".v42" ],
-  [ "n204", ".v103" ],
-  [ "n205", "Cell(.v22, Int(*(.v40, .v42)), Nil())" ],
-  [ "n206", ".v22" ],
-  [ "n207", "Int(*(.v40, .v42))" ],
-  [ "n208", "*(.v40, .v42)" ],
-  [ "n209", ".v40" ],
-  [ "n210", ".v42" ],
-  [ "n211", "Nil()" ],
-  [ "n212", "evalProgram(.v99, .v100)" ],
-  [ "n213", ".g4(.v99, .v100)" ],
-  [ "n214", ".v99" ],
-  [ "n215", "evalProgram(.v110, evalStmt(.v109, .v100))" ],
-  [ "n216", "evalProgram(.v110, .g7(.v109, .v100, .v109))" ],
-  [ "n217", ".v109" ],
+  [ "n189", ".v77" ],
+  [
+    "n190",
+    "evalProgram(.v95, evalStmt(.v94, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [
+    "n191",
+    "evalProgram(.v95, .g7(.v94, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v94))"
+  ],
+  [ "n192", ".v94" ],
+  [
+    "n193",
+    "evalProgram(.v95, updateCell(Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v96, evalTerm(.v97, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))))"
+  ],
+  [
+    "n194",
+    "evalProgram(.v95, updateCell(Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v96, .g8(.v97, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))))"
+  ],
+  [ "n195", ".v95" ],
+  [
+    "n196",
+    "updateCell(Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v96, .g8(.v97, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [
+    "n197",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n198", ".v79" ],
+  [ "n199", ".v80" ],
+  [
+    "n200",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n201", ".v82" ],
+  [ "n202", "Int(.v85)" ],
+  [ "n203", ".v85" ],
+  [ "n204", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n205", ".v86" ],
+  [ "n206", "Int(.v89)" ],
+  [ "n207", ".v89" ],
+  [ "n208", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n209", ".v90" ],
+  [ "n210", "Int(.v93)" ],
+  [ "n211", ".v93" ],
+  [ "n212", ".v92" ],
+  [ "n213", ".v96" ],
+  [
+    "n214",
+    ".g8(.v97, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))"
+  ],
+  [ "n215", ".v97" ],
+  [ "n216", "Boolean(.v6279)" ],
+  [ "n217", ".v6279" ],
   [
     "n218",
-    "evalProgram(.v110, updateCell(.v100, .v111, evalTerm(.v112, .v100)))"
+    ".f7(evalInt(.v6280, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6281)"
   ],
   [
-    "n219", "evalProgram(.v110, updateCell(.v100, .v111, .g8(.v112, .v100)))"
-  ],
-  [ "n220", ".v110" ],
-  [ "n221", "updateCell(.v100, .v111, .g8(.v112, .v100))" ],
-  [ "n222", ".v100" ],
-  [ "n223", ".v111" ],
-  [ "n224", ".g8(.v112, .v100)" ],
-  [ "n225", ".v112" ],
-  [ "n226", "Boolean(.v180)" ],
-  [ "n227", ".v180" ],
-  [ "n228", ".f7(evalInt(.v181, .v100), .v100, .v182)" ],
-  [ "n229", ".f7(.g10(evalTerm(.v181, .v100)), .v100, .v182)" ],
-  [ "n230", ".f7(.g10(.g8(.v181, .v100)), .v100, .v182)" ],
-  [ "n231", ".g10(.g8(.v181, .v100))" ],
-  [ "n232", ".g8(.v181, .v100)" ],
-  [ "n233", ".v100" ],
-  [ "n234", ".v181" ],
-  [ "n235", ".g10(.v194)" ],
-  [ "n236", ".v194" ],
-  [ "n237", ".v100" ],
-  [ "n238", ".v182" ],
-  [ "n239", ".f7(.v190, .v191, .v192)" ],
-  [ "n240", ".f6(evalInt(.v192, .v191), .v190)" ],
-  [ "n241", ".f6(.g10(evalTerm(.v192, .v191)), .v190)" ],
-  [ "n242", ".f6(.g10(.g8(.v192, .v191)), .v190)" ],
-  [ "n243", ".g10(.g8(.v192, .v191))" ],
-  [ "n244", ".v191" ],
-  [ "n245", ".v192" ],
-  [ "n246", ".v190" ],
-  [ "n247", ".f6(.v196, .v197)" ],
-  [ "n248", "Boolean(>(.v197, .v196))" ],
-  [ "n249", ">(.v197, .v196)" ],
-  [ "n250", ".v197" ],
-  [ "n251", ".v196" ],
-  [ "n252", "Int(.v183)" ],
-  [ "n253", ".v183" ],
-  [ "n254", ".f5(evalInt(.v184, .v100), .v100, .v185)" ],
-  [ "n255", ".f5(.g10(evalTerm(.v184, .v100)), .v100, .v185)" ],
-  [ "n256", ".f5(.g10(.g8(.v184, .v100)), .v100, .v185)" ],
-  [ "n257", ".g10(.g8(.v184, .v100))" ],
-  [ "n258", ".v100" ],
-  [ "n259", ".v184" ],
-  [ "n260", ".v100" ],
-  [ "n261", ".v185" ],
-  [ "n262", ".f5(.v199, .v200, .v201)" ],
-  [ "n263", ".f4(evalInt(.v201, .v200), .v199)" ],
-  [ "n264", ".f4(.g10(evalTerm(.v201, .v200)), .v199)" ],
-  [ "n265", ".f4(.g10(.g8(.v201, .v200)), .v199)" ],
-  [ "n266", ".g10(.g8(.v201, .v200))" ],
-  [ "n267", ".v200" ],
-  [ "n268", ".v201" ],
-  [ "n269", ".v199" ],
-  [ "n270", ".f4(.v203, .v204)" ],
-  [ "n271", "Int(*(.v204, .v203))" ],
-  [ "n272", "*(.v204, .v203)" ],
-  [ "n273", ".v204" ],
-  [ "n274", ".v203" ],
-  [ "n275", ".f3(evalInt(.v186, .v100), .v100, .v187)" ],
-  [ "n276", ".f3(.g10(evalTerm(.v186, .v100)), .v100, .v187)" ],
-  [ "n277", ".f3(.g10(.g8(.v186, .v100)), .v100, .v187)" ],
-  [ "n278", ".g10(.g8(.v186, .v100))" ],
-  [ "n279", ".v100" ],
-  [ "n280", ".v186" ],
-  [ "n281", ".v100" ],
-  [ "n282", ".v187" ],
-  [ "n283", ".f3(.v206, .v207, .v208)" ],
-  [ "n284", ".f2(evalInt(.v208, .v207), .v206)" ],
-  [ "n285", ".f2(.g10(evalTerm(.v208, .v207)), .v206)" ],
-  [ "n286", ".f2(.g10(.g8(.v208, .v207)), .v206)" ],
-  [ "n287", ".g10(.g8(.v208, .v207))" ],
-  [ "n288", ".v207" ],
-  [ "n289", ".v208" ],
-  [ "n290", ".v206" ],
-  [ "n291", ".f2(.v210, .v211)" ],
-  [ "n292", "Int(-(.v211, .v210))" ],
-  [ "n293", "-(.v211, .v210)" ],
-  [ "n294", ".v211" ],
-  [ "n295", ".v210" ],
-  [ "n296", "fetchCell(.v100, .v188)" ],
-  [ "n297", ".g1(.v100, .v188)" ],
-  [ "n298", ".v188" ],
-  [ "n299", ".v100" ],
-  [ "n300", "updateCell(.v177, .v178, .v179)" ],
-  [ "n301", ".g3(.v177, .v179, .v178)" ],
-  [ "n302", ".v177" ],
-  [ "n303", ".g2(=(.v178, .v212), .v179, .v213, .v178, .v214, .v212)" ],
-  [ "n304", "=(.v178, .v212)" ],
-  [ "n305", ".v178" ],
-  [ "n306", ".v212" ],
-  [ "n307", ".f1(updateCell(.v214, .v178, .v179), .v213, .v212)" ],
-  [ "n308", ".f1(.g3(.v214, .v179, .v178), .v213, .v212)" ],
-  [ "n309", ".g3(.v214, .v179, .v178)" ],
-  [ "n310", ".v214" ],
-  [ "n311", ".v178" ],
-  [ "n312", ".v179" ],
-  [ "n313", ".v213" ],
-  [ "n314", ".v212" ],
-  [ "n315", ".f1(.v217, .v218, .v219)" ],
-  [ "n316", "Cell(.v219, .v218, .v217)" ],
-  [ "n317", ".v219" ],
-  [ "n318", ".v218" ],
-  [ "n319", ".v217" ],
-  [ "n320", "Cell(.v212, .v179, .v214)" ],
-  [ "n321", ".v212" ],
-  [ "n322", ".v179" ],
-  [ "n323", ".v214" ],
-  [ "n324", "Cell(.v178, .v179, Nil())" ],
-  [ "n325", ".v178" ],
-  [ "n326", ".v179" ],
-  [ "n327", "Nil()" ],
-  [ "n328", "evalProgram(.v153, .v154)" ],
-  [ "n329", ".g4(.v153, .v154)" ],
-  [ "n330", ".v154" ],
-  [ "n331", ".v153" ],
-  [ "n332", ".g5(evalBoolean(.v113, .v100), .v115, .v100, .v114)" ],
-  [ "n333", ".g5(.g9(evalTerm(.v113, .v100)), .v115, .v100, .v114)" ],
-  [ "n334", ".g5(.g9(.g8(.v113, .v100)), .v115, .v100, .v114)" ],
-  [ "n335", ".g9(.g8(.v113, .v100))" ],
-  [ "n336", ".g8(.v113, .v100)" ],
-  [ "n337", ".v100" ],
-  [ "n338", ".v113" ],
-  [ "n339", ".g9(.v252)" ],
-  [ "n340", ".v252" ],
-  [ "n341", ".v253" ],
-  [ "n342", "Panic(\"want `Boolean(b)`, got `Int(n)`\")" ],
-  [ "n343", "\"want `Boolean(b)`, got `Int(n)`\"" ],
-  [ "n344", ".v115" ],
-  [ "n345", ".v100" ],
-  [ "n346", ".v114" ],
-  [ "n347", ".g5(.v236, .v237, .v238, .v239)" ],
-  [ "n348", ".v236" ],
-  [ "n349", "evalProgram(.v237, .v238)" ],
-  [ "n350", ".g4(.v237, .v238)" ],
-  [ "n351", ".v237" ],
-  [ "n352", ".v238" ],
-  [ "n353", "evalProgram(.v239, .v238)" ],
-  [ "n354", ".g4(.v239, .v238)" ],
-  [ "n355", ".v239" ],
-  [ "n356", ".v238" ],
-  [ "n357", "evalProgram(.v110, .v116)" ],
-  [ "n358", ".g4(.v110, .v116)" ],
-  [ "n359", ".v110" ],
-  [ "n360", ".v116" ],
-  [
-    "n361",
-    ".g6(evalBoolean(.v117, .v100), .v100, .v118, While(.v117, .v118))"
+    "n219",
+    ".f7(.g10(evalTerm(.v6280, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6281)"
   ],
   [
-    "n362",
-    ".g6(.g9(evalTerm(.v117, .v100)), .v100, .v118, While(.v117, .v118))"
+    "n220",
+    ".f7(.g10(.g8(.v6280, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6281)"
   ],
   [
-    "n363", ".g6(.g9(.g8(.v117, .v100)), .v100, .v118, While(.v117, .v118))"
-  ],
-  [ "n364", ".g9(.g8(.v117, .v100))" ],
-  [ "n365", ".g8(.v117, .v100)" ],
-  [ "n366", ".v100" ],
-  [ "n367", ".v117" ],
-  [ "n368", ".g9(.v290)" ],
-  [ "n369", ".v290" ],
-  [ "n370", ".v100" ],
-  [ "n371", ".v118" ],
-  [ "n372", "While(.v117, .v118)" ],
-  [ "n373", ".v117" ],
-  [ "n374", ".v118" ],
-  [ "n375", ".g6(.v274, .v275, .v276, .v277)" ],
-  [ "n376", ".v274" ],
-  [ "n377", ".v275" ],
-  [ "n378", "evalStmt(.v277, evalProgram(.v276, .v275))" ],
-  [ "n379", "evalStmt(.v277, .g4(.v276, .v275))" ],
-  [ "n380", ".g4(.v276, .v275)" ],
-  [ "n381", ".v276" ],
-  [ "n382", ".v275" ],
-  [ "n383", "evalStmt(.v277, .v291)" ],
-  [ "n384", ".g7(.v277, .v291, .v277)" ],
-  [ "n385", ".v277" ],
-  [ "n386", "updateCell(.v291, .v292, evalTerm(.v293, .v291))" ],
-  [ "n387", "updateCell(.v291, .v292, .g8(.v293, .v291))" ],
-  [ "n388", ".v291" ],
-  [ "n389", ".v292" ],
-  [ "n390", ".g8(.v293, .v291)" ],
-  [ "n391", ".v291" ],
-  [ "n392", ".v293" ],
-  [ "n393", "updateCell(.v321, .v322, .v323)" ],
-  [ "n394", ".g3(.v321, .v323, .v322)" ],
-  [ "n395", ".v321" ],
-  [ "n396", ".v322" ],
-  [ "n397", ".v323" ],
-  [ "n398", ".g5(evalBoolean(.v294, .v291), .v296, .v291, .v295)" ],
-  [ "n399", ".g5(.g9(evalTerm(.v294, .v291)), .v296, .v291, .v295)" ],
-  [ "n400", ".g5(.g9(.g8(.v294, .v291)), .v296, .v291, .v295)" ],
-  [ "n401", ".g9(.g8(.v294, .v291))" ],
-  [ "n402", ".g8(.v294, .v291)" ],
-  [ "n403", ".v291" ],
-  [ "n404", ".v294" ],
-  [ "n405", ".g9(.v356)" ],
-  [ "n406", ".v356" ],
-  [ "n407", ".v296" ],
-  [ "n408", ".v291" ],
-  [ "n409", ".v295" ],
-  [ "n410", ".g5(.v340, .v341, .v342, .v343)" ],
-  [ "n411", ".v340" ],
-  [ "n412", ".v341" ],
-  [ "n413", ".v342" ],
-  [ "n414", ".v343" ],
-  [
-    "n415",
-    ".g6(evalBoolean(.v297, .v291), .v291, .v298, While(.v297, .v298))"
+    "n221",
+    ".g10(.g8(.v6280, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
   ],
   [
-    "n416",
-    ".g6(.g9(evalTerm(.v297, .v291)), .v291, .v298, While(.v297, .v298))"
+    "n222",
+    ".g8(.v6280, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))"
+  ],
+  [ "n223", ".v79" ],
+  [ "n224", ".v80" ],
+  [ "n225", ".v82" ],
+  [ "n226", ".v85" ],
+  [ "n227", ".v86" ],
+  [ "n228", ".v89" ],
+  [ "n229", ".v90" ],
+  [ "n230", ".v92" ],
+  [ "n231", ".v93" ],
+  [ "n232", ".v6280" ],
+  [ "n233", ".g10(.v6293)" ],
+  [ "n234", ".v6293" ],
+  [
+    "n235",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n236", ".v79" ],
+  [ "n237", ".v80" ],
+  [
+    "n238",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n239", ".v82" ],
+  [ "n240", "Int(.v85)" ],
+  [ "n241", ".v85" ],
+  [ "n242", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n243", ".v86" ],
+  [ "n244", "Int(.v89)" ],
+  [ "n245", ".v89" ],
+  [ "n246", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n247", ".v90" ],
+  [ "n248", "Int(.v93)" ],
+  [ "n249", ".v93" ],
+  [ "n250", ".v92" ],
+  [ "n251", ".v6281" ],
+  [ "n252", ".f7(.v6289, .v6290, .v6291)" ],
+  [ "n253", ".f6(evalInt(.v6291, .v6290), .v6289)" ],
+  [ "n254", ".f6(.g10(evalTerm(.v6291, .v6290)), .v6289)" ],
+  [ "n255", ".f6(.g10(.g8(.v6291, .v6290)), .v6289)" ],
+  [ "n256", ".g10(.g8(.v6291, .v6290))" ],
+  [ "n257", ".g8(.v6291, .v6290)" ],
+  [ "n258", ".v6291" ],
+  [ "n259", "Boolean(.v6323)" ],
+  [ "n260", ".v6323" ],
+  [ "n261", ".f7(evalInt(.v6324, .v6290), .v6290, .v6325)" ],
+  [ "n262", ".f7(.g10(evalTerm(.v6324, .v6290)), .v6290, .v6325)" ],
+  [ "n263", ".f7(.g10(.g8(.v6324, .v6290)), .v6290, .v6325)" ],
+  [ "n264", ".g10(.g8(.v6324, .v6290))" ],
+  [ "n265", ".g8(.v6324, .v6290)" ],
+  [ "n266", ".v6290" ],
+  [ "n267", ".v6324" ],
+  [ "n268", ".g10(.v6337)" ],
+  [ "n269", ".v6337" ],
+  [ "n270", ".v6290" ],
+  [ "n271", ".v6325" ],
+  [ "n272", ".f7(.v6333, .v6334, .v6335)" ],
+  [ "n273", ".f6(evalInt(.v6335, .v6334), .v6333)" ],
+  [ "n274", ".f6(.g10(evalTerm(.v6335, .v6334)), .v6333)" ],
+  [ "n275", ".f6(.g10(.g8(.v6335, .v6334)), .v6333)" ],
+  [ "n276", ".g10(.g8(.v6335, .v6334))" ],
+  [ "n277", ".v6334" ],
+  [ "n278", ".v6335" ],
+  [ "n279", ".v6333" ],
+  [ "n280", ".f6(.v6339, .v6340)" ],
+  [ "n281", "Boolean(>(.v6340, .v6339))" ],
+  [ "n282", ">(.v6340, .v6339)" ],
+  [ "n283", ".v6340" ],
+  [ "n284", ".v6339" ],
+  [ "n285", "Int(.v6326)" ],
+  [ "n286", ".v6326" ],
+  [ "n287", ".f5(evalInt(.v6327, .v6290), .v6290, .v6328)" ],
+  [ "n288", ".f5(.g10(evalTerm(.v6327, .v6290)), .v6290, .v6328)" ],
+  [ "n289", ".f5(.g10(.g8(.v6327, .v6290)), .v6290, .v6328)" ],
+  [ "n290", ".g10(.g8(.v6327, .v6290))" ],
+  [ "n291", ".v6290" ],
+  [ "n292", ".v6327" ],
+  [ "n293", ".v6290" ],
+  [ "n294", ".v6328" ],
+  [ "n295", ".f5(.v6342, .v6343, .v6344)" ],
+  [ "n296", ".f4(evalInt(.v6344, .v6343), .v6342)" ],
+  [ "n297", ".f4(.g10(evalTerm(.v6344, .v6343)), .v6342)" ],
+  [ "n298", ".f4(.g10(.g8(.v6344, .v6343)), .v6342)" ],
+  [ "n299", ".g10(.g8(.v6344, .v6343))" ],
+  [ "n300", ".v6343" ],
+  [ "n301", ".v6344" ],
+  [ "n302", ".v6342" ],
+  [ "n303", ".f4(.v6346, .v6347)" ],
+  [ "n304", "Int(*(.v6347, .v6346))" ],
+  [ "n305", "*(.v6347, .v6346)" ],
+  [ "n306", ".v6347" ],
+  [ "n307", ".v6346" ],
+  [ "n308", ".f3(evalInt(.v6329, .v6290), .v6290, .v6330)" ],
+  [ "n309", ".f3(.g10(evalTerm(.v6329, .v6290)), .v6290, .v6330)" ],
+  [ "n310", ".f3(.g10(.g8(.v6329, .v6290)), .v6290, .v6330)" ],
+  [ "n311", ".g10(.g8(.v6329, .v6290))" ],
+  [ "n312", ".v6290" ],
+  [ "n313", ".v6329" ],
+  [ "n314", ".v6290" ],
+  [ "n315", ".v6330" ],
+  [ "n316", ".f3(.v6349, .v6350, .v6351)" ],
+  [ "n317", ".f2(evalInt(.v6351, .v6350), .v6349)" ],
+  [ "n318", ".f2(.g10(evalTerm(.v6351, .v6350)), .v6349)" ],
+  [ "n319", ".f2(.g10(.g8(.v6351, .v6350)), .v6349)" ],
+  [ "n320", ".g10(.g8(.v6351, .v6350))" ],
+  [ "n321", ".v6350" ],
+  [ "n322", ".v6351" ],
+  [ "n323", ".v6349" ],
+  [ "n324", ".f2(.v6353, .v6354)" ],
+  [ "n325", "Int(-(.v6354, .v6353))" ],
+  [ "n326", "-(.v6354, .v6353)" ],
+  [ "n327", ".v6354" ],
+  [ "n328", ".v6353" ],
+  [ "n329", "fetchCell(.v6290, .v6331)" ],
+  [ "n330", ".g1(.v6290, .v6331)" ],
+  [ "n331", ".v6290" ],
+  [ "n332", ".g0(=(.v6331, .v6355), .v6356, .v6331, .v6357)" ],
+  [ "n333", "=(.v6331, .v6355)" ],
+  [ "n334", ".v6331" ],
+  [ "n335", ".v6355" ],
+  [ "n336", "fetchCell(.v6357, .v6331)" ],
+  [ "n337", ".g1(.v6357, .v6331)" ],
+  [ "n338", ".v6357" ],
+  [ "n339", ".v6331" ],
+  [ "n340", ".v6356" ],
+  [ "n341", "Panic(++(\"the variable is unbound: \", .v6331))" ],
+  [ "n342", "++(\"the variable is unbound: \", .v6331)" ],
+  [ "n343", "\"the variable is unbound: \"" ],
+  [ "n344", ".v6331" ],
+  [ "n345", ".g10(.v6322)" ],
+  [ "n346", ".v6322" ],
+  [ "n347", ".v6289" ],
+  [ "n348", ".f6(.v6308, .v6309)" ],
+  [ "n349", "Boolean(>(.v6309, .v6308))" ],
+  [ "n350", ">(.v6309, .v6308)" ],
+  [ "n351", ".v6309" ],
+  [ "n352", ".v6308" ],
+  [ "n353", "Int(.v6282)" ],
+  [ "n354", ".v6282" ],
+  [
+    "n355",
+    ".f5(evalInt(.v6283, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6284)"
   ],
   [
-    "n417", ".g6(.g9(.g8(.v297, .v291)), .v291, .v298, While(.v297, .v298))"
+    "n356",
+    ".f5(.g10(evalTerm(.v6283, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6284)"
   ],
-  [ "n418", ".g9(.g8(.v297, .v291))" ],
-  [ "n419", ".g8(.v297, .v291)" ],
-  [ "n420", ".v291" ],
-  [ "n421", ".v297" ],
-  [ "n422", ".g9(.v391)" ],
-  [ "n423", ".v391" ],
-  [ "n424", ".v291" ],
-  [ "n425", ".v298" ],
-  [ "n426", "While(.v297, .v298)" ],
-  [ "n427", ".v297" ],
-  [ "n428", ".v298" ],
-  [ "n429", ".g6(.v375, .v376, .v377, .v378)" ],
-  [ "n430", ".v375" ],
-  [ "n431", ".v376" ],
-  [ "n432", ".v377" ],
-  [ "n433", ".v378" ],
-  [ "n434", "evalProgram(.v110, .v119)" ],
-  [ "n435", ".g4(.v110, .v119)" ],
-  [ "n436", ".v110" ],
-  [ "n437", ".v119" ],
-  [ "n438", ".v100" ],
-  [ "n439", "evalStmt(.v82, .v83)" ],
-  [ "n440", ".g7(.v82, .v83, .v82)" ],
-  [ "n441", ".v82" ],
-  [ "n442", ".v83" ],
-  [ "n443", "fetchCell(evalProgram(Nil(), .v37), .v22)" ],
-  [ "n444", "fetchCell(.g4(Nil(), .v37), .v22)" ],
-  [ "n445", "fetchCell(.v37, .v22)" ],
-  [ "n446", ".g1(.v37, .v22)" ],
-  [ "n447", ".v22" ],
-  [ "n448", ".v37" ]
+  [
+    "n357",
+    ".f5(.g10(.g8(.v6283, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6284)"
+  ],
+  [
+    "n358",
+    ".g10(.g8(.v6283, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [ "n359", ".v6283" ],
+  [ "n360", ".v79" ],
+  [ "n361", ".v80" ],
+  [ "n362", ".v82" ],
+  [ "n363", ".v85" ],
+  [ "n364", ".v86" ],
+  [ "n365", ".v89" ],
+  [ "n366", ".v90" ],
+  [ "n367", ".v92" ],
+  [ "n368", ".v93" ],
+  [
+    "n369",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n370", ".v79" ],
+  [ "n371", ".v80" ],
+  [
+    "n372",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n373", ".v82" ],
+  [ "n374", "Int(.v85)" ],
+  [ "n375", ".v85" ],
+  [ "n376", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n377", ".v86" ],
+  [ "n378", "Int(.v89)" ],
+  [ "n379", ".v89" ],
+  [ "n380", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n381", ".v90" ],
+  [ "n382", "Int(.v93)" ],
+  [ "n383", ".v93" ],
+  [ "n384", ".v92" ],
+  [ "n385", ".v6284" ],
+  [ "n386", ".f5(.v6360, .v6361, .v6362)" ],
+  [ "n387", ".f4(evalInt(.v6362, .v6361), .v6360)" ],
+  [ "n388", ".f4(.g10(evalTerm(.v6362, .v6361)), .v6360)" ],
+  [ "n389", ".f4(.g10(.g8(.v6362, .v6361)), .v6360)" ],
+  [ "n390", ".v6360" ],
+  [ "n391", ".v6361" ],
+  [ "n392", ".v6362" ],
+  [
+    "n393",
+    ".f3(evalInt(.v6285, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6286)"
+  ],
+  [
+    "n394",
+    ".f3(.g10(evalTerm(.v6285, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6286)"
+  ],
+  [
+    "n395",
+    ".f3(.g10(.g8(.v6285, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6286)"
+  ],
+  [
+    "n396",
+    ".g10(.g8(.v6285, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [ "n397", ".v6285" ],
+  [ "n398", ".v79" ],
+  [ "n399", ".v80" ],
+  [ "n400", ".v82" ],
+  [ "n401", ".v85" ],
+  [ "n402", ".v86" ],
+  [ "n403", ".v89" ],
+  [ "n404", ".v90" ],
+  [ "n405", ".v92" ],
+  [ "n406", ".v93" ],
+  [
+    "n407",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n408", ".v79" ],
+  [ "n409", ".v80" ],
+  [
+    "n410",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n411", ".v82" ],
+  [ "n412", "Int(.v85)" ],
+  [ "n413", ".v85" ],
+  [ "n414", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n415", ".v86" ],
+  [ "n416", "Int(.v89)" ],
+  [ "n417", ".v89" ],
+  [ "n418", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n419", ".v90" ],
+  [ "n420", "Int(.v93)" ],
+  [ "n421", ".v93" ],
+  [ "n422", ".v92" ],
+  [ "n423", ".v6286" ],
+  [ "n424", ".f3(.v6364, .v6365, .v6366)" ],
+  [ "n425", ".f2(evalInt(.v6366, .v6365), .v6364)" ],
+  [ "n426", ".f2(.g10(evalTerm(.v6366, .v6365)), .v6364)" ],
+  [ "n427", ".f2(.g10(.g8(.v6366, .v6365)), .v6364)" ],
+  [ "n428", ".v6364" ],
+  [ "n429", ".v6365" ],
+  [ "n430", ".v6366" ],
+  [
+    "n431",
+    "fetchCell(Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6287)"
+  ],
+  [
+    "n432",
+    ".g1(Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v6287)"
+  ],
+  [
+    "n433",
+    ".g0(=(.v6287, .v79), .v80, .v6287, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n434", "=(.v6287, .v79)" ],
+  [ "n435", ".v6287" ],
+  [ "n436", ".v79" ],
+  [
+    "n437",
+    "fetchCell(Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))), .v6287)"
+  ],
+  [
+    "n438",
+    ".g1(Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))), .v6287)"
+  ],
+  [
+    "n439",
+    ".g0(=(.v6287, .v82), Int(.v85), .v6287, Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n440", "=(.v6287, .v82)" ],
+  [ "n441", ".v6287" ],
+  [ "n442", ".v82" ],
+  [
+    "n443",
+    "fetchCell(Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)), .v6287)"
+  ],
+  [
+    "n444", ".g1(Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)), .v6287)"
+  ],
+  [
+    "n445",
+    ".g0(=(.v6287, .v86), Int(.v89), .v6287, Cell(.v90, Int(.v93), .v92))"
+  ],
+  [ "n446", "=(.v6287, .v86)" ],
+  [ "n447", ".v6287" ],
+  [ "n448", ".v86" ],
+  [ "n449", "fetchCell(Cell(.v90, Int(.v93), .v92), .v6287)" ],
+  [ "n450", ".g1(Cell(.v90, Int(.v93), .v92), .v6287)" ],
+  [ "n451", ".g0(=(.v6287, .v90), Int(.v93), .v6287, .v92)" ],
+  [ "n452", "=(.v6287, .v90)" ],
+  [ "n453", ".v6287" ],
+  [ "n454", ".v90" ],
+  [ "n455", "fetchCell(.v92, .v6287)" ],
+  [ "n456", ".g1(.v92, .v6287)" ],
+  [ "n457", ".v92" ],
+  [ "n458", ".v6287" ],
+  [ "n459", "Int(.v93)" ],
+  [ "n460", ".v93" ],
+  [ "n461", "Int(.v89)" ],
+  [ "n462", ".v89" ],
+  [ "n463", "Int(.v85)" ],
+  [ "n464", ".v85" ],
+  [ "n465", ".v80" ],
+  [ "n466", "updateCell(.v6276, .v6277, .v6278)" ],
+  [ "n467", ".g3(.v6276, .v6278, .v6277)" ],
+  [ "n468", ".v6276" ],
+  [
+    "n469", ".g2(=(.v6277, .v6371), .v6278, .v6372, .v6277, .v6373, .v6371)"
+  ],
+  [ "n470", "=(.v6277, .v6371)" ],
+  [ "n471", ".v6277" ],
+  [ "n472", ".v6371" ],
+  [ "n473", ".f1(updateCell(.v6373, .v6277, .v6278), .v6372, .v6371)" ],
+  [ "n474", ".f1(.g3(.v6373, .v6278, .v6277), .v6372, .v6371)" ],
+  [ "n475", ".g3(.v6373, .v6278, .v6277)" ],
+  [ "n476", ".v6373" ],
+  [ "n477", ".v6277" ],
+  [ "n478", ".v6278" ],
+  [ "n479", ".v6372" ],
+  [ "n480", ".v6371" ],
+  [ "n481", ".f1(.v6376, .v6377, .v6378)" ],
+  [ "n482", "Cell(.v6378, .v6377, .v6376)" ],
+  [ "n483", ".v6378" ],
+  [ "n484", ".v6377" ],
+  [ "n485", ".v6376" ],
+  [ "n486", "Cell(.v6371, .v6278, .v6373)" ],
+  [ "n487", ".v6371" ],
+  [ "n488", ".v6278" ],
+  [ "n489", ".v6373" ],
+  [ "n490", "Cell(.v6277, .v6278, Nil())" ],
+  [ "n491", ".v6277" ],
+  [ "n492", ".v6278" ],
+  [ "n493", "Nil()" ],
+  [ "n494", "evalProgram(.v6162, .v6163)" ],
+  [ "n495", ".g4(.v6162, .v6163)" ],
+  [ "n496", ".v6162" ],
+  [ "n497", "evalProgram(.v6380, evalStmt(.v6379, .v6163))" ],
+  [ "n498", "evalProgram(.v6380, .g7(.v6379, .v6163, .v6379))" ],
+  [ "n499", ".v6379" ],
+  [
+    "n500",
+    "evalProgram(.v6380, updateCell(.v6163, .v6381, evalTerm(.v6382, .v6163)))"
+  ],
+  [
+    "n501",
+    "evalProgram(.v6380, updateCell(.v6163, .v6381, .g8(.v6382, .v6163)))"
+  ],
+  [ "n502", ".v6380" ],
+  [ "n503", "updateCell(.v6163, .v6381, .g8(.v6382, .v6163))" ],
+  [ "n504", ".v6163" ],
+  [ "n505", ".v6381" ],
+  [ "n506", ".g8(.v6382, .v6163)" ],
+  [ "n507", ".v6163" ],
+  [ "n508", ".v6382" ],
+  [ "n509", "updateCell(.v6447, .v6448, .v6449)" ],
+  [ "n510", ".g3(.v6447, .v6449, .v6448)" ],
+  [ "n511", ".v6447" ],
+  [ "n512", ".v6448" ],
+  [ "n513", ".v6449" ],
+  [ "n514", "evalProgram(.v6423, .v6424)" ],
+  [ "n515", ".g4(.v6423, .v6424)" ],
+  [ "n516", ".v6423" ],
+  [ "n517", ".v6424" ],
+  [ "n518", ".g5(evalBoolean(.v6383, .v6163), .v6385, .v6163, .v6384)" ],
+  [ "n519", ".g5(.g9(evalTerm(.v6383, .v6163)), .v6385, .v6163, .v6384)" ],
+  [ "n520", ".g5(.g9(.g8(.v6383, .v6163)), .v6385, .v6163, .v6384)" ],
+  [ "n521", ".g9(.g8(.v6383, .v6163))" ],
+  [ "n522", ".g8(.v6383, .v6163)" ],
+  [ "n523", ".v6163" ],
+  [ "n524", ".v6383" ],
+  [ "n525", ".g9(.v6482)" ],
+  [ "n526", ".v6482" ],
+  [ "n527", ".v6483" ],
+  [ "n528", "Panic(\"want `Boolean(b)`, got `Int(n)`\")" ],
+  [ "n529", "\"want `Boolean(b)`, got `Int(n)`\"" ],
+  [ "n530", ".v6385" ],
+  [ "n531", ".v6163" ],
+  [ "n532", ".v6384" ],
+  [ "n533", ".g5(.v6466, .v6467, .v6468, .v6469)" ],
+  [ "n534", ".v6466" ],
+  [ "n535", "evalProgram(.v6467, .v6468)" ],
+  [ "n536", ".g4(.v6467, .v6468)" ],
+  [ "n537", ".v6467" ],
+  [ "n538", ".v6468" ],
+  [ "n539", "evalProgram(.v6469, .v6468)" ],
+  [ "n540", ".g4(.v6469, .v6468)" ],
+  [ "n541", ".v6469" ],
+  [ "n542", ".v6468" ],
+  [ "n543", "evalProgram(.v6380, .v6386)" ],
+  [ "n544", ".g4(.v6380, .v6386)" ],
+  [ "n545", ".v6380" ],
+  [ "n546", ".v6386" ],
+  [
+    "n547",
+    ".g6(evalBoolean(.v6387, .v6163), .v6163, .v6388, While(.v6387, .v6388))"
+  ],
+  [
+    "n548",
+    ".g6(.g9(evalTerm(.v6387, .v6163)), .v6163, .v6388, While(.v6387, .v6388))"
+  ],
+  [
+    "n549",
+    ".g6(.g9(.g8(.v6387, .v6163)), .v6163, .v6388, While(.v6387, .v6388))"
+  ],
+  [ "n550", ".g9(.g8(.v6387, .v6163))" ],
+  [ "n551", ".g8(.v6387, .v6163)" ],
+  [ "n552", ".v6163" ],
+  [ "n553", ".v6387" ],
+  [ "n554", ".g9(.v6520)" ],
+  [ "n555", ".v6520" ],
+  [ "n556", ".v6163" ],
+  [ "n557", ".v6388" ],
+  [ "n558", "While(.v6387, .v6388)" ],
+  [ "n559", ".v6387" ],
+  [ "n560", ".v6388" ],
+  [ "n561", ".g6(.v6504, .v6505, .v6506, .v6507)" ],
+  [ "n562", ".v6504" ],
+  [ "n563", ".v6505" ],
+  [ "n564", "evalStmt(.v6507, evalProgram(.v6506, .v6505))" ],
+  [ "n565", "evalStmt(.v6507, .g4(.v6506, .v6505))" ],
+  [ "n566", ".g4(.v6506, .v6505)" ],
+  [ "n567", ".v6506" ],
+  [ "n568", ".v6505" ],
+  [ "n569", "evalStmt(.v6507, .v6521)" ],
+  [ "n570", ".g7(.v6507, .v6521, .v6507)" ],
+  [ "n571", ".v6507" ],
+  [ "n572", "updateCell(.v6521, .v6522, evalTerm(.v6523, .v6521))" ],
+  [ "n573", "updateCell(.v6521, .v6522, .g8(.v6523, .v6521))" ],
+  [ "n574", ".v6521" ],
+  [ "n575", ".v6522" ],
+  [ "n576", ".g8(.v6523, .v6521)" ],
+  [ "n577", ".v6521" ],
+  [ "n578", ".v6523" ],
+  [ "n579", "updateCell(.v6551, .v6552, .v6553)" ],
+  [ "n580", ".g3(.v6551, .v6553, .v6552)" ],
+  [ "n581", ".v6551" ],
+  [ "n582", ".v6552" ],
+  [ "n583", ".v6553" ],
+  [ "n584", ".g5(evalBoolean(.v6524, .v6521), .v6526, .v6521, .v6525)" ],
+  [ "n585", ".g5(.g9(evalTerm(.v6524, .v6521)), .v6526, .v6521, .v6525)" ],
+  [ "n586", ".g5(.g9(.g8(.v6524, .v6521)), .v6526, .v6521, .v6525)" ],
+  [ "n587", ".g9(.g8(.v6524, .v6521))" ],
+  [ "n588", ".g8(.v6524, .v6521)" ],
+  [ "n589", ".v6521" ],
+  [ "n590", ".v6524" ],
+  [ "n591", ".g9(.v6586)" ],
+  [ "n592", ".v6586" ],
+  [ "n593", ".v6526" ],
+  [ "n594", ".v6521" ],
+  [ "n595", ".v6525" ],
+  [ "n596", ".g5(.v6570, .v6571, .v6572, .v6573)" ],
+  [ "n597", ".v6570" ],
+  [ "n598", ".v6571" ],
+  [ "n599", ".v6572" ],
+  [ "n600", ".v6573" ],
+  [
+    "n601",
+    ".g6(evalBoolean(.v6527, .v6521), .v6521, .v6528, While(.v6527, .v6528))"
+  ],
+  [
+    "n602",
+    ".g6(.g9(evalTerm(.v6527, .v6521)), .v6521, .v6528, While(.v6527, .v6528))"
+  ],
+  [
+    "n603",
+    ".g6(.g9(.g8(.v6527, .v6521)), .v6521, .v6528, While(.v6527, .v6528))"
+  ],
+  [ "n604", ".g9(.g8(.v6527, .v6521))" ],
+  [ "n605", ".g8(.v6527, .v6521)" ],
+  [ "n606", ".v6521" ],
+  [ "n607", ".v6527" ],
+  [ "n608", ".g9(.v6622)" ],
+  [ "n609", ".v6622" ],
+  [ "n610", ".v6521" ],
+  [ "n611", ".v6528" ],
+  [ "n612", "While(.v6527, .v6528)" ],
+  [ "n613", ".v6527" ],
+  [ "n614", ".v6528" ],
+  [ "n615", ".g6(.v6606, .v6607, .v6608, .v6609)" ],
+  [ "n616", ".v6606" ],
+  [ "n617", ".v6607" ],
+  [ "n618", ".v6608" ],
+  [ "n619", ".v6609" ],
+  [ "n620", "evalProgram(.v6380, .v6389)" ],
+  [ "n621", ".g4(.v6380, .v6389)" ],
+  [ "n622", ".v6380" ],
+  [ "n623", ".v6389" ],
+  [ "n624", ".v6163" ],
+  [
+    "n625",
+    ".g5(evalBoolean(.v98, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))), .v100, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v99)"
+  ],
+  [
+    "n626",
+    ".g5(.g9(evalTerm(.v98, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), .v100, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v99)"
+  ],
+  [
+    "n627",
+    ".g5(.g9(.g8(.v98, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), .v100, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v99)"
+  ],
+  [
+    "n628",
+    ".g9(.g8(.v98, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [
+    "n629",
+    ".g8(.v98, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))"
+  ],
+  [ "n630", ".v79" ],
+  [ "n631", ".v80" ],
+  [ "n632", ".v82" ],
+  [ "n633", ".v85" ],
+  [ "n634", ".v86" ],
+  [ "n635", ".v89" ],
+  [ "n636", ".v90" ],
+  [ "n637", ".v92" ],
+  [ "n638", ".v93" ],
+  [ "n639", ".v98" ],
+  [ "n640", ".g9(.v6670)" ],
+  [ "n641", ".v6670" ],
+  [ "n642", ".v100" ],
+  [
+    "n643",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n644", ".v79" ],
+  [ "n645", ".v80" ],
+  [
+    "n646",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n647", ".v82" ],
+  [ "n648", "Int(.v85)" ],
+  [ "n649", ".v85" ],
+  [ "n650", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n651", ".v86" ],
+  [ "n652", "Int(.v89)" ],
+  [ "n653", ".v89" ],
+  [ "n654", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n655", ".v90" ],
+  [ "n656", "Int(.v93)" ],
+  [ "n657", ".v93" ],
+  [ "n658", ".v92" ],
+  [ "n659", ".v99" ],
+  [ "n660", ".g5(.v6654, .v6655, .v6656, .v6657)" ],
+  [ "n661", ".v6654" ],
+  [ "n662", ".v6655" ],
+  [ "n663", ".v6656" ],
+  [ "n664", ".v6657" ],
+  [ "n665", "evalProgram(.v95, .v101)" ],
+  [ "n666", ".g4(.v95, .v101)" ],
+  [ "n667", ".v95" ],
+  [ "n668", ".v101" ],
+  [
+    "n669",
+    ".g6(evalBoolean(.v102, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v103, While(.v102, .v103))"
+  ],
+  [
+    "n670",
+    ".g6(.g9(evalTerm(.v102, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v103, While(.v102, .v103))"
+  ],
+  [
+    "n671",
+    ".g6(.g9(.g8(.v102, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))), Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))), .v103, While(.v102, .v103))"
+  ],
+  [
+    "n672",
+    ".g9(.g8(.v102, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))))"
+  ],
+  [
+    "n673",
+    ".g8(.v102, Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))))"
+  ],
+  [ "n674", ".v79" ],
+  [ "n675", ".v80" ],
+  [ "n676", ".v82" ],
+  [ "n677", ".v85" ],
+  [ "n678", ".v86" ],
+  [ "n679", ".v89" ],
+  [ "n680", ".v90" ],
+  [ "n681", ".v92" ],
+  [ "n682", ".v93" ],
+  [ "n683", ".v102" ],
+  [ "n684", ".g9(.v6722)" ],
+  [ "n685", ".v6722" ],
+  [
+    "n686",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n687", ".v79" ],
+  [ "n688", ".v80" ],
+  [
+    "n689",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n690", ".v82" ],
+  [ "n691", "Int(.v85)" ],
+  [ "n692", ".v85" ],
+  [ "n693", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n694", ".v86" ],
+  [ "n695", "Int(.v89)" ],
+  [ "n696", ".v89" ],
+  [ "n697", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n698", ".v90" ],
+  [ "n699", "Int(.v93)" ],
+  [ "n700", ".v93" ],
+  [ "n701", ".v92" ],
+  [ "n702", ".v103" ],
+  [ "n703", "While(.v102, .v103)" ],
+  [ "n704", ".v102" ],
+  [ "n705", ".v103" ],
+  [ "n706", ".g6(.v6706, .v6707, .v6708, .v6709)" ],
+  [ "n707", ".v6706" ],
+  [ "n708", ".v6707" ],
+  [ "n709", ".v6708" ],
+  [ "n710", ".v6709" ],
+  [ "n711", "evalProgram(.v95, .v104)" ],
+  [ "n712", ".g4(.v95, .v104)" ],
+  [ "n713", ".v95" ],
+  [ "n714", ".v104" ],
+  [
+    "n715",
+    "Cell(.v79, .v80, Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))))"
+  ],
+  [ "n716", ".v79" ],
+  [ "n717", ".v80" ],
+  [
+    "n718",
+    "Cell(.v82, Int(.v85), Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92)))"
+  ],
+  [ "n719", ".v82" ],
+  [ "n720", "Int(.v85)" ],
+  [ "n721", ".v85" ],
+  [ "n722", "Cell(.v86, Int(.v89), Cell(.v90, Int(.v93), .v92))" ],
+  [ "n723", ".v86" ],
+  [ "n724", "Int(.v89)" ],
+  [ "n725", ".v89" ],
+  [ "n726", "Cell(.v90, Int(.v93), .v92)" ],
+  [ "n727", ".v90" ],
+  [ "n728", "Int(.v93)" ],
+  [ "n729", ".v93" ],
+  [ "n730", ".v92" ],
+  [
+    "n731",
+    "fetchCell(evalProgram(Nil(), evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), .v50)), .v6)"
+  ],
+  [
+    "n732",
+    "fetchCell(evalProgram(Nil(), .g7(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), .v50, While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n733",
+    "fetchCell(evalProgram(Nil(), .g6(evalBoolean(GreaterThan(Var(.v48), Int(.v35)), .v50), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n734",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(evalTerm(GreaterThan(Var(.v48), Int(.v35)), .v50)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n735",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.g8(GreaterThan(Var(.v48), Int(.v35)), .v50)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n736",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(evalInt(Var(.v48), .v50), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n737",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(evalTerm(Var(.v48), .v50)), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n738",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g8(Var(.v48), .v50)), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n739",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(fetchCell(.v50, .v48)), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n740",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.g1(.v50, .v48)), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [ "n741", ".g1(.v50, .v48)" ],
+  [ "n742", ".v50" ],
+  [ "n743", ".v48" ],
+  [
+    "n744",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.g10(.v6723), .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [ "n745", ".g10(.v6723)" ],
+  [ "n746", ".v6723" ],
+  [
+    "n747",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f7(.v6724, .v50, Int(.v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n748",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(evalInt(Int(.v35), .v50), .v6724)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n749",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(evalTerm(Int(.v35), .v50)), .v6724)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n750",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(.g8(Int(.v35), .v50)), .v6724)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n751",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.g10(Int(.v35)), .v6724)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n752",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(.f6(.v35, .v6724)), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n753",
+    "fetchCell(evalProgram(Nil(), .g6(.g9(Boolean(>(.v6724, .v35))), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n754",
+    "fetchCell(evalProgram(Nil(), .g6(>(.v6724, .v35), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))), .v6)"
+  ],
+  [
+    "n755",
+    ".g6(>(.v6724, .v35), .v50, Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))))"
+  ],
+  [ "n756", ">(.v6724, .v35)" ],
+  [ "n757", ".v6724" ],
+  [ "n758", ".v35" ],
+  [ "n759", ".v50" ],
+  [
+    "n760",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), .v50))"
+  ],
+  [
+    "n761",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), .g4(Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())), .v50))"
+  ],
+  [
+    "n762",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), evalStmt(Assign(.v6, Mul(Var(.v6), Var(.v45))), .v50)))"
+  ],
+  [
+    "n763",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), .g7(Assign(.v6, Mul(Var(.v6), Var(.v45))), .v50, Assign(.v6, Mul(Var(.v6), Var(.v45))))))"
+  ],
+  [
+    "n764",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, evalTerm(Mul(Var(.v6), Var(.v45)), .v50))))"
+  ],
+  [
+    "n765",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .g8(Mul(Var(.v6), Var(.v45)), .v50))))"
+  ],
+  [
+    "n766",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(evalInt(Var(.v6), .v50), .v50, Var(.v45)))))"
+  ],
+  [
+    "n767",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.g10(evalTerm(Var(.v6), .v50)), .v50, Var(.v45)))))"
+  ],
+  [
+    "n768",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.g10(.g8(Var(.v6), .v50)), .v50, Var(.v45)))))"
+  ],
+  [
+    "n769",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.g10(fetchCell(.v50, .v6)), .v50, Var(.v45)))))"
+  ],
+  [
+    "n770",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.g10(.g1(.v50, .v6)), .v50, Var(.v45)))))"
+  ],
+  [ "n771", ".g1(.v50, .v6)" ],
+  [ "n772", ".v50" ],
+  [ "n773", ".v6" ],
+  [
+    "n774",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.g10(.v6727), .v50, Var(.v45)))))"
+  ],
+  [ "n775", ".g10(.v6727)" ],
+  [ "n776", ".v6727" ],
+  [
+    "n777",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f5(.v6728, .v50, Var(.v45)))))"
+  ],
+  [
+    "n778",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(evalInt(Var(.v45), .v50), .v6728))))"
+  ],
+  [
+    "n779",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.g10(evalTerm(Var(.v45), .v50)), .v6728))))"
+  ],
+  [
+    "n780",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.g10(.g8(Var(.v45), .v50)), .v6728))))"
+  ],
+  [
+    "n781",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.g10(fetchCell(.v50, .v45)), .v6728))))"
+  ],
+  [
+    "n782",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.g10(.g1(.v50, .v45)), .v6728))))"
+  ],
+  [ "n783", ".g1(.v50, .v45)" ],
+  [ "n784", ".v50" ],
+  [ "n785", ".v45" ],
+  [
+    "n786",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.g10(.v6729), .v6728))))"
+  ],
+  [ "n787", ".g10(.v6729)" ],
+  [ "n788", ".v6729" ],
+  [
+    "n789",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, .f4(.v6730, .v6728))))"
+  ],
+  [
+    "n790",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), updateCell(.v50, .v6, Int(*(.v6728, .v6730)))))"
+  ],
+  [
+    "n791",
+    "evalStmt(While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))), evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), .g3(.v50, Int(*(.v6728, .v6730)), .v6)))"
+  ],
+  [
+    "n792",
+    "While(GreaterThan(Var(.v48), Int(.v35)), Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())))"
+  ],
+  [ "n793", "GreaterThan(Var(.v48), Int(.v35))" ],
+  [ "n794", "Var(.v48)" ],
+  [ "n795", ".v48" ],
+  [ "n796", "Int(.v35)" ],
+  [ "n797", ".v35" ],
+  [
+    "n798",
+    "Cons(Assign(.v6, Mul(Var(.v6), Var(.v45))), Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()))"
+  ],
+  [ "n799", "Assign(.v6, Mul(Var(.v6), Var(.v45)))" ],
+  [ "n800", ".v6" ],
+  [ "n801", "Mul(Var(.v6), Var(.v45))" ],
+  [ "n802", "Var(.v6)" ],
+  [ "n803", ".v6" ],
+  [ "n804", "Var(.v45)" ],
+  [ "n805", ".v45" ],
+  [ "n806", "Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())" ],
+  [ "n807", "Assign(.v48, Sub(Var(.v48), Int(.v49)))" ],
+  [ "n808", ".v48" ],
+  [ "n809", "Sub(Var(.v48), Int(.v49))" ],
+  [ "n810", "Var(.v48)" ],
+  [ "n811", ".v48" ],
+  [ "n812", "Int(.v49)" ],
+  [ "n813", ".v49" ],
+  [ "n814", "Nil()" ],
+  [
+    "n815",
+    "evalProgram(Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil()), .g3(.v50, Int(*(.v6728, .v6730)), .v6))"
+  ],
+  [ "n816", "Cons(Assign(.v48, Sub(Var(.v48), Int(.v49))), Nil())" ],
+  [ "n817", "Assign(.v48, Sub(Var(.v48), Int(.v49)))" ],
+  [ "n818", ".v48" ],
+  [ "n819", "Sub(Var(.v48), Int(.v49))" ],
+  [ "n820", "Var(.v48)" ],
+  [ "n821", ".v48" ],
+  [ "n822", "Int(.v49)" ],
+  [ "n823", ".v49" ],
+  [ "n824", "Nil()" ],
+  [ "n825", ".g3(.v50, Int(*(.v6728, .v6730)), .v6)" ],
+  [ "n826", ".v50" ],
+  [
+    "n827",
+    ".g2(=(.v6, .v6789), Int(*(.v6728, .v6730)), .v6790, .v6, .v6791, .v6789)"
+  ],
+  [ "n828", "=(.v6, .v6789)" ],
+  [ "n829", ".v6" ],
+  [ "n830", ".v6789" ],
+  [
+    "n831",
+    ".f1(updateCell(.v6791, .v6, Int(*(.v6728, .v6730))), .v6790, .v6789)"
+  ],
+  [ "n832", ".f1(.g3(.v6791, Int(*(.v6728, .v6730)), .v6), .v6790, .v6789)" ],
+  [ "n833", ".g3(.v6791, Int(*(.v6728, .v6730)), .v6)" ],
+  [ "n834", ".v6791" ],
+  [ "n835", ".v6" ],
+  [ "n836", ".v6728" ],
+  [ "n837", ".v6730" ],
+  [ "n838", ".v6790" ],
+  [ "n839", ".v6789" ],
+  [ "n840", ".f1(.v6794, .v6795, .v6796)" ],
+  [ "n841", "Cell(.v6796, .v6795, .v6794)" ],
+  [ "n842", ".v6796" ],
+  [ "n843", ".v6795" ],
+  [ "n844", ".v6794" ],
+  [ "n845", "Cell(.v6789, Int(*(.v6728, .v6730)), .v6791)" ],
+  [ "n846", ".v6789" ],
+  [ "n847", "Int(*(.v6728, .v6730))" ],
+  [ "n848", "*(.v6728, .v6730)" ],
+  [ "n849", ".v6728" ],
+  [ "n850", ".v6730" ],
+  [ "n851", ".v6791" ],
+  [ "n852", "Cell(.v6, Int(*(.v6728, .v6730)), Nil())" ],
+  [ "n853", ".v6" ],
+  [ "n854", "Int(*(.v6728, .v6730))" ],
+  [ "n855", "*(.v6728, .v6730)" ],
+  [ "n856", ".v6728" ],
+  [ "n857", ".v6730" ],
+  [ "n858", "Nil()" ],
+  [ "n859", "evalProgram(.v6787, .v6788)" ],
+  [ "n860", ".g4(.v6787, .v6788)" ],
+  [ "n861", ".v6787" ],
+  [ "n862", ".v6788" ],
+  [ "n863", "evalStmt(.v6770, .v6771)" ],
+  [ "n864", ".g7(.v6770, .v6771, .v6770)" ],
+  [ "n865", ".v6770" ],
+  [ "n866", ".v6771" ],
+  [ "n867", "fetchCell(evalProgram(Nil(), .v6725), .v6)" ],
+  [ "n868", "fetchCell(.g4(Nil(), .v6725), .v6)" ],
+  [ "n869", "fetchCell(.v6725, .v6)" ],
+  [ "n870", ".g1(.v6725, .v6)" ],
+  [ "n871", ".v6725" ],
+  [ "n872", ".v6" ]
 ]
