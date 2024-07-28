@@ -1,0 +1,173 @@
+main() :=
+    let input := cons(Const(1i32), cons(Const(2i32), cons(Const(3i32),
+        cons(Const(4i32), cons(Const(5i32), nil())))));
+    eval(Nil(), FCall("sum", Cons(input, Nil())));
+
+nil() := CCall("Nil", Nil());
+
+cons(x, xs) := CCall("Cons", Cons(x, Cons(xs, Nil())));
+
+program() :=
+    Rule("sum", Cons("xs", Nil()),
+        Match(Var("xs"),
+            Case("Nil", Nil(), Const(0i32),
+            Case("Cons", Cons("x", Cons("xs", Nil())), Op2(Var("x"), Add(),
+                FCall("sum", Cons(Var("xs"), Nil()))),
+            Nil()))),
+    Nil());
+
+// We do not account for object-level panics in this implementation.
+eval(env, t) := match t {
+    Var(x) -> eval(Nil(), lookup(env, x)),
+    Const(const) -> Const(const),
+    FCall(f, args) ->
+        let RuleDef(params, body) := findRuleDef(f);
+        eval(evalArgs(env, params, args), body),
+    CCall(c, args) ->
+        let args := substArgs(env, args);
+        CCall(c, args),
+    Op1(op, t) ->
+        let Const(tVal) := eval(env, t);
+        evalOp1(op, tVal),
+    Op2(t1, op, t2) ->
+        let Const(t1Val) := eval(env, t1);
+        let Const(t2Val) := eval(env, t2);
+        evalOp2(t1Val, op, t2Val),
+    Match(t, cases) ->
+        let CCall(c, args) := eval(env, t);
+        let CaseDef(params, body) := findCaseDef(c, cases);
+        eval(bind(env, params, args), body),
+    Let(x, t, u) ->
+        let tVal := eval(env, t);
+        eval(Cell(x, tVal, env), u)
+};
+
+evalArgs(env, params, args) := match params {
+    Nil() -> Nil(),
+    Cons(x, params) ->
+        let Cons(t, args) := args;
+        cellOf(x, eval(env, t), evalArgs(env, params, args))
+};
+
+cellOf(x, tVal, env) := Cell(x, tVal, env);
+
+evalOp1(op, tVal) := match op {
+    BitNot() -> constOf(~(tVal)),
+    StringOf() -> constOf(string(tVal)),
+    StringOfChar() -> constOf(#(tVal)),
+    LengthOf() -> constOf(length(tVal)),
+    IntOf(ty) -> match ty {
+        U8() -> constOf(u8(tVal)),
+        U16() -> constOf(u16(tVal)),
+        U32() -> constOf(u32(tVal)),
+        U64() -> constOf(u64(tVal)),
+        U128() -> constOf(u128(tVal)),
+        I8() -> constOf(i8(tVal)),
+        I16() -> constOf(i16(tVal)),
+        I32() -> constOf(i32(tVal)),
+        I64() -> constOf(i64(tVal)),
+        I128() -> constOf(i128(tVal))
+    }
+};
+
+evalOp2(t1Val, op, t2Val) := match op {
+    Add() -> constOf(+(t1Val, t2Val)),
+    Sub() -> constOf(-(t1Val, t2Val)),
+    Mul() -> constOf(*(t1Val, t2Val)),
+    Div() -> constOf(/(t1Val, t2Val)),
+    Rem() -> constOf(%(t1Val, t2Val)),
+    BitOr() -> constOf(|(t1Val, t2Val)),
+    BitAnd() -> constOf(&(t1Val, t2Val)),
+    BitXor() -> constOf(^(t1Val, t2Val)),
+    LeftShift() -> constOf(<<(t1Val, t2Val)),
+    RightShift() -> constOf(>>(t1Val, t2Val)),
+    Equal() -> booleanOf(=(t1Val, t2Val)),
+    NotEqual() -> booleanOf(!=(t1Val, t2Val)),
+    GreaterThan() -> booleanOf(>(t1Val, t2Val)),
+    GreaterThanEqual() -> booleanOf(>=(t1Val, t2Val)),
+    LessThan() -> booleanOf(<(t1Val, t2Val)),
+    LessThanEqual() -> booleanOf(<=(t1Val, t2Val)),
+    PlusPlus() -> constOf(++(t1Val, t2Val)),
+    CharAt() -> constOf(get(t1Val, t2Val))
+};
+
+constOf(const) := Const(const);
+
+booleanOf(boolean) := match boolean {
+    T() -> CCall("T", Nil()),
+    F() -> CCall("F", Nil())
+};
+
+subst(env, t) := match t {
+    Var(x) -> lookup(env, x),
+    Const(const) -> Const(const),
+    FCall(f, args) ->
+        let args := substArgs(env, args);
+        FCall(f, args),
+    CCall(c, args) ->
+        let args := substArgs(env, args);
+        CCall(c, args),
+    Op1(op, t) ->
+        let t := subst(env, t);
+        Op1(op, t),
+    Op2(t1, op, t2) ->
+        let t1 := subst(env, t1);
+        let t2 := subst(env, t2);
+        Op2(t1, op, t2),
+    Match(t, cases) ->
+        let t := subst(env, t);
+        let cases := substCases(env, cases);
+        Match(t, cases),
+    Let(x, t, u) ->
+        let t := subst(env, t);
+        let u := subst(env, u);
+        Let(x, t, u)
+};
+
+substArgs(env, args) := match args {
+    Nil() -> Nil(),
+    Cons(t, args) -> consOf(subst(env, t), substArgs(env, args))
+};
+
+consOf(x, xs) := Cons(x, xs);
+
+substCases(env, cases) := match cases {
+    Nil() -> Nil(),
+    Case(c, params, t, cases) ->
+        caseOf(c, params, subst(env, t), substCases(env, cases))
+};
+
+caseOf(c, params, t, cases) := Case(c, params, t, cases);
+
+lookup(env, x) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", x)),
+    Cell(y, value, env) -> match =(x, y) {
+        T() -> value,
+        F() -> lookup(env, x)
+    }
+};
+
+bind(env, params, args) := match params {
+    Nil() -> env,
+    Cons(x, params) ->
+        let Cons(value, args) := args;
+        cellOf(x, value, bind(env, params, args))
+};
+
+findRuleDef(f) := findRuleDefAux(f, program());
+
+findRuleDefAux(f, rules) := match rules {
+    Nil() -> Panic(++("the function is undefined: ", f)),
+    Rule(f', params, t, rules) -> match =(f, f') {
+        T() -> RuleDef(params, t),
+        F() -> findRuleDefAux(f, rules)
+    }
+};
+
+findCaseDef(c, cases) := match cases {
+    Nil() -> Panic(++("the case is undefined: ", c)),
+    Case(c', params, t, cases) -> match =(c, c') {
+        T() -> CaseDef(params, t),
+        F() -> findCaseDef(c, cases)
+    }
+};
