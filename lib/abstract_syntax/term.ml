@@ -148,12 +148,16 @@ let redex_sig : t -> redex_sig =
       | Call (op, args) -> go_args ~op ~acc:[] args
     and go_args ~op ~acc = function
       | [] -> Some (op, List.rev acc)
-      | Call (c, [ _ ]) :: _rest when c = Symbol.of_string "Panic" -> None
-      | Const _ :: rest -> go_args ~op ~acc:(VConst :: acc) rest
-      | Call (c, _args) :: rest when Symbol.kind c = `CCall ->
-        go_args ~op ~acc:(VCCall c :: acc) rest
-      | t :: rest when is_neutral t -> go_args ~op ~acc:(VNeutral :: acc) rest
-      | t :: _rest -> go t
+      | t :: rest ->
+        let$ category = t in
+        go_args ~op ~acc:(category :: acc) rest
+    and ( let$ ) t k =
+        match t with
+        | Call (c, [ _ ]) when c = Symbol.of_string "Panic" -> None
+        | Const _ -> k VConst
+        | Call (c, _args) when Symbol.kind c = `CCall -> k (VCCall c)
+        | t when is_neutral t -> k VNeutral
+        | t -> go t
     in
     go
 ;;
