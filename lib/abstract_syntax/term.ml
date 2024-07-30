@@ -39,7 +39,68 @@ let panic fmt =
     Printf.ksprintf (fun s -> Call (Symbol.of_string "Panic", [ string s ])) fmt
 ;;
 
+let is_var = function
+  | Var _ -> true
+  | _ -> false
+;;
+
+let rec is_neutral = function
+  | Var _ -> true
+  | Const _ -> false
+  | Call (op, [ t ]) when Symbol.is_op1 op -> is_neutral t
+  | Call (op, [ t1; t2 ]) when Symbol.is_op2 op ->
+    (is_neutral t1 && is_value t2) || (is_value t1 && is_neutral t2)
+  | Call (_op, _args) -> false
+
+and is_value = function
+  | Var _ | Const _ -> true
+  | Call (op, args) ->
+    (match Symbol.kind op with
+     | `CCall -> op <> Symbol.of_string "Panic"
+     | `FCall -> is_neutral (Call (op, args))
+     | `GCall -> false)
+;;
+
 [@@@coverage on]
+
+let classify : t -> category =
+    let rec go = function
+      | Var _ | Const _ -> Trivial
+      | Call (op, args) -> go_call (Symbol.kind op, args)
+    and go_call = function
+      | `CCall, _args -> Trivial
+      | `GCall, Var _x :: _args -> Global
+      | (`FCall | `GCall), args -> go_args args
+    and go_args = function
+      | [] -> Local
+      | t :: rest ->
+        (match go t with
+         | Global -> Global
+         | Local | Trivial -> go_args rest)
+    in
+    go
+;;
+
+let redex_sig : t -> redex_sig =
+    let rec go = function
+      | Var _ | Const _ -> None
+      | Call (op, _args) when Symbol.is_lazy op -> None
+      | Call (op, args) -> go_args ~op ~acc:Fun.id args
+    and go_args ~op ~acc = function
+      | [] -> Some (op, acc [])
+      | t :: rest ->
+        let$ category = t in
+        go_args ~op ~acc:(fun xs -> acc (category :: xs)) rest
+    and ( let$ ) t k =
+        match t with
+        | Call (c, [ _ ]) when c = Symbol.of_string "Panic" -> None
+        | Const _ -> k VConst
+        | Call (c, _args) when Symbol.kind c = `CCall -> k (VCCall c)
+        | t when is_neutral t -> k VNeutral
+        | t -> go t
+    in
+    go
+;;
 
 let subst ~x ~value : t -> t =
     let exception Rebuild of t in
@@ -104,76 +165,6 @@ let rename_against (t1, t2) : t Symbol_map.t option =
       Some !subst
     with
     | Fail -> None
-;;
-
-[@@@coverage off]
-
-let is_var = function
-  | Var _ -> true
-  | _ -> false
-;;
-
-let is_const = function
-  | Const _ -> true
-  | _ -> false
-;;
-
-let rec is_value = function
-  | Var _ | Const _ -> true
-  | Call (op, args) ->
-    (match Symbol.kind op with
-     | `CCall -> op <> Symbol.of_string "Panic"
-     | `FCall -> is_neutral (Call (op, args))
-     | `GCall -> false)
-
-and is_neutral = function
-  | Var _ -> true
-  | Const _ -> false
-  | Call (op, [ t ]) when Symbol.is_op1 op -> is_neutral t
-  | Call (op, [ t1; t2 ]) when Symbol.is_op2 op ->
-    (is_neutral t1 && is_value t2) || (is_value t1 && is_neutral t2)
-  | Call (_op, _args) -> false
-;;
-
-[@@@coverage on]
-
-let classify : t -> category =
-    let rec go = function
-      | Var _ | Const _ -> Trivial
-      | Call (op, args) -> go_call (Symbol.kind op, args)
-    and go_call = function
-      | `CCall, _args -> Trivial
-      | `GCall, Var _x :: _args -> Global
-      | (`FCall | `GCall), args -> go_args args
-    and go_args = function
-      | [] -> Local
-      | t :: rest ->
-        (match go t with
-         | Global -> Global
-         | Local | Trivial -> go_args rest)
-    in
-    go
-;;
-
-let redex_sig : t -> redex_sig =
-    let rec go = function
-      | Var _ | Const _ -> None
-      | Call (op, _args) when Symbol.is_lazy op -> None
-      | Call (op, args) -> go_args ~op ~acc:Fun.id args
-    and go_args ~op ~acc = function
-      | [] -> Some (op, acc [])
-      | t :: rest ->
-        let$ category = t in
-        go_args ~op ~acc:(fun xs -> acc (category :: xs)) rest
-    and ( let$ ) t k =
-        match t with
-        | Call (c, [ _ ]) when c = Symbol.of_string "Panic" -> None
-        | Const _ -> k VConst
-        | Call (c, _args) when Symbol.kind c = `CCall -> k (VCCall c)
-        | t when is_neutral t -> k VNeutral
-        | t -> go t
-    in
-    go
 ;;
 
 [@@@coverage off]

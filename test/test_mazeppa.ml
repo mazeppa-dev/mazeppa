@@ -56,6 +56,67 @@ let print_constants () =
 
 let print_constants_cases = [ "Tests", print_constants ]
 
+let classify () =
+    let module Category = struct
+      type t = T.category
+
+      let pp = T.pp_category
+
+      let equal = T.equal_category
+    end
+    in
+    let check ~expected t =
+        Alcotest.(check' (module Category))
+          ~msg:"Classify"
+          ~actual:(T.classify t)
+          ~expected
+    in
+    check ~expected:T.Trivial (T.var "x");
+    check ~expected:T.Trivial (T.string "hello world");
+    check ~expected:T.Trivial T.(call ("Foo", [ call ("f", []); call ("g", []) ]));
+    check ~expected:T.Global T.(call (".g", [ var "x"; call ("f", []) ]));
+    [ ".g1"; "f" ]
+    |> List.iter (fun op ->
+      let args = T.[ call (".g2", [ var "x" ]); var "y"; call ("f", []) ] in
+      check ~expected:T.Global (T.call (op, args));
+      check ~expected:T.Global (T.call (op, List.rev args)));
+    check ~expected:T.Local T.(call ("f", [ call ("g", []); var "x"; var "y" ]))
+;;
+
+let term_classification_cases = [ "Tests", classify ]
+
+let redex_sig () =
+    let module Redex_sig = struct
+      type t = T.redex_sig
+
+      let pp = T.pp_redex_sig
+
+      let equal = T.equal_redex_sig
+    end
+    in
+    let check ~expected t =
+        Alcotest.(check' (module Redex_sig))
+          ~msg:"Redex signature"
+          ~actual:(T.redex_sig t)
+          ~expected
+    in
+    check ~expected:None (T.var "x");
+    check ~expected:None (T.string "hello world");
+    check ~expected:None T.(call ("Foo", [ call ("f", []); call ("g", []) ]));
+    check ~expected:None T.(call ("f", [ call ("Panic", [ var "x" ]) ]));
+    let redex, redex_sig =
+        ( T.(call ("f", [ var "x"; string "hello world"; call ("Foo", []) ]))
+        , Some (symbol "f", T.[ VNeutral; VConst; VCCall (symbol "Foo") ]) )
+    in
+    let redex = ref redex in
+    for _i = 0 to 9 do
+      check ~expected:redex_sig !redex;
+      redex := T.call ("f", [ !redex ])
+    done
+;;
+
+let term_redex_signature_cases = [ "Tests", redex_sig ]
+
 let subst () =
     let check ~expected ~x ~value t =
         Alcotest.(check' (module Term))
@@ -133,67 +194,6 @@ let rename_against () =
 ;;
 
 let term_renamings_cases = [ "Tests", rename_against ]
-
-let classify () =
-    let module Category = struct
-      type t = T.category
-
-      let pp = T.pp_category
-
-      let equal = T.equal_category
-    end
-    in
-    let check ~expected t =
-        Alcotest.(check' (module Category))
-          ~msg:"Classify"
-          ~actual:(T.classify t)
-          ~expected
-    in
-    check ~expected:T.Trivial (T.var "x");
-    check ~expected:T.Trivial (T.string "hello world");
-    check ~expected:T.Trivial T.(call ("Foo", [ call ("f", []); call ("g", []) ]));
-    check ~expected:T.Global T.(call (".g", [ var "x"; call ("f", []) ]));
-    [ ".g1"; "f" ]
-    |> List.iter (fun op ->
-      let args = T.[ call (".g2", [ var "x" ]); var "y"; call ("f", []) ] in
-      check ~expected:T.Global (T.call (op, args));
-      check ~expected:T.Global (T.call (op, List.rev args)));
-    check ~expected:T.Local T.(call ("f", [ call ("g", []); var "x"; var "y" ]))
-;;
-
-let term_classification_cases = [ "Tests", classify ]
-
-let redex_sig () =
-    let module Redex_sig = struct
-      type t = T.redex_sig
-
-      let pp = T.pp_redex_sig
-
-      let equal = T.equal_redex_sig
-    end
-    in
-    let check ~expected t =
-        Alcotest.(check' (module Redex_sig))
-          ~msg:"Redex signature"
-          ~actual:(T.redex_sig t)
-          ~expected
-    in
-    check ~expected:None (T.var "x");
-    check ~expected:None (T.string "hello world");
-    check ~expected:None T.(call ("Foo", [ call ("f", []); call ("g", []) ]));
-    check ~expected:None T.(call ("f", [ call ("Panic", [ var "x" ]) ]));
-    let redex, redex_sig =
-        ( T.(call ("f", [ var "x"; string "hello world"; call ("Foo", []) ]))
-        , Some (symbol "f", T.[ VNeutral; VConst; VCCall (symbol "Foo") ]) )
-    in
-    let redex = ref redex in
-    for _i = 0 to 9 do
-      check ~expected:redex_sig !redex;
-      redex := T.call ("f", [ !redex ])
-    done
-;;
-
-let term_redex_signature_cases = [ "Tests", redex_sig ]
 
 let msg () =
     let check ~expected (t1, t2) =
@@ -539,11 +539,11 @@ let () =
     Alcotest.run
       "Mazeppa"
       ([ "Print constants", print_constants_cases
+       ; "Term classification", term_classification_cases
+       ; "Term redex signatures", term_redex_signature_cases
        ; "Term substitution", substitution_cases
        ; "Term instances", term_instances_cases
        ; "Term renamings", term_renamings_cases
-       ; "Term classification", term_classification_cases
-       ; "Term redex signatures", term_redex_signature_cases
        ; "MSG", msg_cases
        ; "Homeomorphic embedding", he_cases
        ; "Raw program errors", raw_program_errors_cases

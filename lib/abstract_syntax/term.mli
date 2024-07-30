@@ -32,6 +32,18 @@ val of_bool : bool -> t
 
 val panic : ('a, unit, string, t) format4 -> 'a
 
+val is_var : t -> bool
+
+val is_neutral : t -> bool
+
+val is_value : t -> bool
+
+val classify : t -> category
+
+val redex_sig : t -> redex_sig
+
+(* Substitutes [x] for [value]. If any subterm (including the term itself) is unaffected,
+   it is left intact (see issue #14). *)
 val subst : x:Symbol.t -> value:t -> t -> t
 
 (* If [t2] is an instance of [t1], [match_against (t1, t2)] returns an environment [env]
@@ -42,18 +54,6 @@ val match_against : t * t -> t Symbol_map.t option
 
 (* Just like [match_against] but produces a renaming or returns [None]. *)
 val rename_against : t * t -> t Symbol_map.t option
-
-val is_var : t -> bool
-
-val is_const : t -> bool
-
-val is_value : t -> bool
-
-val is_neutral : t -> bool
-
-val classify : t -> category
-
-val redex_sig : t -> redex_sig
 
 val to_string : t -> string
 
