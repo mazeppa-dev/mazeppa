@@ -32,9 +32,7 @@ val of_bool : bool -> t
 
 val panic : ('a, unit, string, t) format4 -> 'a
 
-val subst : env:t Symbol_map.t -> t -> t
-
-val subst_params : params:Symbol.t list -> args:t list -> t -> t
+val subst : x:Symbol.t -> value:t -> t -> t
 
 (* If [t2] is an instance of [t1], [match_against (t1, t2)] returns an environment [env]
    such that [equal (subst ~env t1) t2].

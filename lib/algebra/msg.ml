@@ -20,12 +20,12 @@ let common_functor ~gensym (g, subst_1, subst_2) =
     |> Option.map (fun (x, op, args, args') ->
       let fresh_vars = Gensym.emit_list ~length_list:args gensym in
       let common_call = Call (op, var_list fresh_vars) in
-      let new_subst ~args old_subst =
-          Symbol_map.(extend2 ~keys:fresh_vars ~values:args (remove x old_subst))
+      let resubst ~args subst =
+          Symbol_map.(extend2 ~keys:fresh_vars ~values:args (remove x subst))
       in
-      ( subst ~env:(Symbol_map.singleton x common_call) g
-      , new_subst ~args subst_1
-      , new_subst ~args:args' subst_2 ))
+      let g = subst ~x ~value:common_call g in
+      let subst_1, subst_2 = resubst ~args subst_1, resubst ~args:args' subst_2 in
+      g, subst_1, subst_2)
 ;;
 
 let common_subst (g, subst_1, subst_2) =
@@ -41,9 +41,9 @@ let common_subst (g, subst_1, subst_2) =
         then Some (x, y)
         else None))
     |> Option.map (fun (x, y) ->
-      ( subst ~env:(Symbol_map.singleton x (Var y)) g
-      , Symbol_map.remove x subst_1
-      , Symbol_map.remove x subst_2 ))
+      let g = subst ~x ~value:(Var y) g in
+      let subst_1, subst_2 = Symbol_map.(remove x subst_1, remove x subst_2) in
+      g, subst_1, subst_2)
 ;;
 
 let step ~rules triple = List.find_map (fun f -> f triple) rules

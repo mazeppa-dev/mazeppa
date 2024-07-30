@@ -39,13 +39,26 @@ let panic fmt =
     Printf.ksprintf (fun s -> Call (Symbol.of_string "Panic", [ string s ])) fmt
 ;;
 
-let rec subst ~(env : t Symbol_map.t) = function
-  | Var x as default -> Option.value ~default (Symbol_map.find_opt x env)
-  | Const const -> Const const
-  | Call (op, args) -> Call (op, List.map (subst ~env) args)
+let subst ~x ~value : t -> t =
+    let exception Rebuild of t in
+    let rebuild t = raise_notrace (Rebuild t) in
+    let rec go = function
+      | Var y when x = y -> rebuild value
+      | Var _ | Const _ -> ()
+      | Call (op, args) -> go_args ~op ~acc:Fun.id args
+    and go_args ~op ~acc = function
+      | [] -> ()
+      | t :: rest ->
+        (try go t with
+         | Rebuild t -> rebuild (Call (op, acc (t :: List.map try_go rest))));
+        go_args ~op ~acc:(fun xs -> t :: acc xs) rest
+    and try_go t =
+        match go t with
+        | exception Rebuild t -> t
+        | () -> t
+    in
+    try_go
 ;;
-
-let subst_params ~params ~args t = subst ~env:(Symbol_map.setup2 (params, args)) t
 
 [@@@coverage on]
 

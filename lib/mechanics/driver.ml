@@ -42,8 +42,7 @@ let unify ~x ~contraction:(c, fresh_vars) list =
     | None -> list
     | Some x ->
       let unifier = Term.(Call (c, var_list fresh_vars)) in
-      let subst t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
-      List.map subst list
+      List.map (Term.subst ~x ~value:unifier) list
 ;;
 
 let symbol = Symbol.of_string
@@ -165,14 +164,14 @@ struct
         g
 
   and unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
-      let unify t = Term.subst_params ~params:[ x ] ~args:[ unifier ] t in
+      let unify list = List.map (Term.subst ~x ~value:unifier) list in
       analyze_g_rules
         ~depth
         ~f:(fun ~c_params ->
           function
           | c, [] ->
             (match Symbol.(to_string c, to_string op') with
-             | "T", "=" | "F", "!=" -> List.map unify args
+             | "T", "=" | "F", "!=" -> unify args
              | ("T" | "F"), _ -> args
              | _ -> Util.panic "Expected either `T` or `F`, got %s" (Symbol.verbatim c))
           | c, _fresh_vars ->
