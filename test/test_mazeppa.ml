@@ -56,6 +56,38 @@ let print_constants () =
 
 let print_constants_cases = [ "Tests", print_constants ]
 
+let subst () =
+    let check ~expected ~x ~value t =
+        Alcotest.(check' (module Term))
+          ~msg:"Substitute"
+          ~actual:(T.subst ~x ~value t)
+          ~expected
+    in
+    check ~expected:(T.var "y") ~x:(symbol "x") ~value:(T.var "y") (T.var "x");
+    check ~expected:(T.var "x") ~x:(symbol "z") ~value:(T.var "y") (T.var "x");
+    check
+      ~expected:(T.string "hello world")
+      ~x:(symbol "x")
+      ~value:(T.var "y")
+      (T.string "hello world");
+    let t x = T.(call ("f", [ var "a"; var "b"; x; var "c"; var "d" ])) in
+    check ~expected:(t (T.var "y")) ~x:(symbol "x") ~value:(T.var "y") (t (T.var "x"));
+    check
+      ~expected:(t T.(call ("f", [ var "y" ])))
+      ~x:(symbol "x")
+      ~value:(T.var "y")
+      (t T.(call ("f", [ var "x" ])));
+    (* Test physical equalities (implicit sharing). *)
+    let subst t = T.subst ~x:(symbol "x") ~value:(T.var "y") t in
+    let t = T.(call ("f", [ var "a"; var "b"; var "c" ])) in
+    assert (t == subst t);
+    let t' = T.(call ("f", [ var "x"; t ])) in
+    let[@warning "-8"] (T.Call (_op, [ _; t'' ])) = subst t' in
+    assert (t == t'')
+;;
+
+let substitution_cases = [ "Tests", subst ]
+
 let match_against () =
     let check ~expected (t1, t2) =
         Alcotest.(check' (option (module Subst)))
@@ -507,6 +539,7 @@ let () =
     Alcotest.run
       "Mazeppa"
       ([ "Print constants", print_constants_cases
+       ; "Term substitution", substitution_cases
        ; "Term instances", term_instances_cases
        ; "Term renamings", term_renamings_cases
        ; "Term classification", term_classification_cases

@@ -39,6 +39,8 @@ let panic fmt =
     Printf.ksprintf (fun s -> Call (Symbol.of_string "Panic", [ string s ])) fmt
 ;;
 
+[@@@coverage on]
+
 let subst ~x ~value : t -> t =
     let exception Rebuild of t in
     let rebuild t = raise_notrace (Rebuild t) in
@@ -50,8 +52,9 @@ let subst ~x ~value : t -> t =
       | [] -> ()
       | t :: rest ->
         (try go t with
-         | Rebuild t -> rebuild (Call (op, acc (t :: List.map try_go rest))));
-        go_args ~op ~acc:(fun xs -> t :: acc xs) rest
+         | Rebuild t ->
+           (rebuild [@coverage off]) (Call (op, acc (t :: List.map try_go rest))));
+        go_args ~op ~acc:(fun xs -> acc (t :: xs)) rest
     and try_go t =
         match go t with
         | exception Rebuild t -> t
@@ -59,8 +62,6 @@ let subst ~x ~value : t -> t =
     in
     try_go
 ;;
-
-[@@@coverage on]
 
 let match_against (t1, t2) : t Symbol_map.t option =
     let exception Fail in
@@ -188,3 +189,5 @@ let rec to_string = function
 ;;
 
 let verbatim t = "`" ^ to_string t ^ "`"
+
+[@@@coverage on]
