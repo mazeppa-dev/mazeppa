@@ -75,7 +75,7 @@ let let' (x, t, u) =
       | Var y -> if x = y then raise_notrace (Replace t)
       | Const _const -> ()
       | Call (op, _args) when Symbol.is_lazy op -> ()
-      | Call (op, args) -> go_call ~op ~acc:[] args
+      | Call (op, args) -> go_call ~op ~acc:Fun.id args
       | Match (t, cases) -> reconstruct ~f:(fun better -> Match (better, cases)) t
       | Let (x', t, u) -> reconstruct ~f:(fun better -> Let (x', better, u)) t
     and go_call ~op ~acc = function
@@ -83,10 +83,10 @@ let let' (x, t, u) =
       | t :: rest ->
         reconstruct
           ~f:(fun better ->
-            let args = List.rev acc @ [ better ] @ rest in
+            let args = acc [] @ [ better ] @ rest in
             Call (op, args))
           t;
-        go_call ~op ~acc:(t :: acc) rest
+        go_call ~op ~acc:(fun xs -> acc (t :: xs)) rest
     and reconstruct ~f t =
         try go t with
         | Replace better -> raise_notrace (Replace (f better))

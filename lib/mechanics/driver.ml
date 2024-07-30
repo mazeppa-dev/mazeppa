@@ -104,11 +104,11 @@ struct
 
   and reduce_args ~depth (op, args) =
       let rec go ~acc = function
-        | [] -> reduce_call ~depth ~op (Symbol.kind op, List.rev acc)
-        | t :: rest when Term.is_value t -> go ~acc:(t :: acc) rest
-        | t :: rest -> reduce_amidst ~depth ~op (List.rev acc, t, rest)
+        | [] -> reduce_call ~depth ~op (Symbol.kind op, acc [])
+        | t :: rest when Term.is_value t -> go ~acc:(fun xs -> acc (t :: xs)) rest
+        | t :: rest -> reduce_amidst ~depth ~op (acc [], t, rest)
       in
-      go ~acc:[] args
+      go ~acc:Fun.id args
 
   and reduce_amidst ~depth ~op (before, t, after) =
       match reduce ~depth:(depth + 1) t with

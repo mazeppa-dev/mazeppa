@@ -88,15 +88,17 @@ end = struct
       in
       let rec go ~depth = function
         | Call (f, _args) as t when is_extractable f && depth > 0 -> extract t
-        | Call (op, args) when not (Symbol.is_lazy op) -> go_args ~depth ~op ~acc:[] args
+        | Call (op, args) when not (Symbol.is_lazy op) ->
+          go_args ~depth ~op ~acc:Fun.id args
         | Var _ | Const _ | Call _ -> ()
       and go_args ~depth ~op ~acc = function
-        | [] -> go_call ~depth ~op (Symbol.kind op, List.rev acc)
-        | t :: rest when is_value t -> go_args ~depth ~op ~acc:(t :: acc) rest
+        | [] -> go_call ~depth ~op (Symbol.kind op, acc [])
+        | t :: rest when is_value t ->
+          go_args ~depth ~op ~acc:(fun xs -> acc (t :: xs)) rest
         | t :: rest ->
           (try go ~depth:(depth + 1) t with
            | Extract ((x, call), shell) ->
-             let shell = Call (op, List.rev acc @ [ shell ] @ rest) in
+             let shell = Call (op, acc [] @ [ shell ] @ rest) in
              raise_notrace (Extract ((x, call), shell)))
       and go_call ~depth ~op = function
         | `GCall, Call (c, _c_args) :: _args when Symbol.kind c = `CCall -> ()

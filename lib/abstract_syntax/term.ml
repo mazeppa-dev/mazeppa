@@ -159,12 +159,12 @@ let redex_sig : t -> redex_sig =
     let rec go = function
       | Var _ | Const _ -> None
       | Call (op, _args) when Symbol.is_lazy op -> None
-      | Call (op, args) -> go_args ~op ~acc:[] args
+      | Call (op, args) -> go_args ~op ~acc:Fun.id args
     and go_args ~op ~acc = function
-      | [] -> Some (op, List.rev acc)
+      | [] -> Some (op, acc [])
       | t :: rest ->
         let$ category = t in
-        go_args ~op ~acc:(category :: acc) rest
+        go_args ~op ~acc:(fun xs -> acc (category :: xs)) rest
     and ( let$ ) t k =
         match t with
         | Call (c, [ _ ]) when c = Symbol.of_string "Panic" -> None

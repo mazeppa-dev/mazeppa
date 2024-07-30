@@ -83,7 +83,7 @@ let run_exn (input : Raw_program.t) =
         from_const (Simplifier.handle_op2 ~op (to_const t1_val, to_const t2_val))
       | Raw_term.Call (op, args) when Symbol.is_primitive_op op ->
         invalid_arg_list ~op args
-      | Raw_term.Call (f, args) -> go_args ~env ~f ~acc:[] args
+      | Raw_term.Call (f, args) -> go_args ~env ~f ~acc:Fun.id args
       | Raw_term.Match (t, cases) ->
         let$ t_val = go ~env t in
         let c, c_args = to_c_call t_val in
@@ -94,10 +94,10 @@ let run_exn (input : Raw_program.t) =
         (let$ t_val = go ~env t in
          go ~env:(Symbol_map.add x t_val env) u) [@coverage off]
     and go_args ~env ~f ~acc = function
-      | [] -> go_call ~f (List.rev acc)
+      | [] -> go_call ~f (acc [])
       | t :: rest ->
         let$ t_val = go ~env t in
-        go_args ~env ~f ~acc:(t_val :: acc) rest
+        go_args ~env ~f ~acc:(fun xs -> acc (t_val :: xs)) rest
     and go_call ~f args =
         let params, body = find_rule ~program f in
         let env = Symbol_map.setup2 (params, args) in
