@@ -145,33 +145,32 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
   (* +(t, 0), +(0, t) -> t *)
   (* |(t, 0), |(0, t) -> t *)
   | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
-    when (op = symbol "+" || op = symbol "|") && Checked_oint.is_zero n -> t
+    when (op = symbol "+" || op = symbol "|") && is_zero n -> t
   (* -(t, 0) -> t *)
-  | t, Const (Const.Int n) when op = symbol "-" && Checked_oint.is_zero n -> t
+  | t, Const (Const.Int n) when op = symbol "-" && is_zero n -> t
   (* *(t, 1), *(1, t) -> t *)
   | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
-    when op = symbol "*" && Checked_oint.is_one n -> t
+    when op = symbol "*" && is_one n -> t
   (* *(t, 0), *(0, t) -> 0 *)
   (* &(t, 0), &(0, t) -> 0 *)
   | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
-    when (op = symbol "*" || op = symbol "&") && Checked_oint.is_zero n -> int n
+    when (op = symbol "*" || op = symbol "&") && is_zero n -> int n
   (* |(t, all ones), |(all ones, t) -> all ones *)
   | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
-    when op = symbol "|" && Checked_oint.is_all_ones n -> int n
+    when op = symbol "|" && is_all_ones n -> int n
   (* &(t, all ones), &(all ones, t) -> t *)
   | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
-    when op = symbol "&" && Checked_oint.is_all_ones n -> t
+    when op = symbol "&" && is_all_ones n -> t
   (* /(t, 1) -> t *)
-  | t, Const (Const.Int n) when op = symbol "/" && Checked_oint.is_one n -> t
+  | t, Const (Const.Int n) when op = symbol "/" && is_one n -> t
   (* /(0, t) -> 0 *)
-  | Const (Const.Int n), _t when op = symbol "/" && Checked_oint.is_zero n -> int n
+  | Const (Const.Int n), _t when op = symbol "/" && is_zero n -> int n
   (* %(t, 1) -> 0 *)
-  | _t, Const (Const.Int n) when op = symbol "%" && Checked_oint.is_one n ->
+  | _t, Const (Const.Int n) when op = symbol "%" && is_one n ->
     let (module Singleton) = Checked_oint.singleton n in
     int Singleton.(to_generic zero)
   (* /(t, 0), %(t, 0) -> out of range *)
-  | _t, Const (Const.Int n)
-    when (op = symbol "/" || op = symbol "%") && Checked_oint.is_zero n ->
+  | _t, Const (Const.Int n) when (op = symbol "/" || op = symbol "%") && is_zero n ->
     do_int_op2 ~op (Checked_oint.pair_exn (n, n))
   (* |(t, t), &(t, t) -> t *)
   | t1, t2 when (op = symbol "|" || op = symbol "&") && equal t1 t2 -> t1
