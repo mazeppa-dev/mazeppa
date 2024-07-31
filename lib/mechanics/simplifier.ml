@@ -144,21 +144,27 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
      | exception Invalid_argument _ -> panic "out of bounds: %du64" idx)
   (* +(t, 0), +(0, t) -> t *)
   (* |(t, 0), |(0, t) -> t *)
-  | ((t1 as t), (Const (Const.Int n) as t2) | (Const (Const.Int n) as t1), (t2 as t))
-    when op = symbol "+" || op = symbol "|" ->
-    if Checked_oint.is_zero n then t else Call (op, [ t1; t2 ])
+  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+    when (op = symbol "+" || op = symbol "|") && Checked_oint.is_zero n -> t
   (* -(t, 0) -> t *)
   | t, Const (Const.Int n) when op = symbol "-" && Checked_oint.is_zero n -> t
   (* *(t, 1), *(1, t) -> t *)
-  | ((t1 as t), (Const (Const.Int n) as t2) | (Const (Const.Int n) as t1), (t2 as t))
-    when op = symbol "*" -> if Checked_oint.is_one n then t else Call (op, [ t1; t2 ])
+  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+    when op = symbol "*" && Checked_oint.is_one n -> t
   (* *(t, 0), *(0, t) -> 0 *)
   (* &(t, 0), &(0, t) -> 0 *)
-  | (t1, (Const (Const.Int n) as t2) | (Const (Const.Int n) as t1), t2)
-    when op = symbol "*" || op = symbol "&" ->
-    if Checked_oint.is_zero n then int n else Call (op, [ t1; t2 ])
+  | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
+    when (op = symbol "*" || op = symbol "&") && Checked_oint.is_zero n -> int n
+  (* |(t, all ones), |(all ones, t) -> all ones *)
+  | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
+    when op = symbol "|" && Checked_oint.is_all_ones n -> int n
+  (* &(t, all ones), &(all ones, t) -> t *)
+  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+    when op = symbol "&" && Checked_oint.is_all_ones n -> t
   (* /(t, 1) -> t *)
   | t, Const (Const.Int n) when op = symbol "/" && Checked_oint.is_one n -> t
+  (* /(0, t) -> 0 *)
+  | Const (Const.Int n), _t when op = symbol "/" && Checked_oint.is_zero n -> int n
   (* %(t, 1) -> 0 *)
   | _t, Const (Const.Int n) when op = symbol "%" && Checked_oint.is_one n ->
     let (module Singleton) = Checked_oint.singleton n in
