@@ -26,7 +26,7 @@ let map_case_body ~(f : 'a -> 'b) : 'a case_body -> 'b case_body = function
 
 let map ~(f : 'a -> 'b) : 'a step -> 'b step = function
   | Var x -> Var x
-  | Const const -> Const const
+  | Const _ as step -> step
   | Decompose (op, args) -> Decompose (op, List.map f args)
   | Unfold t -> Unfold (f t)
   | Analyze (x, t, variants) ->

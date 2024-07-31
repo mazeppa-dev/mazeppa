@@ -85,7 +85,7 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
     let exception Select of Raw_term.t in
     let rec go ~env = function
       | Var x -> Var (query_env ~env x)
-      | Const const -> Const const
+      | Const _ as t -> t
       | Call (op, [ Var x; t ])
         when op = symbol "=" && is_conflict (x, hermetic (go ~env) t) ->
         Call (symbol "F", [])

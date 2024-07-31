@@ -137,7 +137,7 @@ let to_program (input : t) : Program.t =
     in
     let rec to_term : Raw_term.t -> Term.t * Symbol_set.t = function
       | Raw_term.Var x -> Term.Var x, Symbol_set.singleton x
-      | Raw_term.Const const -> Const const, Symbol_set.empty
+      | Raw_term.Const const -> Term.Const const, Symbol_set.empty
       | Raw_term.Call (op, args_raw) as scrutinee ->
         Arity_table.record ~scrutinee (op, List.length args_raw);
         let args, args_fv = Symbol_set.decouple_map ~f:to_term args_raw in

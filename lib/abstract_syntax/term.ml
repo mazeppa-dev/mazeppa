@@ -133,7 +133,7 @@ let match_against (t1, t2) : t Symbol_map.t option =
           (match Symbol_map.find_opt x !subst with
            | Some x_subst -> if not (equal x_subst t2) then raise_notrace Fail
            | None -> subst := Symbol_map.add x t2 !subst)
-        | Const const -> if not (equal (Const const) t2) then raise_notrace Fail
+        | Const _ -> if not (equal t1 t2) then raise_notrace Fail
         | Call (op, args) ->
           (match t2 with
            | Call (op', args') when op = op' ->

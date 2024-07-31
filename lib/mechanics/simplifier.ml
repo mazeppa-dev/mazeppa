@@ -195,7 +195,7 @@ let handle_term ~(params : Symbol.t list) ~(args : t list) : t -> t =
     let env = Symbol_map.setup2 (params, args) in
     let rec go = function
       | Var x as default -> Option.value ~default (Symbol_map.find_opt x env)
-      | Const const -> Const const
+      | Const _ as t -> t
       | Call (op, args) -> handle_call ~op (Symbol.kind op, List.map go args)
     in
     go

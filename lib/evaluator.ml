@@ -38,7 +38,7 @@ let find_var ~env x =
 
 let rec subst ~env = function
   | Raw_term.Var x -> find_var ~env x
-  | Raw_term.Const const -> Raw_term.Const const
+  | Raw_term.Const _ as t -> t
   | Raw_term.Call (op, args) -> Raw_term.Call (op, List.map (subst ~env) args)
   | Raw_term.Match (t, cases) ->
     Raw_term.Match
@@ -71,7 +71,7 @@ let run_exn (input : Raw_program.t) =
     in
     let rec go ~env = function
       | Raw_term.Var x -> go ~env:Symbol_map.empty (find_var ~env x)
-      | Raw_term.Const const -> Raw_term.Const const
+      | Raw_term.Const _ as t -> t
       | Raw_term.Call (c, args) when Symbol.kind c = `CCall ->
         Raw_term.Call (c, List.map (subst ~env) args)
       | Raw_term.Call (op, [ t ]) when Symbol.is_op1 op ->
