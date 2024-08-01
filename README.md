@@ -559,7 +559,9 @@ It can only be called on programs whose `main` functions do not accept parameter
  - Forget about `--inspect` in a real environment: use it only for debugging purposes.
  - Supercompiling a whole user program is not a good idea. Instead, consider supercompiling separate modules and then linking them together (the exact way you do so depends on your situation).
    - Although Mazeppa is itself not parallel, supercompiling separate modules can be done in parallel.
- - It is _much_ better if recursive functions reduce at least one argument structurally, just as in total functional programming. Otherwise, termination checking will not work well.
+ - It is _much_ better if recursive functions reduce at least one argument structurally, just as in total functional programming. Otherwise, termination checking might not work well.
+   - No integer is structurally smaller than another one: iteration can happen in any order.
+   - A string _s1_ is smaller than _s2_ iff _s2_ contains all the characters of _s1_, preserving the order; for example, `"otus"` is smaller than `"octopus"` but `"octopusx"` is not.
 
 [Flambda]: https://ocaml.org/manual/latest/flambda.html
 
