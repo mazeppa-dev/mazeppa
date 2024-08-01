@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Only whistle on terms with equal redex signatures (issues https://github.com/mazeppa-dev/mazeppa/issues/9, https://github.com/mazeppa-dev/mazeppa/issues/11).
  - Only whistle on equal integers (issue https://github.com/mazeppa-dev/mazeppa/issues/12).
  - Rebuild as less terms as possible when substituting contractions (issue https://github.com/mazeppa-dev/mazeppa/issues/14).
+ - Optimize homeomorphic embedding by storing term sizes (issue https://github.com/mazeppa-dev/mazeppa/issues/17).
 
 ### Fixed
 

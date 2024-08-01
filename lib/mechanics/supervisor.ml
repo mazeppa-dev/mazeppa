@@ -21,6 +21,8 @@ end = struct
       let gensym = var_gensym
     end)
 
+  module History = History.Make (struct end)
+
   module State = struct
     let node_gensym : Gensym.t = Gensym.create ~prefix:"n" ()
 

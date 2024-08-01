@@ -244,10 +244,11 @@ let msg () =
 let msg_cases = [ "Tests", msg ]
 
 let he () =
+    let module Emb = Homeomorphic_emb.Make (struct end) in
     let check ~expected (t1, t2) =
         Alcotest.(check' bool)
           ~msg:"Homeomorphic embedding"
-          ~actual:(Homeomorphic_emb.decide (t1, t2))
+          ~actual:(Emb.decide (t1, t2))
           ~expected
     in
     (* All variables are collapsed into a single unique constructor. *)
@@ -265,6 +266,10 @@ let he () =
     check ~expected:true T.(var "x", call ("f", [ var "y"; call ("g", []) ]));
     check ~expected:false T.(var "x", call ("f", [ call ("g", []) ]));
     check ~expected:false T.(call ("f", []), var "x");
+    (* A bigger term cannot be embedded into a smaller one. *)
+    check
+      ~expected:false
+      T.(call ("f", [ var "x"; string "hello world" ]), call ("f", []));
     (* Integers are treated as unique constructors. *)
     for i = -100 to 100 do
       for j = -100 to 100 do

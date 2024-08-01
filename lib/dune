@@ -9,7 +9,10 @@
    ppx_string_interpolation
    ppx_yojson_conv))
  (instrumentation
-  (backend bisect_ppx)))
+  (backend bisect_ppx))
+ (foreign_stubs
+  (language c)
+  (names magic)))
 
 (include_subdirs unqualified)
 

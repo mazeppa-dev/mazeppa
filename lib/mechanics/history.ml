@@ -30,41 +30,45 @@
    [2] Romanenko, Sergei. (2018). Supercompilation: homeomorphic embedding, call-by-name,
    partial evaluation. Keldysh Institute Preprints. 1-32. 10.20948/prepr-2018-209. *)
 
-type node = Symbol.t * Term.t
+module Make (_ : sig end) = struct
+  module Emb = Homeomorphic_emb.Make (struct end)
 
-type internal_node = Term.redex_sig * node
+  type node = Symbol.t * Term.t
 
-type t =
-  { locals : internal_node list
-  ; globals : internal_node list
-  }
+  type internal_node = Term.redex_sig * node
 
-let empty = { locals = []; globals = [] }
+  type t =
+    { locals : internal_node list
+    ; globals : internal_node list
+    }
 
-exception Whistle of node
+  let empty = { locals = []; globals = [] }
 
-(* Prepends [suspect] to [history] or raises [Whistle] on homeomorphic embedding. *)
-let scan ~suspect:(n_id, n) history =
-    let n_redex_sig = Term.redex_sig n in
-    let rec go = function
-      | [] -> (n_redex_sig, (n_id, n)) :: history
-      | (m_redex_sig, (m_id, m)) :: _rest
-        when Term.equal_redex_sig m_redex_sig n_redex_sig && Homeomorphic_emb.decide (m, n)
-        -> raise_notrace (Whistle (m_id, m))
-      | _ :: rest -> go rest
-    in
-    go history
-;;
+  exception Whistle of node
 
-let memoize ~suspect ({ locals; globals } as history) =
-    let _n_id, n = suspect in
-    match Term.classify n with
-    | Term.Global -> { locals = []; globals = scan ~suspect globals }
-    | Term.Local -> { locals = scan ~suspect locals; globals }
-    | Term.Trivial -> history
-;;
+  (* Prepends [suspect] to [history] or raises [Whistle] with a parent node. *)
+  let scan ~suspect:(n_id, n) history =
+      let n_redex_sig = Term.redex_sig n in
+      let rec go = function
+        | [] -> (n_redex_sig, (n_id, n)) :: history
+        | (m_redex_sig, (m_id, m)) :: _rest
+          when Term.equal_redex_sig m_redex_sig n_redex_sig && Emb.decide (m, n) ->
+          raise_notrace (Whistle (m_id, m))
+        | _ :: rest -> go rest
+      in
+      go history
+  ;;
 
-let memoize ~(suspect : node) (history : t) : node option * t =
-    try None, memoize ~suspect history with
-    | Whistle (m_id, m) -> Some (m_id, m), history
-;;
+  let memoize ~suspect ({ locals; globals } as history) =
+      let _n_id, n = suspect in
+      match Term.classify n with
+      | Term.Global -> { locals = []; globals = scan ~suspect globals }
+      | Term.Local -> { locals = scan ~suspect locals; globals }
+      | Term.Trivial -> history
+  ;;
+
+  let memoize ~(suspect : node) (history : t) : node option * t =
+      try None, memoize ~suspect history with
+      | Whistle (m_id, m) -> Some (m_id, m), history
+  ;;
+end
