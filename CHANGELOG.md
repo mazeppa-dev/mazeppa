@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - _/(0, t) -> 0_
    - _|(t, all ones), |(all ones, t) -> all ones_
    - _&(t, all ones), &(all ones, t) -> t_
+ - Add the `check` command to the CLI for checking program well-formedness (issue https://github.com/mazeppa-dev/mazeppa/issues/18).
  - Expose the `Symbol.list` function in the public API.
 
 ### Changed

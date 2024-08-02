@@ -152,9 +152,10 @@ let supercompile ~(conf : config) (input : Raw_program.t) : unit =
         input
 ;;
 
+let check (input : Raw_program.t) : unit = ignore (Converter.to_program input)
+
 let eval (input : Raw_program.t) : unit =
-    (* Just check that the input program is (syntactically) well-formed. *)
-    ignore (Converter.to_program input);
+    check input;
     print_endline (Raw_term.to_string (Mazeppa.eval input))
 ;;
 
@@ -176,6 +177,8 @@ let parse_cli () =
              false
        in
        `Run { target_dir; inspect })
+    ; (Clap.case "check" ~description:"Check a program for well-formedness."
+       @@ fun () -> `Check)
     ; (Clap.case
          "eval"
          ~description:
@@ -206,6 +209,7 @@ let () =
       let input = read_file_exn "main.mz" in
       match command with
       | `Run conf -> supercompile ~conf input
+      | `Check -> check input
       | `Eval -> eval input
     with
     | Util.Panic { msg; reduction_path } -> its_over ~reduction_path msg
