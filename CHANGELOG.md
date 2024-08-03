@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.2.0 - 2024-08-03
+
 ### Added
 
  - Propagate positive information for inequality (`!=`) tests (issue https://github.com/mazeppa-dev/mazeppa/issues/7).
