@@ -3,7 +3,7 @@
 
 Supercompilation [^turchin-concept] is a program transformation technique that symbolically evaluates a given program, with run-time values as unknowns. In doing so, it discovers execution patterns of the original program and synthesizes them into standalone functions; the result of supercompilation is a more efficient residual program. In terms of transformational power, supercompilation subsumes both deforestation [^deforestation] and partial evaluation [^partial-evaluation], and even exhibits certain capabilities of theorem proving.
 
-_Mazeppa_ is a modern supercompiler intended to be a compilation target for call-by-value functional languages. Made by diligently comparing and revising previous supercompilers, Mazeppa
+_Mazeppa_ is a modern supercompiler intended to be a compilation target for call-by-value functional languages. Having prior supercompilers diligently compared and revised, Mazeppa
   1. Provides the full set of primitive data types for efficient computation.
   2. Supports manual control of function unfolding.
   3. Is fully transparent in terms of what decisions it takes during transformation.
