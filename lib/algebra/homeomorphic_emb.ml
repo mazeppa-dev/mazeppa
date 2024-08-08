@@ -42,9 +42,8 @@ module Make (_ : sig end) = struct
     | Const (Const.String s) -> String.length s
     | Var _ | Const _ -> 1
     | Call (_op, args) as t ->
-      (match Eph.find_opt table t with
-       | Some result -> result
-       | None ->
+      (try Eph.find table t with
+       | Not_found ->
          let result = 1 + List.fold_left (fun acc t -> acc + memoize t) 0 args in
          Eph.replace table t result;
          result)
