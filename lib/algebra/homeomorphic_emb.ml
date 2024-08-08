@@ -39,6 +39,7 @@ module Make (_ : sig end) = struct
   let table = Eph.create 1024
 
   let rec memoize = function
+    | Const (Const.String s) -> String.length s
     | Var _ | Const _ -> 1
     | Call (_op, args) as t ->
       (match Eph.find_opt table t with

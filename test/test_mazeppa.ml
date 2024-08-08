@@ -269,7 +269,7 @@ let he () =
     (* A bigger term cannot be embedded into a smaller one. *)
     check
       ~expected:false
-      T.(call ("f", [ var "x"; string "hello world" ]), call ("f", []));
+      T.(call ("f", [ var "x"; int (u8 10); string "hello world" ]), call ("f", []));
     (* Integers are treated as unique constructors. *)
     for i = -100 to 100 do
       for j = -100 to 100 do
