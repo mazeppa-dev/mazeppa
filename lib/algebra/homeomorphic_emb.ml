@@ -53,7 +53,7 @@ module Make (_ : sig end) = struct
   ;;
 
   let rec decide : Term.t * Term.t -> bool = function
-    | Var _x, Var _y -> true
+    | Var _, Var _ -> true
     | Const const, Const const' -> decide_const (const, const')
     | t1, (Call (_op, args) as t2) ->
       let t1_size, t2_size = size t1, size t2 in

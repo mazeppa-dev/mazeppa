@@ -12,7 +12,7 @@ type t = (Term.t Symbol_map.t[@printer pp_as_list]) [@@deriving eq, show]
 let is_renaming subst =
     Symbol_map.for_all
       (fun _x -> function
-         | Term.Var _x -> true
+         | Term.Var _ -> true
          | _ -> false)
       subst
 ;;

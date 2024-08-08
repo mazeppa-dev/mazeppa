@@ -182,7 +182,7 @@ end = struct
            let g, subst_1, _subst_2 = Msg.compute ~gensym:var_gensym (m, n) in
            (match g with
             (* Split: there is no meaningful generalization of [m] and [n]. *)
-            | Term.Var _x -> split ~history n
+            | Term.Var _ -> split ~history n
             (* Split: [g] is simply a renaming of [m]. *)
             | _ when Subst.is_renaming subst_1 -> split ~history n
             (* Split: there is a danger of removing some loops and panics. *)

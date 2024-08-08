@@ -54,8 +54,7 @@ let count_occurences ~x =
     let open Raw_term in
     let rec go = function
       | Var y when x = y -> 1
-      | Var _y -> 0
-      | Const _const -> 0
+      | Var _ | Const _ -> 0
       | Call (_op, args) -> List.fold_left (fun acc t -> acc + go t) 0 args
       | Match (t, cases) ->
         go t + List.fold_left (fun acc (_pattern, t) -> acc + go t) 0 cases
@@ -73,7 +72,7 @@ let let' (x, t, u) =
     let exception Replace of Raw_term.t in
     let rec go = function
       | Var y -> if x = y then raise_notrace (Replace t)
-      | Const _const -> ()
+      | Const _ -> ()
       | Call (op, _args) when Symbol.is_lazy op -> ()
       | Call (op, args) -> go_call ~op ~acc:Fun.id args
       | Match (t, cases) -> reconstruct ~f:(fun better -> Match (better, cases)) t

@@ -25,8 +25,8 @@ let compute_productive_g_rules program =
           result
     in
     let rec go_term = function
-      | Term.Var _x -> false
-      | Term.Const _const -> true
+      | Term.Var _ -> false
+      | Term.Const _ -> true
       | Term.Call (op, _args) -> go_call ~op (Symbol.kind op)
     and go_call ~op = function
       | `CCall -> op <> Symbol.of_string "Panic"

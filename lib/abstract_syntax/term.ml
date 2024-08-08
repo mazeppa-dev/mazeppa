@@ -69,7 +69,7 @@ let classify : t -> category =
       | Call (op, args) -> go_call (Symbol.kind op, args)
     and go_call = function
       | `CCall, _args -> Trivial
-      | `GCall, Var _x :: _args -> Global
+      | `GCall, Var _ :: _args -> Global
       | (`FCall | `GCall), args -> go_args args
     and go_args = function
       | [] -> Local
