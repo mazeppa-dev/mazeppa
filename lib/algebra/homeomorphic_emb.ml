@@ -41,22 +41,19 @@ module Make (_ : sig end) = struct
   let rec memoize = function
     | Var _ | Const _ -> 1
     | Call (_op, args) as t ->
-      let result = 1 + List.fold_left (fun acc t -> acc + memoize t) 0 args in
-      Eph.replace table t result;
-      result
-  ;;
-
-  let size t =
-      match Eph.find_opt table t with
-      | Some result -> result
-      | None -> memoize t
+      (match Eph.find_opt table t with
+       | Some result -> result
+       | None ->
+         let result = 1 + List.fold_left (fun acc t -> acc + memoize t) 0 args in
+         Eph.replace table t result;
+         result)
   ;;
 
   let rec decide : Term.t * Term.t -> bool = function
     | Var _, Var _ -> true
     | Const const, Const const' -> decide_const (const, const')
     | t1, (Call (_op, args) as t2) ->
-      let t1_size, t2_size = size t1, size t2 in
+      let t1_size, t2_size = memoize t1, memoize t2 in
       if t1_size = t2_size
       then decide_by_coupling (t1, t2)
       else if t1_size < t2_size
