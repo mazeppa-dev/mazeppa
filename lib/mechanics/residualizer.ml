@@ -69,34 +69,35 @@ let count_occurences ~x =
    binds an immediate term, the binding is removed. *)
 let let' (x, t, u) =
     let open Raw_term in
-    let exception Replace of Raw_term.t in
+    let exception Rebuild of Raw_term.t in
+    let rebuild better = raise_notrace (Rebuild better) in
     let rec go = function
-      | Var y -> if x = y then raise_notrace (Replace t)
+      | Var y -> if x = y then rebuild t
       | Const _ -> ()
       | Call (op, _args) when Symbol.is_lazy_op op -> ()
       | Call (op, args) -> go_call ~op ~acc:Fun.id args
-      | Match (t, cases) -> reconstruct ~f:(fun better -> Match (better, cases)) t
-      | Let (x', t, u) -> reconstruct ~f:(fun better -> Let (x', better, u)) t
+      | Match (t, cases) -> try_go ~f:(fun better -> Match (better, cases)) t
+      | Let (x', t, u) -> try_go ~f:(fun better -> Let (x', better, u)) t
     and go_call ~op ~acc = function
       | [] -> ()
       | t :: rest ->
-        reconstruct
+        try_go
           ~f:(fun better ->
             let args = acc [] @ [ better ] @ rest in
             Call (op, args))
           t;
         go_call ~op ~acc:(fun xs -> acc (t :: xs)) rest
-    and reconstruct ~f t =
+    and try_go ~f t =
         try go t with
-        | Replace better -> raise_notrace (Replace (f better))
+        | Rebuild better -> rebuild (f better)
     in
     let occurs = count_occurences ~x u in
     try
       if occurs = 1 then go u;
-      if occurs = 0 && is_immediate t then raise_notrace (Replace u);
+      if occurs = 0 && is_immediate t then rebuild u;
       Let (x, t, u)
     with
-    | Replace better -> better
+    | Rebuild better -> better
 ;;
 
 let query_env ~env x = Option.value ~default:(Raw_term.Var x) (Symbol_map.find_opt x env)
