@@ -28,7 +28,21 @@ let decide_const =
 module Make (_ : sig end) = struct
   external address_of_value : 'a -> int = "address_of_value"
 
-  module Eph = Ephemeron.K1.Make (struct
+  module Make_cache (H : Hashtbl.HashedType) = struct
+    include Ephemeron.K1.Make (H)
+
+    let bind (cache, key) k =
+        try find cache key with
+        | Not_found ->
+          let result = k () in
+          add cache key result;
+          result
+    ;;
+  end
+
+  [@@@coverage off]
+
+  module Size_cache = Make_cache (struct
       type t = Term.t
 
       let equal = ( == )
@@ -36,36 +50,51 @@ module Make (_ : sig end) = struct
       let hash = address_of_value
     end)
 
-  let table = Eph.create 1024
+  module Result_cache = Make_cache (struct
+      type t = Term.t * Term.t
 
-  let rec memoize = function
+      let equal (t1, t2) (s1, s2) = t1 == s1 && t2 == s2
+
+      let hash (t1, t2) = Hashtbl.hash (address_of_value t1, address_of_value t2)
+    end)
+
+  [@@@coverage on]
+
+  let ( let$ ), ( let& ) = Size_cache.bind, Result_cache.bind
+
+  let size_table = Size_cache.create 1024
+
+  let rec memoize_size = function
     | Const (Const.String s) -> String.length s
     | Var _ | Const _ -> 1
     | Call (_op, args) as t ->
-      (try Eph.find table t with
-       | Not_found ->
-         let result = 1 + List.fold_left (fun acc t -> acc + memoize t) 0 args in
-         Eph.replace table t result;
-         result)
+      let$ () = size_table, t in
+      1 + List.fold_left (fun acc t -> acc + memoize_size t) 0 args
   ;;
 
-  let rec decide : Term.t * Term.t -> bool = function
+  let rec decide ~cache = function
     | Var _, Var _ -> true
     | Const const, Const const' -> decide_const (const, const')
     | t1, (Call (_op, args) as t2) ->
-      let t1_size, t2_size = memoize t1, memoize t2 in
+      let& () = cache, (t1, t2) in
+      let t1_size, t2_size = memoize_size t1, memoize_size t2 in
       if t1_size = t2_size
-      then decide_by_coupling (t1, t2)
+      then decide_by_coupling ~cache (t1, t2)
       else if t1_size < t2_size
-      then decide_by_diving (t1, args) || decide_by_coupling (t1, t2)
+      then decide_by_diving ~cache (t1, args) || decide_by_coupling ~cache (t1, t2)
       else false
     | (Var _ | Const _ | Call _), _ -> false
 
-  and decide_by_diving (t1, args) = List.exists (fun t2 -> decide (t1, t2)) args
+  and decide_by_diving ~cache (t1, args) =
+      List.exists (fun t2 -> decide ~cache (t1, t2)) args
 
-  and decide_by_coupling = function
+  and decide_by_coupling ~cache = function
     | Call (op, args), Call (op', args') when op = op' ->
-      List.for_all2 (fun t1 t2 -> decide (t1, t2)) args args'
+      List.for_all2 (fun t1 t2 -> decide ~cache (t1, t2)) args args'
     | _, _ -> false
+  ;;
+
+  let decide ((t1, t2) : Term.t * Term.t) : bool =
+      decide ~cache:(Result_cache.create 128) (t1, t2)
   ;;
 end

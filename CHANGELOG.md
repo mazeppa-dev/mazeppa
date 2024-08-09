@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
-### Fixed
+### Changed
 
- - Small homeomorphic embedding performance tweaks (issue https://github.com/mazeppa-dev/mazeppa/issues/17).
+ - Optimize homeomorphic embedding by maintaining a local result cache (issue https://github.com/mazeppa-dev/mazeppa/issues/20).
+ - Other homeomorphic embedding performance tweaks (issue https://github.com/mazeppa-dev/mazeppa/issues/17).
 
 ## 0.2.0 - 2024-08-03
 
