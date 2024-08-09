@@ -8,10 +8,9 @@ val to_string : t -> string
 
 val verbatim : t -> string
 
-(* Determines the kind of a functional symbol. *)
-val kind : t -> [ `CCall | `FCall | `GCall ]
+val op_kind : t -> [ `CCall | `FCall | `GCall ]
 
-val is_lazy : t -> bool
+val is_lazy_op : t -> bool
 
 val is_op1 : t -> bool
 

@@ -20,13 +20,13 @@ let to_const = function
 
 let from_const = function
   | Term.Const const -> Raw_term.Const const
-  | Term.Call (c, []) when (Symbol.kind c = `CCall) [@coverage off] ->
+  | Term.Call (c, []) when (Symbol.op_kind c = `CCall) [@coverage off] ->
     Raw_term.Call (c, []) [@coverage off]
   | t -> Util.panic "Cannot reduce: %s" (Term.verbatim t)
 ;;
 
 let to_c_call = function
-  | Raw_term.Call (c, args) when Symbol.kind c = `CCall -> c, args
+  | Raw_term.Call (c, args) when Symbol.op_kind c = `CCall -> c, args
   | t -> Util.panic "Expected a constructor call: %s" (Raw_term.verbatim t)
 ;;
 
@@ -72,7 +72,7 @@ let run_exn (input : Raw_program.t) =
     let rec go ~env = function
       | Raw_term.Var x -> go ~env:Symbol_map.empty (find_var ~env x)
       | Raw_term.Const _ as t -> t
-      | Raw_term.Call (c, args) when Symbol.kind c = `CCall ->
+      | Raw_term.Call (c, args) when Symbol.op_kind c = `CCall ->
         Raw_term.Call (c, List.map (subst ~env) args)
       | Raw_term.Call (op, [ t ]) when Symbol.is_op1 op ->
         (let$ t_val = go ~env t in

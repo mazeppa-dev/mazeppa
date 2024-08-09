@@ -21,6 +21,6 @@ let is_safe subst =
     Symbol_map.for_all
       (fun _x -> function
          | Term.(Var _ | Const _) -> true
-         | Term.Call (op, _args) -> Symbol.kind op = `CCall)
+         | Term.Call (op, _args) -> Symbol.op_kind op = `CCall)
       subst
 ;;

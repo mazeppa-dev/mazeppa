@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Optimize homeomorphic embedding by maintaining a local result cache (issue https://github.com/mazeppa-dev/mazeppa/issues/20).
  - Other homeomorphic embedding performance tweaks (issue https://github.com/mazeppa-dev/mazeppa/issues/17).
+ - Rename `Symbol.kind` to `Symbol.op_kind`, `Symbol.is_lazy` to `Symbol.is_lazy_op` for clarity [**BC**].
 
 ## 0.2.0 - 2024-08-03
 

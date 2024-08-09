@@ -54,7 +54,7 @@ let is_op2 = function
 
 let is_primitive_op op = is_op1 op || is_op2 op
 
-let kind op : [ `CCall | `FCall | `GCall ] =
+let op_kind op : [ `CCall | `FCall | `GCall ] =
     if op.[0] >= 'A' && op.[0] <= 'Z'
     then `CCall
     else if op.[0] >= 'a' && op.[0] <= 'z'
@@ -68,8 +68,8 @@ let kind op : [ `CCall | `FCall | `GCall ] =
     else Util.panic "An unknown symbol kind: `%s`" op
 ;;
 
-let is_lazy op : bool =
-    match kind op with
+let is_lazy_op op : bool =
+    match op_kind op with
     | `CCall -> true
     | `FCall | `GCall -> false
 ;;

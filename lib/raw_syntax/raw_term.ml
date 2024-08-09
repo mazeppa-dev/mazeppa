@@ -23,7 +23,7 @@ let var_list symbols = List.map (fun x -> Var x) symbols
 
 let is_immediate = function
   | Var _ | Const _ -> true
-  | Call (c, []) when Symbol.kind c = `CCall -> true
+  | Call (c, []) when Symbol.op_kind c = `CCall -> true
   | Call _ | Match _ | Let _ -> false
 ;;
 

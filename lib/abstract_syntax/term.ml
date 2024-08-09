@@ -55,7 +55,7 @@ let rec is_neutral = function
 and is_value = function
   | Var _ | Const _ -> true
   | Call (op, args) ->
-    (match Symbol.kind op with
+    (match Symbol.op_kind op with
      | `CCall -> op <> Symbol.of_string "Panic"
      | `FCall -> is_neutral (Call (op, args))
      | `GCall -> false)
@@ -66,7 +66,7 @@ and is_value = function
 let classify : t -> category =
     let rec go = function
       | Var _ | Const _ -> Trivial
-      | Call (op, args) -> go_call (Symbol.kind op, args)
+      | Call (op, args) -> go_call (Symbol.op_kind op, args)
     and go_call = function
       | `CCall, _args -> Trivial
       | `GCall, Var _ :: _args -> Global
@@ -84,7 +84,7 @@ let classify : t -> category =
 let redex_sig : t -> redex_sig =
     let rec go = function
       | Var _ | Const _ -> None
-      | Call (op, _args) when Symbol.is_lazy op -> None
+      | Call (op, _args) when Symbol.is_lazy_op op -> None
       | Call (op, args) -> go_args ~op ~acc:Fun.id args
     and go_args ~op ~acc = function
       | [] -> Some (op, acc [])
@@ -95,7 +95,7 @@ let redex_sig : t -> redex_sig =
         match t with
         | Call (c, [ _ ]) when c = Symbol.of_string "Panic" -> None
         | Const _ -> k VConst
-        | Call (c, _args) when Symbol.kind c = `CCall -> k (VCCall c)
+        | Call (c, _args) when Symbol.op_kind c = `CCall -> k (VCCall c)
         | t when is_neutral t -> k VNeutral
         | t -> go t
     in

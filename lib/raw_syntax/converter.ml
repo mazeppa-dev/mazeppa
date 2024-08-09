@@ -27,7 +27,7 @@ let compute_productive_g_rules program =
     let rec go_term = function
       | Term.Var _ -> false
       | Term.Const _ -> true
-      | Term.Call (op, _args) -> go_call ~op (Symbol.kind op)
+      | Term.Call (op, _args) -> go_call ~op (Symbol.op_kind op)
     and go_call ~op = function
       | `CCall -> op <> Symbol.of_string "Panic"
       | `FCall when Symbol.is_primitive_op op -> false
@@ -189,7 +189,7 @@ let to_program (input : t) : Program.t =
     |> List.map (fun (attrs, f, params, body_raw) ->
       if Symbol.is_primitive_op f
       then Util.panic "Cannot redefine the primitive operator %s" (Symbol.verbatim f);
-      if Symbol.kind f <> `FCall
+      if Symbol.op_kind f <> `FCall
       then
         Util.panic
           "Functions must follow the `camelCase` convention: %s"

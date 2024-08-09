@@ -73,7 +73,7 @@ let let' (x, t, u) =
     let rec go = function
       | Var y -> if x = y then raise_notrace (Replace t)
       | Const _ -> ()
-      | Call (op, _args) when Symbol.is_lazy op -> ()
+      | Call (op, _args) when Symbol.is_lazy_op op -> ()
       | Call (op, args) -> go_call ~op ~acc:Fun.id args
       | Match (t, cases) -> reconstruct ~f:(fun better -> Match (better, cases)) t
       | Let (x', t, u) -> reconstruct ~f:(fun better -> Let (x', better, u)) t

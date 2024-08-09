@@ -54,7 +54,7 @@ let share_args ~gensym (op, initial_args) =
            args := lever :: !args;
            go rest)
     in
-    if Symbol.is_lazy op
+    if Symbol.is_lazy_op op
     then (* Let-bindings might affect the order of evaluation. *)
       Call (op, initial_args)
     else go initial_args

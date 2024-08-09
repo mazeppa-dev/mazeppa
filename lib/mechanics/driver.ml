@@ -98,13 +98,13 @@ struct
   let rec reduce ~depth : Term.t -> Term.t step = function
     | Term.Var x -> Var x
     | Term.Const const -> Const const
-    | Term.Call (op, args) when Symbol.is_lazy op ->
-      reduce_call ~depth ~op (Symbol.kind op, args)
+    | Term.Call (op, args) when Symbol.is_lazy_op op ->
+      reduce_call ~depth ~op (Symbol.op_kind op, args)
     | Term.Call (op, args) -> reduce_args ~depth (op, args)
 
   and reduce_args ~depth (op, args) =
       let rec go ~acc = function
-        | [] -> reduce_call ~depth ~op (Symbol.kind op, acc [])
+        | [] -> reduce_call ~depth ~op (Symbol.op_kind op, acc [])
         | t :: rest when Term.is_value t -> go ~acc:(fun xs -> acc (t :: xs)) rest
         | t :: rest -> reduce_amidst ~depth ~op (acc [], t, rest)
       in
@@ -139,7 +139,7 @@ struct
     | `GCall, Term.Var x :: args ->
       Analyze (x, Term.Var x, unfold_g_rules ~depth ~x:(Some x) ~args op)
     | `GCall, Term.Call (op', args') :: args ->
-      reduce_g_call ~depth ~op (Symbol.kind op', (op', args'), args)
+      reduce_g_call ~depth ~op (Symbol.op_kind op', (op', args'), args)
 
   (* Reduces a g-function call where the first argument is also a call. *)
   and reduce_g_call ~depth ~op = function
