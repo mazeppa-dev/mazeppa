@@ -557,6 +557,7 @@ It can only be called on programs whose `main` functions do not accept parameter
 
  - Consider building Mazeppa with an [Flambda]-enabled OCaml compiler; to check, run `ocamlopt -config | grep flambda`.
  - Forget about `--inspect` in a real environment: use it only for debugging purposes.
+ - Refrain from CPU-intensive computations: termination checking makes them extremely slow. Use `@extract` (as [shown above](#restricting-supercompilation)) to control whether to continue supercompilation or extract the redex.
  - Supercompiling a whole user program is not a good idea. Instead, consider supercompiling separate modules and then linking them together (the exact way you do so depends on your situation).
    - Although Mazeppa is itself not parallel, supercompiling separate modules can be done in parallel.
  - It is _much_ better if recursive functions reduce at least one argument structurally, just as in total functional programming. Otherwise, termination checking might not work well.
