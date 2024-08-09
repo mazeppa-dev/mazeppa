@@ -28,8 +28,26 @@ let decide_const =
 module Make (_ : sig end) = struct
   external address_of_value : 'a -> int = "address_of_value"
 
-  module Make_cache (H : Hashtbl.HashedType) = struct
-    include Ephemeron.K1.Make (H)
+  module type Cache = sig
+    type key
+
+    type !'a t
+
+    val create : int -> 'a t
+
+    val add : 'a t -> key -> 'a -> unit
+
+    val find : 'a t -> key -> 'a
+  end
+
+  module Make_cache
+      (Maker : functor (H : Hashtbl.HashedType) -> Cache with type key = H.t)
+      (H : Hashtbl.HashedType) : sig
+    include Cache with type key = H.t
+
+    val bind : 'a t * key -> (unit -> 'a) -> 'a
+  end = struct
+    include Maker (H)
 
     let bind (cache, key) k =
         try find cache key with
@@ -42,21 +60,27 @@ module Make (_ : sig end) = struct
 
   [@@@coverage off]
 
-  module Size_cache = Make_cache (struct
-      type t = Term.t
+  module Size_cache =
+    Make_cache
+      (Ephemeron.K1.Make)
+      (struct
+        type t = Term.t
 
-      let equal = ( == )
+        let equal = ( == )
 
-      let hash = address_of_value
-    end)
+        let hash = address_of_value
+      end)
 
-  module Result_cache = Make_cache (struct
-      type t = Term.t * Term.t
+  module Result_cache =
+    Make_cache
+      (Hashtbl.Make)
+      (struct
+        type t = Term.t * Term.t
 
-      let equal (t1, t2) (s1, s2) = t1 == s1 && t2 == s2
+        let equal (t1, t2) (s1, s2) = t1 == s1 && t2 == s2
 
-      let hash (t1, t2) = Hashtbl.hash (address_of_value t1, address_of_value t2)
-    end)
+        let hash (t1, t2) = Hashtbl.hash (address_of_value t1, address_of_value t2)
+      end)
 
   [@@@coverage on]
 
