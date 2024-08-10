@@ -13,8 +13,8 @@ exception Panic of string
     You can call this function as many times as you want, including in parallel. *)
 val supercompile : Raw_program.t -> Raw_program.t
 
-(* Raises {!Panic} if a given program is not well-formed. To be used as a sanity check
-   before {!supercompile} and {!eval}. *)
+(** Raises {!Panic} if a given program is not well-formed. To be used as a sanity check
+    before {!supercompile} and {!eval}. *)
 val check : Raw_program.t -> unit
 
 (** Evaluates a given program to a value, as defined by the language semantics. May raise
