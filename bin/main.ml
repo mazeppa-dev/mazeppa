@@ -108,7 +108,7 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
 type config =
   { target_dir : string
   ; inspect : bool
-  ; print_gc_stat : bool
+  ; print_gc_stats : bool
   }
 
 let prepare_target_dir (conf : config) : unit =
@@ -151,23 +151,23 @@ let supercompile ~(conf : config) (input : Raw_program.t) : unit =
       supercompile
         ~channels:{ program_oc = None; graph_oc = None; nodes_oc = None; output_oc }
         input;
-    if conf.print_gc_stat then Gc.print_stat stderr
+    if conf.print_gc_stats then Gc.print_stat stderr
 ;;
 
 let check (input : Raw_program.t) : unit = ignore (Converter.to_program input)
 
-type eval_config = { print_gc_stat : bool }
+type eval_config = { print_gc_stats : bool }
 
 let eval ~(conf : eval_config) (input : Raw_program.t) : unit =
     check input;
     print_endline (Raw_term.to_string (Mazeppa.eval input));
-    if conf.print_gc_stat then Gc.print_stat stderr
+    if conf.print_gc_stats then Gc.print_stat stderr
 ;;
 
 module Common_options = struct
-  let get_print_gc_stat () =
+  let get_print_gc_stats () =
       Clap.flag
-        ~set_long:"print-gc-stat"
+        ~set_long:"print-gc-stats"
         ~description:
           "Print the GC statistics before exiting. See \
            <https://ocaml.org/manual/latest/api/Gc.html#TYPEstat> for the meaning of the \
@@ -213,14 +213,14 @@ let get_command () =
         @@ fun () ->
         let target_dir = get_target_dir () in
         let inspect = get_inspect () in
-        let print_gc_stat = Common_options.get_print_gc_stat () in
-        `Run { target_dir; inspect; print_gc_stat })
+        let print_gc_stats = Common_options.get_print_gc_stats () in
+        `Run { target_dir; inspect; print_gc_stats })
     ; Check_command.(Clap.case "check" ~description @@ fun () -> `Check)
     ; Eval_command.(
         Clap.case "eval" ~description
         @@ fun () ->
-        let print_gc_stat = Common_options.get_print_gc_stat () in
-        `Eval { print_gc_stat })
+        let print_gc_stats = Common_options.get_print_gc_stats () in
+        `Eval { print_gc_stats })
     ]
     |> Clap.subcommand
 ;;
