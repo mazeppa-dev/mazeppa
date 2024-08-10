@@ -19,10 +19,6 @@ val call : string * t list -> t
 
 val var_list : Symbol.t list -> t list
 
-(** [is_immediate t] returns [true] if [t] does not diverge or panic, and [false] if it
-    possibly can. *)
-val is_immediate : t -> bool
-
 val to_string : t -> string
 
 val verbatim : t -> string

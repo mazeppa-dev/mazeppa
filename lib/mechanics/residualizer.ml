@@ -94,7 +94,7 @@ let let' (x, t, u) =
     let occurs = count_occurences ~x u in
     try
       if occurs = 1 then go u;
-      if occurs = 0 && is_immediate t then rebuild u;
+      if occurs = 0 && Postprocessor.is_safe t then rebuild u;
       Let (x, t, u)
     with
     | Rebuild better -> better
@@ -199,7 +199,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
         bindings
         |> List.partition_map (fun (x, graph) ->
           let t_res = go ~env graph in
-          if Raw_term.is_immediate t_res then Left (x, t_res) else Right (x, t_res))
+          if Postprocessor.is_safe t_res then Left (x, t_res) else Right (x, t_res))
     in
     let t_res = go ~env:Symbol_map.empty graph in
     ( Postprocessor.handle_term

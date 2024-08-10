@@ -4,6 +4,12 @@ open Raw_term
 
 let symbol = Symbol.of_string
 
+let is_safe = function
+  | Var _ | Const _ -> true
+  | Call (c, []) when Symbol.op_kind c = `CCall -> true
+  | Call _ | Match _ | Let _ -> false
+;;
+
 (* Shares equal arguments in a call [op(t1, ..., tN)] by nested let-bindings. The rules
    are: 1) variables, constants, and zero-arity constructor calls (such as [T()] or [F()])
    are always inlined, 2) the original order of evaluating arguments (eager,
@@ -35,7 +41,7 @@ let share_args ~gensym (op, initial_args) =
           (fun ((lazy x), t, _lever) acc -> Let (x, t, acc))
           bindings
           (Call (op, args))
-      | t :: rest when Raw_term.is_immediate t ->
+      | t :: rest when is_safe t ->
         args := ref (lazy t) :: !args;
         go rest
       | t :: rest ->

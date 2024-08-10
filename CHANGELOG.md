@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Rename the functions 1) `Symbol.kind` to `op_kind`, 2) `Symbol.is_lazy` to `is_lazy_op` for clarity [**BC**].
  - Hide the middles of long reduction paths with `(N more...)` (issue https://github.com/mazeppa-dev/mazeppa/issues/21).
 
+### Removed
+
+ - The function `Raw_term.is_immediate` is no longer public [**BC**].
+
 ## 0.2.0 - 2024-08-03
 
 ### Added
