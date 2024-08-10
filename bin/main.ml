@@ -189,6 +189,21 @@ let parse_cli () =
     |> Clap.subcommand
 ;;
 
+let cut_list list =
+    let array = Array.of_list list in
+    let length = Array.length array in
+    if length <= 20
+    then list
+    else (
+      let first_10, last_10 = Array.(make 10 "", make 10 "") in
+      Array.blit array 0 first_10 0 10;
+      Array.blit array (length - 10) last_10 0 10;
+      let middle =
+          Spectrum.Simple.sprintf "@{<italic,underline>(%d more...)@}" (length - 20)
+      in
+      Array.(to_list first_10 @ [ middle ] @ to_list last_10))
+;;
+
 let its_over ?(reduction_path = []) msg =
     Spectrum.Simple.eprintf "@{<bold,red>error:@} %s\n" msg;
     if not (List.is_empty reduction_path)
@@ -196,7 +211,7 @@ let its_over ?(reduction_path = []) msg =
       Spectrum.Simple.eprintf
         "%s@{<bold,aqua>note:@} While reducing %s\n"
         tab
-        (String.concat " -> " reduction_path);
+        (String.concat " -> " (cut_list reduction_path));
     exit 1
 ;;
 
