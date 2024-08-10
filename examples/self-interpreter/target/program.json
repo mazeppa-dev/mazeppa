@@ -1,19 +1,18 @@
 [
   [
-    [ ".f0", [ "input" ], "eval(Nil(), FCall(\"sum\", Cons(input, Nil())))" ],
-    [ ".f1", [ "args", "c" ], "CCall(c, args)" ],
-    [ ".f10", [ "u", "t", "x" ], "Let(x, t, u)" ],
-    [ ".f11", [ "t", "env", "u", "x" ], ".f10(subst(env, u), t, x)" ],
-    [ ".f2", [ "tVal", "env", "u", "x" ], "eval(Cell(x, tVal, env), u)" ],
-    [ ".f3", [ "args", "f" ], "FCall(f, args)" ],
-    [ ".f4", [ "args", "c" ], "CCall(c, args)" ],
-    [ ".f5", [ "t", "op" ], "Op1(op, t)" ],
-    [ ".f6", [ "t2", "op", "t1" ], "Op2(t1, op, t2)" ],
-    [ ".f7", [ "t1", "env", "op", "t2" ], ".f6(subst(env, t2), op, t1)" ],
-    [ ".f8", [ "cases", "t" ], "Match(t, cases)" ],
-    [ ".f9", [ "t", "cases", "env" ], ".f8(substCases(env, cases), t)" ],
-    [ "bind", [ "env", "params", "args" ], ".g19(params, args, env)" ],
-    [ "booleanOf", [ "boolean" ], ".g12(boolean)" ],
+    [ ".f0", [ "args", "c" ], "CCall(c, args)" ],
+    [ ".f1", [ "tVal", "env", "u", "x" ], "eval(Cell(x, tVal, env), u)" ],
+    [ ".f10", [ "t", "env", "u", "x" ], ".f9(subst(env, u), t, x)" ],
+    [ ".f2", [ "args", "f" ], "FCall(f, args)" ],
+    [ ".f3", [ "args", "c" ], "CCall(c, args)" ],
+    [ ".f4", [ "t", "op" ], "Op1(op, t)" ],
+    [ ".f5", [ "t2", "op", "t1" ], "Op2(t1, op, t2)" ],
+    [ ".f6", [ "t1", "env", "op", "t2" ], ".f5(subst(env, t2), op, t1)" ],
+    [ ".f7", [ "cases", "t" ], "Match(t, cases)" ],
+    [ ".f8", [ "t", "cases", "env" ], ".f7(substCases(env, cases), t)" ],
+    [ ".f9", [ "u", "t", "x" ], "Let(x, t, u)" ],
+    [ "bind", [ "env", "params", "args" ], ".g20(params, args, env)" ],
+    [ "booleanOf", [ "boolean" ], ".g13(boolean)" ],
     [
       "caseOf", [ "c", "params", "t", "cases" ], "Case(c, params, t, cases)"
     ],
@@ -21,30 +20,36 @@
     [ "cons", [ "x", "xs" ], "CCall(\"Cons\", Cons(x, Cons(xs, Nil())))" ],
     [ "consOf", [ "x", "xs" ], "Cons(x, xs)" ],
     [ "constOf", [ "const" ], "Const(const)" ],
-    [ "eval", [ "env", "t" ], ".g6(t, env)" ],
-    [ "evalArgs", [ "env", "params", "args" ], ".g8(params, args, env)" ],
-    [ "evalOp1", [ "op", "tVal" ], ".g10(op, tVal)" ],
-    [ "evalOp2", [ "t1Val", "op", "t2Val" ], ".g11(op, t1Val, t2Val)" ],
-    [ "findCaseDef", [ "c", "cases" ], ".g23(cases, c)" ],
+    [ "eval", [ "env", "t" ], ".g7(t, env)" ],
+    [ "evalArgs", [ "env", "params", "args" ], ".g9(params, args, env)" ],
+    [ "evalOp1", [ "op", "tVal" ], ".g11(op, tVal)" ],
+    [ "evalOp2", [ "t1Val", "op", "t2Val" ], ".g12(op, t1Val, t2Val)" ],
+    [ "findCaseDef", [ "c", "cases" ], ".g24(cases, c)" ],
     [ "findRuleDef", [ "f" ], "findRuleDefAux(f, program())" ],
-    [ "findRuleDefAux", [ "f", "rules" ], ".g21(rules, f)" ],
-    [ "lookup", [ "env", "x" ], ".g17(env, x)" ],
-    [
-      "main", [],
-      ".f0(cons(Const(1i32), cons(Const(2i32), cons(Const(3i32), cons(Const(4i32), cons(Const(5i32), nil()))))))"
-    ],
+    [ "findRuleDefAux", [ "f", "rules" ], ".g22(rules, f)" ],
+    [ "generateList", [ "n" ], ".g0(=(n, 0i32), n)" ],
+    [ "lookup", [ "env", "x" ], ".g18(env, x)" ],
+    [ "main", [], "sum(generateList(5i32))" ],
     [ "nil", [], "CCall(\"Nil\", Nil())" ],
     [
       "program", [],
       "Rule(\"sum\", Cons(\"xs\", Nil()), Match(Var(\"xs\"), Case(\"Nil\", Nil(), Const(0i32), Case(\"Cons\", Cons(\"x\", Cons(\"xs\", Nil())), Op2(Var(\"x\"), Add(), FCall(\"sum\", Cons(Var(\"xs\"), Nil()))), Nil()))), Nil())"
     ],
-    [ "subst", [ "env", "t" ], ".g13(t, env)" ],
-    [ "substArgs", [ "env", "args" ], ".g14(args, env)" ],
-    [ "substCases", [ "env", "cases" ], ".g15(cases, env)" ]
+    [ "subst", [ "env", "t" ], ".g14(t, env)" ],
+    [ "substArgs", [ "env", "args" ], ".g15(args, env)" ],
+    [ "substCases", [ "env", "cases" ], ".g16(cases, env)" ],
+    [ "sum", [ "list" ], "eval(Nil(), FCall(\"sum\", Cons(list, Nil())))" ]
   ],
   [
     [
       ".g0",
+      [
+        [ "F", [], [ "n" ], "cons(Const(n), generateList(-(n, 1i32)))" ],
+        [ "T", [], [ "n" ], "nil()" ]
+      ]
+    ],
+    [
+      ".g1",
       [
         [
           "RuleDef",
@@ -54,19 +59,33 @@
         ]
       ]
     ],
-    [ ".g1", [ [ "Const", [ "tVal" ], [ "op" ], "evalOp1(op, tVal)" ] ] ],
     [
       ".g10",
       [
+        [ "I128", [], [ "tVal" ], "constOf(i128(tVal))" ],
+        [ "I16", [], [ "tVal" ], "constOf(i16(tVal))" ],
+        [ "I32", [], [ "tVal" ], "constOf(i32(tVal))" ],
+        [ "I64", [], [ "tVal" ], "constOf(i64(tVal))" ],
+        [ "I8", [], [ "tVal" ], "constOf(i8(tVal))" ],
+        [ "U128", [], [ "tVal" ], "constOf(u128(tVal))" ],
+        [ "U16", [], [ "tVal" ], "constOf(u16(tVal))" ],
+        [ "U32", [], [ "tVal" ], "constOf(u32(tVal))" ],
+        [ "U64", [], [ "tVal" ], "constOf(u64(tVal))" ],
+        [ "U8", [], [ "tVal" ], "constOf(u8(tVal))" ]
+      ]
+    ],
+    [
+      ".g11",
+      [
         [ "BitNot", [], [ "tVal" ], "constOf(~(tVal))" ],
-        [ "IntOf", [ "ty" ], [ "tVal" ], ".g9(ty, tVal)" ],
+        [ "IntOf", [ "ty" ], [ "tVal" ], ".g10(ty, tVal)" ],
         [ "LengthOf", [], [ "tVal" ], "constOf(length(tVal))" ],
         [ "StringOf", [], [ "tVal" ], "constOf(string(tVal))" ],
         [ "StringOfChar", [], [ "tVal" ], "constOf(#(tVal))" ]
       ]
     ],
     [
-      ".g11",
+      ".g12",
       [
         [ "Add", [], [ "t1Val", "t2Val" ], "constOf(+(t1Val, t2Val))" ],
         [ "BitAnd", [], [ "t1Val", "t2Val" ], "constOf(&(t1Val, t2Val))" ],
@@ -112,46 +131,46 @@
       ]
     ],
     [
-      ".g12",
+      ".g13",
       [
         [ "F", [], [], "CCall(\"F\", Nil())" ],
         [ "T", [], [], "CCall(\"T\", Nil())" ]
       ]
     ],
     [
-      ".g13",
+      ".g14",
       [
         [
-          "CCall", [ "c", "args" ], [ "env" ], ".f4(substArgs(env, args), c)"
+          "CCall", [ "c", "args" ], [ "env" ], ".f3(substArgs(env, args), c)"
         ],
         [ "Const", [ "const" ], [ "env" ], "Const(const)" ],
         [
-          "FCall", [ "f", "args" ], [ "env" ], ".f3(substArgs(env, args), f)"
+          "FCall", [ "f", "args" ], [ "env" ], ".f2(substArgs(env, args), f)"
         ],
         [
           "Let",
           [ "x", "t", "u" ],
           [ "env" ],
-          ".f11(subst(env, t), env, u, x)"
+          ".f10(subst(env, t), env, u, x)"
         ],
         [
           "Match",
           [ "t", "cases" ],
           [ "env" ],
-          ".f9(subst(env, t), cases, env)"
+          ".f8(subst(env, t), cases, env)"
         ],
-        [ "Op1", [ "op", "t" ], [ "env" ], ".f5(subst(env, t), op)" ],
+        [ "Op1", [ "op", "t" ], [ "env" ], ".f4(subst(env, t), op)" ],
         [
           "Op2",
           [ "t1", "op", "t2" ],
           [ "env" ],
-          ".f7(subst(env, t1), env, op, t2)"
+          ".f6(subst(env, t1), env, op, t2)"
         ],
         [ "Var", [ "x" ], [ "env" ], "lookup(env, x)" ]
       ]
     ],
     [
-      ".g14",
+      ".g15",
       [
         [
           "Cons",
@@ -163,7 +182,7 @@
       ]
     ],
     [
-      ".g15",
+      ".g16",
       [
         [
           "Case",
@@ -175,26 +194,26 @@
       ]
     ],
     [
-      ".g16",
+      ".g17",
       [
         [ "F", [], [ "env", "value", "x" ], "lookup(env, x)" ],
         [ "T", [], [ "env", "value", "x" ], "value" ]
       ]
     ],
     [
-      ".g17",
+      ".g18",
       [
         [
           "Cell",
           [ "y", "value", "env" ],
           [ "x" ],
-          ".g16(=(x, y), env, value, x)"
+          ".g17(=(x, y), env, value, x)"
         ],
         [ "Nil", [], [ "x" ], "Panic(++(\"the variable is unbound: \", x))" ]
       ]
     ],
     [
-      ".g18",
+      ".g19",
       [
         [
           "Cons",
@@ -204,31 +223,21 @@
         ]
       ]
     ],
+    [ ".g2", [ [ "Const", [ "tVal" ], [ "op" ], "evalOp1(op, tVal)" ] ] ],
     [
-      ".g19",
+      ".g20",
       [
         [
           "Cons",
           [ "x", "params" ],
           [ "args", "env" ],
-          ".g18(args, env, params, x)"
+          ".g19(args, env, params, x)"
         ],
         [ "Nil", [], [ "args", "env" ], "env" ]
       ]
     ],
     [
-      ".g2",
-      [
-        [
-          "Const",
-          [ "t2Val" ],
-          [ "op", "t1Val" ],
-          "evalOp2(t1Val, op, t2Val)"
-        ]
-      ]
-    ],
-    [
-      ".g20",
+      ".g21",
       [
         [
           "F",
@@ -240,7 +249,7 @@
       ]
     ],
     [
-      ".g21",
+      ".g22",
       [
         [
           "Nil", [], [ "f" ], "Panic(++(\"the function is undefined: \", f))"
@@ -249,25 +258,25 @@
           "Rule",
           [ "f'", "params", "t", "rules" ],
           [ "f" ],
-          ".g20(=(f, f'), f, params, rules, t)"
+          ".g21(=(f, f'), f, params, rules, t)"
         ]
       ]
     ],
     [
-      ".g22",
+      ".g23",
       [
         [ "F", [], [ "c", "cases", "params", "t" ], "findCaseDef(c, cases)" ],
         [ "T", [], [ "c", "cases", "params", "t" ], "CaseDef(params, t)" ]
       ]
     ],
     [
-      ".g23",
+      ".g24",
       [
         [
           "Case",
           [ "c'", "params", "t", "cases" ],
           [ "c" ],
-          ".g22(=(c, c'), c, cases, params, t)"
+          ".g23(=(c, c'), c, cases, params, t)"
         ],
         [ "Nil", [], [ "c" ], "Panic(++(\"the case is undefined: \", c))" ]
       ]
@@ -277,14 +286,25 @@
       [
         [
           "Const",
-          [ "t1Val" ],
-          [ "env", "op", "t2" ],
-          ".g2(eval(env, t2), op, t1Val)"
+          [ "t2Val" ],
+          [ "op", "t1Val" ],
+          "evalOp2(t1Val, op, t2Val)"
         ]
       ]
     ],
     [
       ".g4",
+      [
+        [
+          "Const",
+          [ "t1Val" ],
+          [ "env", "op", "t2" ],
+          ".g3(eval(env, t2), op, t1Val)"
+        ]
+      ]
+    ],
+    [
+      ".g5",
       [
         [
           "CaseDef",
@@ -295,50 +315,50 @@
       ]
     ],
     [
-      ".g5",
+      ".g6",
       [
         [
           "CCall",
           [ "c", "args" ],
           [ "cases", "env" ],
-          ".g4(findCaseDef(c, cases), args, env)"
+          ".g5(findCaseDef(c, cases), args, env)"
         ]
       ]
     ],
     [
-      ".g6",
+      ".g7",
       [
         [
-          "CCall", [ "c", "args" ], [ "env" ], ".f1(substArgs(env, args), c)"
+          "CCall", [ "c", "args" ], [ "env" ], ".f0(substArgs(env, args), c)"
         ],
         [ "Const", [ "const" ], [ "env" ], "Const(const)" ],
         [
           "FCall",
           [ "f", "args" ],
           [ "env" ],
-          ".g0(findRuleDef(f), args, env)"
+          ".g1(findRuleDef(f), args, env)"
         ],
         [
-          "Let", [ "x", "t", "u" ], [ "env" ], ".f2(eval(env, t), env, u, x)"
+          "Let", [ "x", "t", "u" ], [ "env" ], ".f1(eval(env, t), env, u, x)"
         ],
         [
           "Match",
           [ "t", "cases" ],
           [ "env" ],
-          ".g5(eval(env, t), cases, env)"
+          ".g6(eval(env, t), cases, env)"
         ],
-        [ "Op1", [ "op", "t" ], [ "env" ], ".g1(eval(env, t), op)" ],
+        [ "Op1", [ "op", "t" ], [ "env" ], ".g2(eval(env, t), op)" ],
         [
           "Op2",
           [ "t1", "op", "t2" ],
           [ "env" ],
-          ".g3(eval(env, t1), env, op, t2)"
+          ".g4(eval(env, t1), env, op, t2)"
         ],
         [ "Var", [ "x" ], [ "env" ], "eval(Nil(), lookup(env, x))" ]
       ]
     ],
     [
-      ".g7",
+      ".g8",
       [
         [
           "Cons",
@@ -349,30 +369,15 @@
       ]
     ],
     [
-      ".g8",
+      ".g9",
       [
         [
           "Cons",
           [ "x", "params" ],
           [ "args", "env" ],
-          ".g7(args, env, params, x)"
+          ".g8(args, env, params, x)"
         ],
         [ "Nil", [], [ "args", "env" ], "Nil()" ]
-      ]
-    ],
-    [
-      ".g9",
-      [
-        [ "I128", [], [ "tVal" ], "constOf(i128(tVal))" ],
-        [ "I16", [], [ "tVal" ], "constOf(i16(tVal))" ],
-        [ "I32", [], [ "tVal" ], "constOf(i32(tVal))" ],
-        [ "I64", [], [ "tVal" ], "constOf(i64(tVal))" ],
-        [ "I8", [], [ "tVal" ], "constOf(i8(tVal))" ],
-        [ "U128", [], [ "tVal" ], "constOf(u128(tVal))" ],
-        [ "U16", [], [ "tVal" ], "constOf(u16(tVal))" ],
-        [ "U32", [], [ "tVal" ], "constOf(u32(tVal))" ],
-        [ "U64", [], [ "tVal" ], "constOf(u64(tVal))" ],
-        [ "U8", [], [ "tVal" ], "constOf(u8(tVal))" ]
       ]
     ]
   ]

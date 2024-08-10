@@ -1,7 +1,11 @@
-main() :=
-    let input := cons(Const(1i32), cons(Const(2i32), cons(Const(3i32),
-        cons(Const(4i32), cons(Const(5i32), nil())))));
-    eval(Nil(), FCall("sum", Cons(input, Nil())));
+main() := sum(generateList(5i32));
+
+sum(list) := eval(Nil(), FCall("sum", Cons(list, Nil())));
+
+generateList(n) := match =(n, 0i32) {
+    T() -> nil(),
+    F() -> cons(Const(n), generateList(-(n, 1i32)))
+};
 
 nil() := CCall("Nil", Nil());
 
