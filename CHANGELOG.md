@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - The `--print-gc-stat` flag (for the `run` command) to observe total memory usage.
+ - The `--print-gc-stat` flag for `run` and `eval` to observe total memory usage.
 
 ### Changed
 

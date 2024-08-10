@@ -156,46 +156,71 @@ let supercompile ~(conf : config) (input : Raw_program.t) : unit =
 
 let check (input : Raw_program.t) : unit = ignore (Converter.to_program input)
 
-let eval (input : Raw_program.t) : unit =
+type eval_config = { print_gc_stat : bool }
+
+let eval ~(conf : eval_config) (input : Raw_program.t) : unit =
     check input;
-    print_endline (Raw_term.to_string (Mazeppa.eval input))
+    print_endline (Raw_term.to_string (Mazeppa.eval input));
+    if conf.print_gc_stat then Gc.print_stat stderr
 ;;
 
-let parse_cli () =
-    [ (Clap.case "run" ~description:"Run the supercompiler."
-       @@ fun () ->
-       let target_dir =
-           Clap.default_string
-             ~long:"target-dir"
-             ~description:"The target directory to use."
-             "target"
-       in
-       let inspect =
-           Clap.flag
-             ~set_long:"inspect"
-             ~description:
-               "Inspect the work of the supercompiler. The resulting files will be in \
-                the target directory."
-             false
-       in
-       let print_gc_stat =
-           Clap.flag
-             ~set_long:"print-gc-stat"
-             ~description:
-               "Print the GC statistics before exiting. See \
-                <https://ocaml.org/manual/latest/api/Gc.html#TYPEstat> for the meaning \
-                of the fields."
-             false
-       in
-       `Run { target_dir; inspect; print_gc_stat })
-    ; (Clap.case "check" ~description:"Check a program for well-formedness."
-       @@ fun () -> `Check)
-    ; (Clap.case
-         "eval"
-         ~description:
-           "Evaluate a program and print the result. The main function must not accept \
-            parameters."
-       @@ fun () -> `Eval)
+module Common_options = struct
+  let get_print_gc_stat () =
+      Clap.flag
+        ~set_long:"print-gc-stat"
+        ~description:
+          "Print the GC statistics before exiting. See \
+           <https://ocaml.org/manual/latest/api/Gc.html#TYPEstat> for the meaning of the \
+           fields."
+        false
+  ;;
+end
+
+module Run_command = struct
+  let description = "Run the supercompiler."
+
+  let get_target_dir () =
+      Clap.default_string
+        ~long:"target-dir"
+        ~description:"The target directory to use."
+        "target"
+  ;;
+
+  let get_inspect () =
+      Clap.flag
+        ~set_long:"inspect"
+        ~description:
+          "Inspect the work of the supercompiler. The resulting files will be in the \
+           target directory."
+        false
+  ;;
+end
+
+module Check_command = struct
+  let description = "Check a program for errors."
+end
+
+module Eval_command = struct
+  let description =
+      "Evaluate a program and print the result. The main function must not accept \
+       parameters."
+  ;;
+end
+
+let get_command () =
+    [ Run_command.(
+        Clap.case "run" ~description
+        @@ fun () ->
+        let target_dir = get_target_dir () in
+        let inspect = get_inspect () in
+        let print_gc_stat = Common_options.get_print_gc_stat () in
+        `Run { target_dir; inspect; print_gc_stat })
+    ; Check_command.(Clap.case "check" ~description @@ fun () -> `Check)
+    ; Eval_command.(
+        Clap.case "eval" ~description
+        @@ fun () ->
+        let print_gc_stat = Common_options.get_print_gc_stat () in
+        `Eval { print_gc_stat })
     ]
     |> Clap.subcommand
 ;;
@@ -229,14 +254,14 @@ let its_over ?(reduction_path = []) msg =
 let () =
     Printexc.record_backtrace true;
     Clap.description (Printf.sprintf "The Mazeppa supercompiler (v%s)." version);
-    let command = parse_cli () in
+    let command = get_command () in
     Clap.close ();
     try
       let input = read_file_exn "main.mz" in
       match command with
       | `Run conf -> supercompile ~conf input
       | `Check -> check input
-      | `Eval -> eval input
+      | `Eval conf -> eval ~conf input
     with
     | Util.Panic { msg; reduction_path } -> its_over ~reduction_path msg
     | Mazeppa.Panic msg | Sys_error msg -> its_over msg
