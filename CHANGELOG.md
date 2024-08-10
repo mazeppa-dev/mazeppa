@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Added
+
+ - The `--print-gc-stat` flag (for the `run` command) to observe total memory usage.
+
 ### Changed
 
  - Optimize homeomorphic embedding by maintaining a local result cache (issue https://github.com/mazeppa-dev/mazeppa/issues/20).

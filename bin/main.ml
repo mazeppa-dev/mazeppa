@@ -108,6 +108,7 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
 type config =
   { target_dir : string
   ; inspect : bool
+  ; print_gc_stat : bool
   }
 
 let prepare_target_dir (conf : config) : unit =
@@ -149,7 +150,8 @@ let supercompile ~(conf : config) (input : Raw_program.t) : unit =
     else
       supercompile
         ~channels:{ program_oc = None; graph_oc = None; nodes_oc = None; output_oc }
-        input
+        input;
+    if conf.print_gc_stat then Gc.print_stat stderr
 ;;
 
 let check (input : Raw_program.t) : unit = ignore (Converter.to_program input)
@@ -176,7 +178,16 @@ let parse_cli () =
                 the target directory."
              false
        in
-       `Run { target_dir; inspect })
+       let print_gc_stat =
+           Clap.flag
+             ~set_long:"print-gc-stat"
+             ~description:
+               "Print the GC statistics before exiting. See \
+                <https://ocaml.org/manual/latest/api/Gc.html#TYPEstat> for the meaning \
+                of the fields."
+             false
+       in
+       `Run { target_dir; inspect; print_gc_stat })
     ; (Clap.case "check" ~description:"Check a program for well-formedness."
        @@ fun () -> `Check)
     ; (Clap.case
