@@ -29,6 +29,10 @@ let supercompile (input : Raw_program.t) : Raw_program.t =
       ([], main_symbol, main_params, t_res) :: program_res)
 ;;
 
+let check (input : Raw_program.t) : unit =
+    wrap_panic (fun () -> ignore (Converter.to_program input))
+;;
+
 let eval (input : Raw_program.t) : Raw_term.t =
     wrap_panic (fun () -> Evaluator.run_exn input)
 ;;

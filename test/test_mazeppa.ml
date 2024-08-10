@@ -296,11 +296,11 @@ let he_cases = [ "Tests", he ]
 (* Only test errors. Happy paths are covered in [examples/]. *)
 let raw_program_errors () =
     let check ~expected input =
-        Alcotest.check_raises
-          "Raw program errors"
-          (Util.Panic { msg = expected; reduction_path = [] })
-          (fun () -> ignore (Converter.to_program input))
+        Alcotest.check_raises "Raw program errors" (Mazeppa.Panic expected) (fun () ->
+          Mazeppa.check input)
     in
+    (* Just for the test coverage. *)
+    Mazeppa.check [ [], symbol "main", [ symbol "x" ], R.var "x" ];
     check
       ~expected:"Cannot redefine the primitive operator `+`"
       [ [], symbol "+", [ symbol "x" ], R.var "x" ];
