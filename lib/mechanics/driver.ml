@@ -65,7 +65,7 @@ end = struct
   module Cache = Ephemeron.K1.Make (struct
       type t = Term.t
 
-      let equal = Term.equal
+      let equal t1 t2 = t1 == t2 || Term.equal t1 t2
 
       let hash = Hashtbl.hash
     end)
