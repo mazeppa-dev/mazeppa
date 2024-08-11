@@ -86,7 +86,7 @@ module Make (_ : sig end) = struct
 
   let ( let$ ), ( let& ) = Size_cache.bind, Result_cache.bind
 
-  (* The same size as the global term cache used for driving. *)
+  (* The same size as that of the global term cache used for driving. *)
   let size_table = Size_cache.create 16384
 
   let rec memoize_size = function

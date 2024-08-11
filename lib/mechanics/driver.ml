@@ -70,7 +70,7 @@ end = struct
       let hash = Hashtbl.hash
     end)
 
-  (* The same size as the global homeomorphic embedding cache. *)
+  (* The same size as that of the global homeomorphic embedding cache. *)
   let cache = Cache.create 16384
 
   let hashcons t =
