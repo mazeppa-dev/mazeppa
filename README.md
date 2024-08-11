@@ -28,6 +28,28 @@ $ ./scripts/install.sh
 
 Type `mazeppa --help` to confirm the installation.
 
+<details>
+<summary>Building with Flambda</summary>
+
+[Flambda] is a powerful program inliner and specializer for OCaml. If you build Mazeppa with an Flambda-enabled OCaml compiler, you may see much better performance. To set it up:
+
+[Flambda]: https://ocaml.org/manual/latest/flambda.html
+
+```
+$ opam switch create 5.2.0+flambda ocaml-variants.5.2.0+options ocaml-option-flambda
+$ eval $(opam env --switch=5.2.0+flambda)
+```
+
+(You may use a different version instead of `5.2.0` if you wish.)
+
+To check if Flambda was successfully enabled, run:
+
+```
+$ ocamlopt -config | grep flambda
+```
+
+</details>
+
 ## Hacking
 
 You can play with Mazeppa without actually installing it. Having OCaml installed and the repository cloned (as above), run the following command from the root directory:
@@ -555,7 +577,7 @@ It can only be called on programs whose `main` functions do not accept parameter
 
 ## Usage considerations
 
- - Consider building Mazeppa with an [Flambda]-enabled OCaml compiler; to check, run `ocamlopt -config | grep flambda`.
+ - Follow the instructions from the [installation section](#installation) to build Mazeppa with an Flambda-enabled OCaml compiler.
  - Forget about `--inspect` in a real environment: use it only for debugging purposes.
  - Refrain from CPU-intensive computations: termination checking makes them extremely slow. Use `@extract` (as [shown above](#restricting-supercompilation)) to control whether to continue supercompilation or extract the redex.
  - Supercompiling a whole user program is not a good idea. Instead, consider supercompiling separate modules and then linking them together (the exact way you do so depends on your situation).
@@ -563,8 +585,6 @@ It can only be called on programs whose `main` functions do not accept parameter
  - It is _much_ better if recursive functions reduce at least one argument structurally, just as in total functional programming. Otherwise, termination checking might not work well.
    - No integer is structurally smaller than another one: iteration can happen in any order.
    - A string _s1_ is smaller than _s2_ iff _s2_ contains all the characters of _s1_, preserving the order; for example, `"otus"` is smaller than `"octopus"` but `"octopusx"` is not.
-
-[Flambda]: https://ocaml.org/manual/latest/flambda.html
 
 ## Technical decisions
 
