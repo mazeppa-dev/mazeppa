@@ -70,13 +70,14 @@ end = struct
       let hash = Hashtbl.hash
     end)
 
-  let cache = Cache.create 1024
+  (* The same size as the global homeomorphic embedding cache. *)
+  let cache = Cache.create 16384
 
-  let hashcons x =
-      try Cache.find cache x with
+  let hashcons t =
+      try Cache.find cache t with
       | Not_found ->
-        Cache.add cache x x;
-        x
+        Cache.add cache t t;
+        t
   ;;
 
   let build_call ~op =
