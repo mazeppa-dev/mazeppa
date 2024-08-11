@@ -65,17 +65,7 @@ end = struct
   module Cache = Ephemeron.K1.Make (struct
       type t = Term.t
 
-      let equal_terms =
-          let open Term in
-          function
-          | Var x, Var y -> x = y
-          | Const const, Const const' -> Const.equal const const'
-          | Call (op, args), Call (op', args') ->
-            op = op' && List.for_all2 ( == ) args args'
-          | (Var _ | Const _ | Call _), _ -> false
-      ;;
-
-      let equal t1 t2 = t1 == t2 || equal_terms (t1, t2)
+      let equal t1 t2 = t1 == t2 || Term.equal t1 t2
 
       let hash = Hashtbl.hash
     end)
