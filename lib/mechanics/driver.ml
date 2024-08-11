@@ -54,6 +54,49 @@ let invalid_arg_list ~op args =
       (args |> List.map Term.verbatim |> String.concat ",")
 ;;
 
+(* The "body builder" implements ephemeral hash consing for terms. Its purpose is twofold:
+   first, it greatly improves memory usage of the supercompiler by sharing structurally
+   equal terms; second, it allows homeomorphic embedding to avoid doing duplicate work (by
+   looking into its own caches). Since we use an ephemeral cache instead of an ordinary
+   hash table, we avoid memory leaks. *)
+module Make_body_builder (_ : sig end) : sig
+  val build : env:Subst.t -> Term.t -> Term.t
+end = struct
+  module Cache = Ephemeron.K1.Make (struct
+      type t = Term.t
+
+      let equal = Term.equal
+
+      let hash = Hashtbl.hash
+    end)
+
+  let cache = Cache.create 1024
+
+  let hashcons x =
+      try Cache.find cache x with
+      | Not_found ->
+        Cache.add cache x x;
+        x
+  ;;
+
+  let build_call ~op =
+      let open Simplifier in
+      function
+      | `FCall, [ t ] when Symbol.is_op1 op -> handle_op1 ~op t
+      | `FCall, [ t1; t2 ] when Symbol.is_op2 op -> handle_op2 ~op (t1, t2)
+      | (`CCall | `FCall | `GCall), args -> Call (op, args)
+  ;;
+
+  let rec build ~env t = hashcons (build_term ~env t)
+
+  and build_term ~env = function
+    | Term.Var x as default -> Option.value ~default (Symbol_map.find_opt x env)
+    | Term.Const _ as t -> t
+    | Term.Call (op, args) ->
+      build_call ~op (Symbol.op_kind op, List.map (build ~env) args)
+  ;;
+end
+
 module Make (S : sig
     val program : Program.t
 
@@ -63,6 +106,12 @@ module Make (S : sig
   end) =
 struct
   open S
+
+  module Body_builder = Make_body_builder (struct end)
+
+  let simplify_body ~params ~args t =
+      Body_builder.build ~env:(Symbol_map.setup2 (params, args)) t
+  ;;
 
   let view_g_rules g =
       let rules, productive_rules =
@@ -87,7 +136,7 @@ struct
         let contraction = c, fresh_vars in
         let body =
             body
-            |> Simplifier.handle_term
+            |> simplify_body
                  ~params:(c_params @ params)
                  ~args:(Term.var_list fresh_vars @ f ~c_params contraction)
             |> maybe_extract_body ~depth ~is_productive
@@ -134,7 +183,7 @@ struct
     | `FCall, args when Symbol.is_primitive_op op -> invalid_arg_list ~op args
     | `FCall, args ->
       let params, body = Program.find_f_rule ~program op in
-      Unfold (Simplifier.handle_term ~params ~args body)
+      Unfold (simplify_body ~params ~args body)
     | `GCall, (([] | Term.Const _ :: _) as args) -> invalid_arg_list ~op args
     | `GCall, Term.Var x :: args ->
       Analyze (x, Term.Var x, unfold_g_rules ~depth ~x:(Some x) ~args op)
@@ -145,8 +194,7 @@ struct
   and reduce_g_call ~depth ~op = function
     | `CCall, (c, c_args), args ->
       let c_params, params, body = Program.find_g_rule ~program (op, c) in
-      Unfold
-        (Simplifier.handle_term ~params:(c_params @ params) ~args:(c_args @ args) body)
+      Unfold (simplify_body ~params:(c_params @ params) ~args:(c_args @ args) body)
     | _, (op', (([ Var x; t ] | [ t; Var x ]) as args')), args
       when op' = symbol "=" || op' = symbol "!=" ->
       let scrutinee = Term.Call (op', args') in

@@ -183,18 +183,3 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
   (* The catch-call rule. *)
   | t1, t2 -> Call (op, [ t1; t2 ])
 ;;
-
-let handle_term ~(params : Symbol.t list) ~(args : t list) : t -> t =
-    let env = Symbol_map.setup2 (params, args) in
-    let rec go = function
-      | Var x as default -> Option.value ~default (Symbol_map.find_opt x env)
-      | Const _ as t -> t
-      | Call (op, args) -> go_call ~op (Symbol.op_kind op, List.map go args)
-    and go_call ~op = function
-      | `FCall, [ t ] when Symbol.is_op1 op -> handle_op1 ~op t
-      | `FCall, [ t1; t2 ] when Symbol.is_op2 op -> handle_op2 ~op (t1, t2)
-      | `FCall, args when Symbol.is_primitive_op op -> invalid_arg_list ~op args
-      | (`CCall | `FCall | `GCall), args -> Call (op, args)
-    in
-    go
-;;
