@@ -47,17 +47,20 @@ let is_var = function
 let rec is_neutral = function
   | Var _ -> true
   | Const _ -> false
-  | Call (op, [ t ]) when Symbol.is_op1 op -> is_neutral t
-  | Call (op, [ t1; t2 ]) when Symbol.is_op2 op ->
+  | Call (op, args) -> is_neutral_call ~op args
+
+and is_neutral_call ~op = function
+  | [ t ] when Symbol.is_op1 op -> is_neutral t
+  | [ t1; t2 ] when Symbol.is_op2 op ->
     (is_neutral t1 && is_value t2) || (is_value t1 && is_neutral t2)
-  | Call (_op, _args) -> false
+  | _args -> false
 
 and is_value = function
   | Var _ | Const _ -> true
   | Call (op, args) ->
     (match Symbol.op_kind op with
      | `CCall -> op <> Symbol.of_string "Panic"
-     | `FCall -> is_neutral (Call (op, args))
+     | `FCall -> is_neutral_call ~op args
      | `GCall -> false)
 ;;
 
@@ -124,6 +127,8 @@ let subst ~x ~value : t -> t =
     try_go
 ;;
 
+let bind ~subst (x, t) = subst := Symbol_map.add x t !subst
+
 let match_against (t1, t2) : t Symbol_map.t option =
     let exception Fail in
     let subst = ref Symbol_map.empty in
@@ -132,7 +137,7 @@ let match_against (t1, t2) : t Symbol_map.t option =
         | Var x ->
           (match Symbol_map.find_opt x !subst with
            | Some x_subst -> if not (equal x_subst t2) then raise_notrace Fail
-           | None -> subst := Symbol_map.add x t2 !subst)
+           | None -> bind ~subst (x, t2))
         | Const _ -> if not (equal t1 t2) then raise_notrace Fail
         | Call (op, args) ->
           (match t2 with
@@ -151,10 +156,10 @@ let rename_against (t1, t2) : t Symbol_map.t option =
     let exception Fail in
     let subst = ref Symbol_map.empty in
     let rec go = function
-      | Var x, Var y ->
+      | Var x, (Var y as t2) ->
         (match Symbol_map.find_opt x !subst with
          | Some (Var y') -> if y <> y' then raise_notrace Fail
-         | _ -> subst := Symbol_map.add x (Var y) !subst)
+         | _ -> bind ~subst (x, t2))
       | Const const, Const const' when Const.equal const const' -> ()
       | Call (op, args), Call (op', args') when op = op' ->
         List.iter2 (fun t1 t2 -> go (t1, t2)) args args'
