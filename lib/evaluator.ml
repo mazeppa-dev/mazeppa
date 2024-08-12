@@ -22,6 +22,8 @@ let of_const = function
   | Term.Const const -> Raw_term.Const const
   | Term.Call (c, []) when (Symbol.op_kind c = `CCall) [@coverage off] ->
     Raw_term.Call (c, []) [@coverage off]
+  | Term.(Call (c, [ Const (Const.String s) ])) when c = Symbol.of_string "Panic" ->
+    Raw_term.(Call (c, [ string s ]))
   | t -> Util.panic "Cannot reduce: %s" (Term.verbatim t)
 ;;
 

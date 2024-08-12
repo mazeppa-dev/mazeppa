@@ -431,26 +431,28 @@ let supercompilation_cases = [ "Tests", supercompile ]
 
 let eval () =
     let open Raw_term in
+    let check msg ~expected input =
+        Alcotest.(check' (module Raw_term)) ~msg ~actual:(Mazeppa.eval input) ~expected
+    in
     let input_list =
         list [ int (i32 0); int (i32 1); int (i32 2); int (i32 3); int (i32 4) ]
     in
     let main_rule =
         [], symbol "main", [], call ("sum", [ call ("mapSq", [ input_list ]) ])
     in
-    Alcotest.(check' (module Raw_term))
-      ~msg:"Evaluation"
-      ~actual:(Mazeppa.eval (main_rule :: sum_squares_rules))
-      ~expected:(int (i32 30));
-    Alcotest.(check' (module Raw_term))
-      ~msg:"Propagate panics"
-      ~actual:
-        (Mazeppa.eval
-           [ ( []
-             , symbol "main"
-             , []
-             , Let (symbol "x", call ("Panic", [ int (i32 5) ]), int (i32 100)) )
-           ])
+    check "Evaluation" ~expected:(int (i32 30)) (main_rule :: sum_squares_rules);
+    check
+      "Built-in panics"
+      ~expected:(call ("Panic", [ string "out of range: `/(5i32, 0i32)`" ]))
+      [ [], symbol "main", [], call ("/", [ int (i32 5); int (i32 0) ]) ];
+    check
+      "Custom panics"
       ~expected:(call ("Panic", [ int (i32 5) ]))
+      [ ( []
+        , symbol "main"
+        , []
+        , Let (symbol "x", call ("Panic", [ int (i32 5) ]), int (i32 100)) )
+      ]
 ;;
 
 let evaluation_cases = [ "Tests", eval ]
