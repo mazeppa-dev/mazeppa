@@ -50,7 +50,7 @@ let do_int_op1 ~op (module S : Checked_oint.Singleton) =
     with
     | Checked_oint.Out_of_range ->
       panic
-        "out of range: %s(%s)"
+        "out of range: `%s(%s)`"
         (Symbol.to_string op)
         Const.(to_string (Int S.(to_generic value)))
 ;;
@@ -80,7 +80,7 @@ let do_int_op2 ~op (module S : Checked_oint.Pair) =
     with
     | Checked_oint.Out_of_range ->
       panic
-        "out of range: %s(%s, %s)"
+        "out of range: `%s(%s, %s)`"
         (Symbol.to_string op)
         Const.(to_string (Int (S.to_generic m)))
         Const.(to_string (Int (S.to_generic n)))
@@ -141,7 +141,7 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
     let idx = to_int (U64 idx) in
     (match s.[idx] with
      | c -> int (U8 (U8.of_int_exn (int_of_char c)))
-     | exception Invalid_argument _ -> panic "out of bounds: %du64" idx)
+     | exception Invalid_argument _ -> panic "out of bounds: `%du64`" idx)
   (* +(t, 0), +(0, t) -> t *)
   (* |(t, 0), |(0, t) -> t *)
   | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
