@@ -49,5 +49,5 @@
   [ "n41", "get(\"hello world\", 10u64)" ],
   [ "n42", "get(test(), 11u64)" ],
   [ "n43", "get(\"hello world\", 11u64)" ],
-  [ "n44", "\"out of bounds: 11u64\"" ]
+  [ "n44", "\"out of bounds: `11u64`\"" ]
 ]

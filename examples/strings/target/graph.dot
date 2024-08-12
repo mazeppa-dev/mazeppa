@@ -88,6 +88,6 @@ digraph {
     n37 -> n42 [label=" #2 "];
     n43 [label="n43: Panic"];
     n42 -> n43;
-    n44 [label="n44: \"out of bounds: 11u64\""];
+    n44 [label="n44: \"out of bounds: `11u64`\""];
     n43 -> n44 [label=" #0 "];
 }
