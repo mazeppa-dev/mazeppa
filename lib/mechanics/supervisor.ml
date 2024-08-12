@@ -82,12 +82,13 @@ end = struct
     | _ -> false
   ;;
 
+  let extract t =
+      let x = Gensym.emit var_gensym in
+      raise_notrace (Extract ((x, t), Term.Var x))
+  ;;
+
   let extract_call : Term.t -> unit =
       let open Term in
-      let extract t =
-          let x = Gensym.emit var_gensym in
-          raise_notrace (Extract ((x, t), Var x))
-      in
       let rec go ~depth = function
         | Call (f, _args) as t when is_extractable f && depth > 0 -> extract t
         | Call (op, args) when not (Symbol.is_lazy_op op) ->

@@ -18,7 +18,7 @@ let to_const = function
   | t -> Util.panic "Expected a constant: %s" (Raw_term.verbatim t)
 ;;
 
-let from_const = function
+let of_const = function
   | Term.Const const -> Raw_term.Const const
   | Term.Call (c, []) when (Symbol.op_kind c = `CCall) [@coverage off] ->
     Raw_term.Call (c, []) [@coverage off]
@@ -76,11 +76,11 @@ let run_exn (input : Raw_program.t) =
         Raw_term.Call (c, List.map (subst ~env) args)
       | Raw_term.Call (op, [ t ]) when Symbol.is_op1 op ->
         (let$ t_val = go ~env t in
-         from_const (Simplifier.handle_op1 ~op (to_const t_val))) [@coverage off]
+         of_const (Simplifier.handle_op1 ~op (to_const t_val))) [@coverage off]
       | Raw_term.Call (op, [ t1; t2 ]) when Symbol.is_op2 op ->
         let$ t1_val = go ~env t1 in
         let$ t2_val = go ~env t2 in
-        from_const (Simplifier.handle_op2 ~op (to_const t1_val, to_const t2_val))
+        of_const (Simplifier.handle_op2 ~op (to_const t1_val, to_const t2_val))
       | Raw_term.Call (op, args) when Symbol.is_primitive_op op ->
         invalid_arg_list ~op args
       | Raw_term.Call (f, args) -> go_args ~env ~f ~acc:Fun.id args

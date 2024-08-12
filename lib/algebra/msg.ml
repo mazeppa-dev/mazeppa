@@ -19,10 +19,10 @@ let common_functor ~gensym (g, subst_1, subst_2) =
       | _ -> None)
     |> Option.map (fun (x, op, args, args') ->
       let fresh_vars = Gensym.emit_list ~length_list:args gensym in
-      let common_call = Call (op, var_list fresh_vars) in
       let resubst ~args subst =
           Symbol_map.(extend2 ~keys:fresh_vars ~values:args (remove x subst))
       in
+      let common_call = Call (op, var_list fresh_vars) in
       let g = subst ~x ~value:common_call g in
       let subst_1, subst_2 = resubst ~args subst_1, resubst ~args:args' subst_2 in
       g, subst_1, subst_2)

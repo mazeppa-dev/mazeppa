@@ -38,6 +38,10 @@ val is_neutral : t -> bool
 
 val is_value : t -> bool
 
+val to_string : t -> string
+
+val verbatim : t -> string
+
 val classify : t -> category
 
 val redex_sig : t -> redex_sig
@@ -54,7 +58,3 @@ val match_against : t * t -> t Symbol_map.t option
 
 (* Just like [match_against] but produces a renaming or returns [None]. *)
 val rename_against : t * t -> t Symbol_map.t option
-
-val to_string : t -> string
-
-val verbatim : t -> string

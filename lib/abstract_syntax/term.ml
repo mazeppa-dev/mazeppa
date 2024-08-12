@@ -64,6 +64,18 @@ and is_value = function
      | `GCall -> false)
 ;;
 
+let rec to_string = function
+  | Var x -> Symbol.to_string x
+  | Const const -> Const.to_string const
+  | Call (op, args) ->
+    Printf.sprintf
+      "%s(%s)"
+      (Symbol.to_string op)
+      (String.concat ", " (List.map to_string args))
+;;
+
+let verbatim t = "`" ^ to_string t ^ "`"
+
 [@@@coverage on]
 
 let classify : t -> category =
@@ -171,19 +183,3 @@ let rename_against (t1, t2) : t Symbol_map.t option =
     with
     | Fail -> None
 ;;
-
-[@@@coverage off]
-
-let rec to_string = function
-  | Var x -> Symbol.to_string x
-  | Const const -> Const.to_string const
-  | Call (op, args) ->
-    Printf.sprintf
-      "%s(%s)"
-      (Symbol.to_string op)
-      (String.concat ", " (List.map to_string args))
-;;
-
-let verbatim t = "`" ^ to_string t ^ "`"
-
-[@@@coverage on]

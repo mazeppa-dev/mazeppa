@@ -54,6 +54,14 @@ let invalid_arg_list ~op args =
       (args |> List.map Term.verbatim |> String.concat ",")
 ;;
 
+let view_g_rules ~program g =
+    let rules, productive_rules =
+        ( Program.(G_rules_by_name.bindings (find_g_rule_list ~program g))
+        , Program.find_productive_g_rule_list ~program g )
+    in
+    List.combine rules productive_rules
+;;
+
 (* The "body builder" implements ephemeral hash consing for terms. Its purpose is twofold:
    first, it greatly improves memory usage of the supercompiler by sharing structurally
    equal terms; second, it allows homeomorphic embedding to avoid doing duplicate work (by
@@ -114,35 +122,51 @@ struct
       Body_builder.build ~env:(Symbol_map.setup2 (params, args)) t
   ;;
 
-  let view_g_rules g =
-      let rules, productive_rules =
-          ( Program.(G_rules_by_name.bindings (find_g_rule_list ~program g))
-          , Program.find_productive_g_rule_list ~program g )
-      in
-      List.combine rules productive_rules
-  ;;
-
   let maybe_extract_body ~depth ~is_productive body =
       if is_productive || depth = 0 || Term.is_var body
       then None, body
       else (
         let x = Gensym.emit gensym in
-        Some (x, body), Var x)
+        Some (x, body), Term.Var x)
   ;;
 
+  exception Uncontractable
+
   let analyze_g_rules ~depth ~f g =
-      view_g_rules g
+      view_g_rules ~program g
       |> List.map (fun ((c, (c_params, params, body)), is_productive) ->
         let fresh_vars = Gensym.emit_list ~length_list:c_params gensym in
         let contraction = c, fresh_vars in
+        let args =
+            try f contraction with
+            | Uncontractable ->
+              Util.panic
+                "Unexpected pattern %s"
+                Term.(verbatim (Call (c, var_list c_params)))
+        in
+        let params, args = c_params @ params, Term.var_list fresh_vars @ args in
         let body =
             body
-            |> simplify_body
-                 ~params:(c_params @ params)
-                 ~args:(Term.var_list fresh_vars @ f ~c_params contraction)
+            |> simplify_body ~params ~args
             |> maybe_extract_body ~depth ~is_productive
         in
         contraction, body)
+  ;;
+
+  let unfold_g_rules ~depth ~x ~args g =
+      analyze_g_rules ~depth ~f:(fun contraction -> unify ~x ~contraction args) g
+  ;;
+
+  let unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
+      let f (c, fresh_vars) =
+          match Symbol.(to_string c, to_string op'), fresh_vars with
+          | ("T", "="), [] | ("F", "!="), [] ->
+            List.map (Term.subst ~x ~value:unifier) args
+          (* We do not propagate negative information during driving (yet?). *)
+          | (("T" | "F"), _), [] -> args
+          | _ -> raise Uncontractable
+      in
+      analyze_g_rules ~depth ~f g
   ;;
 
   let rec reduce ~depth : Term.t -> Term.t step = function
@@ -196,7 +220,7 @@ struct
     | `CCall, (c, c_args), args ->
       let c_params, params, body = Program.find_g_rule ~program (op, c) in
       Unfold (simplify_body ~params:(c_params @ params) ~args:(c_args @ args) body)
-    | _, (op', (([ Var x; t ] | [ t; Var x ]) as args')), args
+    | _, (op', Term.(([ Var x; t ] | [ t; Var x ]) as args')), args
       when op' = symbol "=" || op' = symbol "!=" ->
       let scrutinee = Term.Call (op', args') in
       let variants = unfold_g_rules_t_f ~depth ~test:(x, op', t) ~args op in
@@ -205,29 +229,6 @@ struct
       let scrutinee = Term.Call (op', args') in
       let variants = unfold_g_rules ~depth ~x:None ~args op in
       Analyze (Gensym.emit gensym, scrutinee, variants)
-
-  and unfold_g_rules ~depth ~x ~args g =
-      analyze_g_rules
-        ~depth
-        ~f:(fun ~c_params:_ contraction -> unify ~x ~contraction args)
-        g
-
-  and unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
-      let unify list = List.map (Term.subst ~x ~value:unifier) list in
-      analyze_g_rules
-        ~depth
-        ~f:(fun ~c_params ->
-          function
-          | c, [] ->
-            (match Symbol.(to_string c, to_string op') with
-             | "T", "=" | "F", "!=" -> unify args
-             | ("T" | "F"), _ -> args
-             | _ -> Util.panic "Expected either `T` or `F`, got %s" (Symbol.verbatim c))
-          | c, _fresh_vars ->
-            Util.panic
-              "Unexpected pattern %s"
-              Term.(verbatim (Call (c, var_list c_params))))
-        g
   ;;
 
   let run ~f t = map ~f (reduce ~depth:0 t)
