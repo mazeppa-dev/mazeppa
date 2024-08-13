@@ -62,31 +62,32 @@ let view_g_rules ~program g =
     List.combine rules productive_rules
 ;;
 
-(* The "body builder" implements ephemeral hash consing for terms. Its purpose is twofold:
-   first, it greatly improves memory usage of the supercompiler by sharing structurally
-   equal terms; second, it allows homeomorphic embedding to avoid doing duplicate work (by
-   looking into its own caches). Since we use an ephemeral cache instead of an ordinary
-   hash table, we avoid memory leaks. *)
+(* The "body builder" implements hash consing for function bodies. Its purpose is twofold:
+   first, it drastically improves memory usage of the supercompiler by sharing
+   structurally equal terms; second, it allows homeomorphic embedding to avoid doing
+   duplicate work (by looking into its own caches). We avoid memory leaks by using a weak
+   hash set provided by the standard library.
+
+   We have also tried using the "ocaml-hashcons" library from [1], but we did not observe
+   any noticeable performance improvements.
+
+   [1] Jean-Christophe Filliâtre and Sylvain Conchon. 2006. Type-safe modular
+   hash-consing. In Proceedings of the 2006 workshop on ML (ML '06). Association for
+   Computing Machinery, New York, NY, USA, 12–19.
+   https://doi.org/10.1145/1159876.1159880 *)
 module Make_body_builder (_ : sig end) : sig
   val build : env:Subst.t -> Term.t -> Term.t
 end = struct
-  module Cache = Ephemeron.K1.Make (struct
+  module Pool = Weak.Make (struct
       type t = Term.t
 
-      let equal t1 t2 = t1 == t2 || Term.equal t1 t2
+      let equal = Term.equal
 
       let hash = Hashtbl.hash
     end)
 
   (* The same size as that of the global homeomorphic embedding cache. *)
-  let cache = Cache.create 16384
-
-  let hashcons t =
-      try Cache.find cache t with
-      | Not_found ->
-        Cache.add cache t t;
-        t
-  ;;
+  let pool = Pool.create 16384
 
   let build_call ~op =
       let open Simplifier in
@@ -96,7 +97,7 @@ end = struct
       | (`CCall | `FCall | `GCall), args -> Call (op, args)
   ;;
 
-  let rec build ~env t = hashcons (build_term ~env t)
+  let rec build ~env t = Pool.merge pool (build_term ~env t)
 
   and build_term ~env = function
     | Term.Var x as default -> Option.value ~default (Symbol_map.find_opt x env)
