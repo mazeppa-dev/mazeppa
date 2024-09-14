@@ -7,12 +7,15 @@
    ppx_deriving.eq
    ppx_deriving.ord
    ppx_string_interpolation
-   ppx_yojson_conv))
+   ppx_yojson_conv
+   ppx_blob))
  (instrumentation
   (backend bisect_ppx))
  (foreign_stubs
   (language c)
-  (names magic)))
+  (names magic))
+ (preprocessor_deps
+  (file ../c/mazeppa.h)))
 
 (include_subdirs unqualified)
 

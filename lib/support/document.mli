@@ -11,6 +11,7 @@ val space : document
 val hardline : document
 val break : int -> document
 val group : document -> document
+val optional : f:('a -> document) -> 'a option -> document
 val nest : offset:int -> document -> document
 val combine : ?group:bool -> ?nest:int -> ?sep:document list -> document list -> document
 val parens : ?group:bool -> ?nest:int -> ?sep:document list -> document list -> document

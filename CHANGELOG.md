@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Added
+
+ - The Mazeppa-to-C translator (with GNU11 extensions) via the new `translate` CLI command (issue https://github.com/mazeppa-dev/mazeppa/issues/1).
+ - The `translate_to_c` and `mazeppa_h` API functions.
+
 ## 0.3.0 - 2024-08-16
 
 ### Added

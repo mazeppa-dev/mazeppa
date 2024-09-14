@@ -16,6 +16,8 @@ let break = PPrint.break
 
 let group = PPrint.group
 
+let optional ~f doc = PPrint.optional f doc
+
 let nest ~offset doc = PPrint.nest offset doc
 
 let combine ?(group = false) ?(nest = 0) ?(sep = [ empty ]) list =

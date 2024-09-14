@@ -32,6 +32,7 @@
   ppx_deriving
   ppx_string_interpolation
   ppx_yojson_conv
+  ppx_blob
   bisect_ppx
   menhir
   (spectrum

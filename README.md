@@ -565,7 +565,7 @@ Run `dune exec my_compiler` to see the desired residual program:
   ]
 ```
 
-You can call Mazeppa as many times as you want, including in parallel. Note that we expose a limited interface that can only transform a value of type `Raw_program.t` into an optimized `Raw_program.t`, and nothing more.
+You can call Mazeppa as many times as you want, including in parallel. Note that we expose a limited interface to the supercompiler; in particular, there is no way to inspect what it does in the process (i.e., `--inspect`).
 
 Besides supercompilation, we also provide a built-in evaluator:
 
@@ -574,6 +574,193 @@ val eval : Raw_program.t -> Raw_term.t
 ```
 
 It can only be called on programs whose `main` functions do not accept parameters. Unlike `supercompile`, it produces an evaluated term of type `Raw_term.t` and can possibly diverge.
+
+See other API functions and their documentation in [`lib/mazeppa.mli`](lib/mazeppa.mli).
+
+## Translation to C
+
+Suppose that `main.mz` contains a slightly modified version of the lazy Fibonacci example:
+
+```
+main(n) := getIt(magic(1u32, 1u32), n);
+
+magic(m, n) := match =(m, 0u32) {
+    T() -> Nil(),
+    F() -> Cons(m, magic(n, +(m, n)))
+};
+
+getIt(xs, n) := match xs {
+    Nil() -> Panic("undefined"),
+    Cons(x, xs) -> match =(n, 1u64) {
+        T() -> x,
+        F() -> getIt(xs, -(n, 1u64))
+    }
+};
+```
+
+The following command translates it to C11 with GNU extensions (i.e., `-std=gnu11`):
+
+```
+$ cat main.mz | mazeppa translate --language C --entry fib
+```
+
+<details>
+<summary>Show the output</summary>
+
+```c
+#include "mazeppa.h"
+
+MZ_ENUM_USER_TAGS(op_Cons, op_Nil);
+
+static mz_Value op_main(mz_ArgsPtr args);
+
+static mz_Value op_magic(mz_ArgsPtr args);
+
+static mz_Value op_getIt(mz_ArgsPtr args);
+
+static mz_Value thunk_0(mz_EnvPtr env) {
+    mz_Value var_m = (env)[0];
+    return var_m;
+}
+
+static mz_Value thunk_1(mz_EnvPtr env) {
+    mz_Value var_m = (env)[0];
+    mz_Value var_n = (env)[1];
+    return ({
+    struct mz_value args[2];
+    (args)[0] = var_n;
+    (args)[1] = MZ_OP2(var_m, add, var_n);
+    op_magic(args);
+    });
+}
+
+static mz_Value op_main(mz_ArgsPtr args) {
+    mz_Value var_n = (args)[0];
+    return ({
+    struct mz_value args[2];
+    (args)[0] = ({
+    struct mz_value args[2];
+    (args)[0] = MZ_INT(U, 32, UINT32_C(1));
+    (args)[1] = MZ_INT(U, 32, UINT32_C(1));
+    op_magic(args);
+    });
+    (args)[1] = var_n;
+    op_getIt(args);
+    });
+}
+
+static mz_Value op_magic(mz_ArgsPtr args) {
+    mz_Value var_m = (args)[0];
+    mz_Value var_n = (args)[1];
+    return ({
+    struct mz_value tmp = MZ_OP2(var_m, equal, MZ_INT(U, 32, UINT32_C(0)));
+    switch((tmp).tag) {
+    case op_T: {
+    tmp = MZ_EMPTY_DATA(op_Nil);
+    break;
+    }
+    case op_F: {
+    tmp = MZ_DATA(op_Cons, 2, MZ_THUNK(thunk_0, 1, var_m), MZ_THUNK(thunk_1, 2, var_m, var_n));
+    break;
+    }
+    default: MZ_UNEXPECTED_TAG((tmp).tag);
+    }
+    tmp;
+    });
+}
+
+static mz_Value op_getIt(mz_ArgsPtr args) {
+    mz_Value var_xs = (args)[0];
+    mz_Value var_n = (args)[1];
+    return ({
+    struct mz_value tmp = var_xs;
+    switch((tmp).tag) {
+    case op_Nil: {
+    tmp = mz_panic(MZ_STRING("undefined"));
+    break;
+    }
+    case op_Cons: {
+    mz_Value var_x = ((tmp).payload)[0];
+    mz_Value var_xs$ = ((tmp).payload)[1];
+    tmp = ({
+    struct mz_value tmp = MZ_OP2(var_n, equal, MZ_INT(U, 64, UINT64_C(1)));
+    switch((tmp).tag) {
+    case op_T: {
+    tmp = mz_force(var_x);
+    break;
+    }
+    case op_F: {
+    tmp = ({
+    struct mz_value args[2];
+    (args)[0] = mz_force(var_xs$);
+    (args)[1] = MZ_OP2(var_n, sub, MZ_INT(U, 64, UINT64_C(1)));
+    op_getIt(args);
+    });
+    break;
+    }
+    default: MZ_UNEXPECTED_TAG((tmp).tag);
+    }
+    tmp;
+    });
+    break;
+    }
+    default: MZ_UNEXPECTED_TAG((tmp).tag);
+    }
+    tmp;
+    });
+}
+
+extern mz_Value fib(mz_Value var_n) {
+    return MZ_CALL_MAIN(var_n);
+}
+```
+
+</details>
+
+The `translate` command requires both `--language `, which is the target language for translation, and `--entry`, which is the name of an external symbol that will correspond to your `main` function. The input Mazeppa program comes from `stdin` (`cat main.mz` in our example); the output GNU11 program is written to `stdout`.
+
+Let us advance further and compile the output program to an object file. First, copy [`c/deps/sds.c`](c/deps/sds.c), [`c/deps/sds.h`](c/deps/sds.h), and [`c/deps/sdsalloc.h`](c/deps/sdsalloc.h) to your current directory; second, install [Boehm GC] on your computer:
+
+[Boehm GC]: https://hboehm.info/gc/
+
+```
+$ sudo apt install libgc-dev -y
+```
+
+then execute the following command:
+
+```
+$ cat main.mz \
+    | mazeppa translate --language C --entry fib --dump-header-to . \
+    | gcc -c -o program.o -std=gnu11 -xc -
+```
+
+The `--dump-header-to` option writes the content of [`mazeppa.h`](c/mazeppa.h) to a specified location; this is needed for the output program to compile. The `gcc` command accepts the output program from `stdin` and produces `program.o`.
+
+Now what is left is to actually invoke the generated `fib` function. Create `main.c` with the following content:
+
+```c
+#include "mazeppa.h"
+
+mz_Value fib(mz_Value n);
+
+int main(void) {
+    // Always initialize Boehm GC before invoking Mazeppa code.
+    GC_INIT();
+    mz_Value v = fib(MZ_INT(U, 64, 10));
+    printf("fib(10) = %" PRIu32 "\n", MZ_GET(U32, v));
+}
+```
+
+This "driver" program just invokes `fib` with a Mazeppa integer (`MZ_INT`) and prints the result. You can use any functionality from `mazeppa.h`, provided that it is not prefixed with `mz_priv_` or `MZ_PRIV_`.
+
+To bring all the pieces together:
+
+```
+$ gcc main.c program.o sds.c -lgc -std=gnu11
+```
+
+`./a.out` prints `fib(10) = 55` and exits, as expected.
 
 ## Usage considerations
 

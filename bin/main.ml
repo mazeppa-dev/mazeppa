@@ -18,7 +18,16 @@ let position_to_string ({ pos_fname; pos_lnum; pos_bol; pos_cnum } : Lexing.posi
       (pos_cnum - pos_bol + 1)
 ;;
 
-let read_file_exn filename =
+let parse lexbuf =
+    try Parser.program Lexer.read lexbuf with
+    | Lexer.SyntaxError msg ->
+      Util.panic "%s: %s" (position_to_string lexbuf.lex_curr_p) msg
+    | Parser.Error -> Util.panic "%s: syntax error" (position_to_string lexbuf.lex_curr_p)
+;;
+
+let read_channel ic = parse (Lexing.from_channel ic)
+
+let read_file filename =
     In_channel.with_open_text filename (fun ic ->
       let lexbuf = Lexing.from_channel ic in
       Lexing.set_filename lexbuf filename;
@@ -105,13 +114,13 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
     Pretty.print_program ~oc:channels.output_oc residue
 ;;
 
-type config =
+type run_config =
   { target_dir : string
   ; inspect : bool
   ; print_gc_stats : bool
   }
 
-let prepare_target_dir (conf : config) : unit =
+let prepare_target_dir (conf : run_config) : unit =
     if Sys.file_exists conf.target_dir
     then
       if not (Sys.is_directory conf.target_dir)
@@ -131,7 +140,8 @@ let ( let$ ) filename k =
       (fun () -> k oc)
 ;;
 
-let supercompile ~(conf : config) (input : Raw_program.t) : unit =
+let supercompile (conf : run_config) : unit =
+    let input = read_file "main.mz" in
     prepare_target_dir conf;
     let$ output_oc = conf.target_dir ^ "/output.mz" in
     if conf.inspect
@@ -154,17 +164,34 @@ let supercompile ~(conf : config) (input : Raw_program.t) : unit =
     if conf.print_gc_stats then Gc.print_stat stderr
 ;;
 
-let check (input : Raw_program.t) : unit = ignore (Converter.to_program input)
+type translate_config =
+  { language : string
+  ; entry : string
+  ; dump_header_to : string option
+  }
 
-type eval_config = { print_gc_stats : bool }
-
-let eval ~(conf : eval_config) (input : Raw_program.t) : unit =
-    check input;
-    print_endline (Raw_term.to_string (Mazeppa.eval input));
-    if conf.print_gc_stats then Gc.print_stat stderr
+let c_identifier x =
+    if Str.(
+         string_match (regexp "[a-zA-Z_][a-zA-Z0-9_]*") x 0
+         && (* Ensure that the whole string has been matched. *)
+         matched_string x = x)
+    then Symbol.of_string x
+    else Util.panic "Invalid entry name: `%s`" x
 ;;
 
-module Common_options = struct
+let translate (conf : translate_config) : unit =
+    let input = read_channel stdin in
+    Mazeppa.check input;
+    match String.lowercase_ascii conf.language with
+    | "c" ->
+      Mazeppa.translate_to_c ~oc:stdout ~entry:(c_identifier conf.entry) input;
+      conf.dump_header_to
+      |> Option.iter (fun dir ->
+        Out_channel.with_open_text (dir ^ "/mazeppa.h") Mazeppa.mazeppa_h)
+    | _ -> Util.panic "Unsupported target language: `%s`" conf.language
+;;
+
+module Options = struct
   let get_print_gc_stats () =
       Clap.flag
         ~set_long:"print-gc-stats"
@@ -174,10 +201,6 @@ module Common_options = struct
            fields."
         false
   ;;
-end
-
-module Run_command = struct
-  let description = "Run the supercompiler."
 
   let get_target_dir () =
       Clap.default_string
@@ -194,33 +217,66 @@ module Run_command = struct
            target directory."
         false
   ;;
-end
 
-module Check_command = struct
-  let description = "Check a program for errors."
-end
+  let get_language () =
+      Clap.mandatory_string
+        ~long:"language"
+        ~description:
+          "The target language for translation (case-insensitive). The only supported \
+           value is `C`, which corresponds to `-std=gnu11`. Both GCC and Clang should \
+           accept the output without issues."
+        ()
+  ;;
 
-module Eval_command = struct
-  let description =
-      "Evaluate a program and print the result. The main function must not accept \
-       parameters."
+  let get_entry () =
+      Clap.mandatory_string
+        ~long:"entry"
+        ~description:
+          "If `--language C` is specified, the name of an `extern` function that will \
+           correspond to your main function."
+        ()
+  ;;
+
+  let get_dump_header_to () =
+      Clap.optional_string
+        ~long:"dump-header-to"
+        ~description:
+          "The directory to dump `mazeppa.h` to. This header is required to compile the \
+           generated C code."
+        ()
   ;;
 end
 
 let get_command () =
-    [ Run_command.(
-        Clap.case "run" ~description
-        @@ fun () ->
-        let target_dir = get_target_dir () in
-        let inspect = get_inspect () in
-        let print_gc_stats = Common_options.get_print_gc_stats () in
-        `Run { target_dir; inspect; print_gc_stats })
-    ; Check_command.(Clap.case "check" ~description @@ fun () -> `Check)
-    ; Eval_command.(
-        Clap.case "eval" ~description
-        @@ fun () ->
-        let print_gc_stats = Common_options.get_print_gc_stats () in
-        `Eval { print_gc_stats })
+    let open Options in
+    [ (Clap.case "run" ~description:"Run the supercompiler."
+       @@ fun () ->
+       let target_dir = get_target_dir () in
+       let inspect = get_inspect () in
+       let print_gc_stats = get_print_gc_stats () in
+       fun () -> supercompile { target_dir; inspect; print_gc_stats })
+    ; (Clap.case "translate" ~description:"Translate a program to some target language."
+       @@ fun () ->
+       let language = get_language () in
+       let entry = get_entry () in
+       let dump_header_to = get_dump_header_to () in
+       fun () -> translate { language; entry; dump_header_to })
+    ; (Clap.case "check" ~description:"Check a program for errors."
+       @@ fun () () ->
+       let input = read_file "main.mz" in
+       Mazeppa.check input)
+    ; (Clap.case
+         "eval"
+         ~description:
+           "Evaluate a program and print the result. The main function must not accept \
+            parameters."
+       @@ fun () ->
+       let print_gc_stats = get_print_gc_stats () in
+       fun () ->
+         let input = read_file "main.mz" in
+         Mazeppa.check input;
+         print_endline (Raw_term.to_string (Mazeppa.eval input));
+         if print_gc_stats then Gc.print_stat stderr)
     ]
     |> Clap.subcommand
 ;;
@@ -256,13 +312,7 @@ let () =
     Clap.description (Printf.sprintf "The Mazeppa supercompiler (v%s)." version);
     let command = get_command () in
     Clap.close ();
-    try
-      let input = read_file_exn "main.mz" in
-      match command with
-      | `Run conf -> supercompile ~conf input
-      | `Check -> check input
-      | `Eval conf -> eval ~conf input
-    with
+    try command () with
     | Util.Panic { msg; reduction_path } -> its_over ~reduction_path msg
     | Mazeppa.Panic msg | Sys_error msg -> its_over msg
     | e ->
