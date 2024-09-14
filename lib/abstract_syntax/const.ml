@@ -14,6 +14,13 @@ let signedness_to_string =
     | Unsigned -> "u"
 ;;
 
+let signedness_to_string_uppercase =
+    let open Checked_oint in
+    function
+    | Signed -> "I"
+    | Unsigned -> "U"
+;;
+
 let bitness_to_string =
     let open Checked_oint in
     function
@@ -26,6 +33,10 @@ let bitness_to_string =
 
 let int_ty_to_string (signedness, bitness) =
     signedness_to_string signedness ^ bitness_to_string bitness
+;;
+
+let int_ty_to_string_uppercase (signedness, bitness) =
+    signedness_to_string_uppercase signedness ^ bitness_to_string bitness
 ;;
 
 let int_to_string x =

@@ -37,6 +37,14 @@ let eval (input : Raw_program.t) : Raw_term.t =
     wrap_panic (fun () -> Evaluator.run_exn input)
 ;;
 
+let translate_to_c ~(oc : out_channel) ~(entry : Symbol.t) (input : Raw_program.t) : unit =
+    wrap_panic (fun () -> C_codegen.run ~oc ~entry input)
+;;
+
+let mazeppa_h (oc : out_channel) : unit =
+    Out_channel.output_string oc [%blob "../c/mazeppa.h"]
+;;
+
 module Internals = struct
   module Parser = Parser
   module Lexer = Lexer

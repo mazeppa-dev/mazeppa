@@ -1,0 +1,20 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+ContinuationIndentWidth: 4
+ColumnLimit: 80
+
+AlwaysBreakBeforeMultilineStrings: true
+AlignConsecutiveMacros: true
+AlignAfterOpenBracket: AlwaysBreak
+SeparateDefinitionBlocks: Always
+
+StatementMacros:
+  [
+    "_Pragma",
+    "X",
+    "MZ_ENUM_INT_TYPES",
+    "MZ_ENUM_INT_TYPES_EXTENDED",
+    "MZ_ENUM_INT_OP2",
+  ]

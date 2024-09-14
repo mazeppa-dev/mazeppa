@@ -44,3 +44,6 @@ jobs:
 
     - name: End-to-end tests
       run: opam exec ./scripts/test-examples.sh
+
+    - name: C codegen tests
+      run: opam exec ./scripts/test-c-codegen.sh
