@@ -65,7 +65,7 @@ let op_kind op : [ `CCall | `FCall | `GCall ] =
     then `GCall
     else if is_primitive_op op
     then `FCall
-    else Util.panic "An unknown symbol kind: `%s`" op
+    else Util.panic "Unexpected symbol kind: `%s`" op
 ;;
 
 let is_lazy_op op : bool =
