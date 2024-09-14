@@ -109,7 +109,7 @@ target
 ```
 
  - `graph.dot` contains the complete _process graph_ for our program. You can obtain a picture of the graph by running `dot -Tsvg target/graph.dot > target/graph.svg`.
- - `nodes.json` contains the _contents_ of all nodes in the graph. Without this file, you would not be able to understand much from the graph alone.
+ - `nodes.json` contains the _content_ of all nodes in the graph. Without this file, you would not be able to understand much from the graph alone.
  - `program.json` contains the initial program in _Mazeppa IR_: our supercompiler works with this particular representation instead of the original program.
  - `output.mz` contains the final residual program.
 
