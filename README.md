@@ -1021,9 +1021,10 @@ Not yet, we need to battle-test Mazeppa on some actual programming language. Our
 
 ### How can I execute programs in Mazeppa?
 
-For debugging and other purposes, we provide a built-in interpreter that can execute Mazeppa programs. You can launch it by typing `mazeppa eval` (make sure that your `main` function does not accept parameters). We are also working on a [Mazeppa-to-C translator], which will enable compilation to zero-overhead machine code.
+For debugging and other purposes, we provide a built-in [definitional interpreter] that can execute Mazeppa programs. You can launch it by typing `mazeppa eval` (make sure that your `main` function does not accept parameters). For the purpose of real execution, we recommend [translating Mazeppa to C] and then compiling C to machine code, as shown above.
 
-[Mazeppa-to-C translator]: https://github.com/mazeppa-dev/mazeppa/issues/1
+[definitional interpreter]: lib/evaluator.ml
+[translating Mazeppa to C]: #translation-to-c
 
 ### How can I perform I/O in Mazeppa?
 
