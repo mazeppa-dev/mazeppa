@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 open C_syntax
 module C = Const
 

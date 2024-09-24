@@ -39,10 +39,12 @@ let eval (input : Raw_program.t) : Raw_term.t =
 
 let translate_to_c ~(oc : out_channel) ~(entry : Symbol.t) (input : Raw_program.t) : unit =
     wrap_panic (fun () -> C_codegen.run ~oc ~entry input)
+[@@coverage off]
 ;;
 
 let mazeppa_h (oc : out_channel) : unit =
     Out_channel.output_string oc [%blob "../c/mazeppa.h"]
+[@@coverage off]
 ;;
 
 module Internals = struct

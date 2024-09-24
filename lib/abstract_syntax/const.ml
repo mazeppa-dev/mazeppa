@@ -5,8 +5,6 @@ type t =
   | String of string
 [@@deriving eq, show]
 
-[@@@coverage on]
-
 let signedness_to_string =
     let open Checked_oint in
     function
@@ -43,6 +41,8 @@ let int_to_string x =
     let (module Singleton) = Checked_oint.singleton x in
     Singleton.(show value) ^ int_ty_to_string (Checked_oint.generic_int_ty x)
 ;;
+
+[@@@coverage on]
 
 let escape_char = function
   (* We would need the below rule for printing single characters, but we only need to
