@@ -1,3 +1,5 @@
+[@@@coverage off]
+
 (* The simplified syntax of C99 from [1] with some GNU extensions.
  *
  * [1] <https://www.open-std.org/JTC1/SC22/WG14/www/docs/n1256.pdf>
