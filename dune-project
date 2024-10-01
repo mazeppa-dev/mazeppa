@@ -11,9 +11,9 @@
 (source
  (github mazeppa-dev/mazeppa))
 
-(authors "Tima Kinsart")
+(authors "hirrolot <hirrolot@gmail.com>")
 
-(maintainers "Tima Kinsart")
+(maintainers "hirrolot <hirrolot@gmail.com>")
 
 (license MIT)
 
