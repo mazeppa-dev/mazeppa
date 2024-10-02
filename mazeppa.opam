@@ -9,8 +9,7 @@ homepage: "https://github.com/mazeppa-dev/mazeppa"
 doc: "https://github.com/mazeppa-dev/mazeppa"
 bug-reports: "https://github.com/mazeppa-dev/mazeppa/issues"
 depends: [
-  "ocaml"
-  "ocamlformat"
+  "ocaml" {>= "4.13"}
   "dune" {>= "3.15"}
   "pprint"
   "checked_oint" {= "0.2.0"}
@@ -22,7 +21,7 @@ depends: [
   "menhir"
   "spectrum" {= "0.6.0"}
   "clap"
-  "alcotest"
+  "alcotest" {>= "1.7.0"}
   "odoc" {with-doc}
 ]
 build: [

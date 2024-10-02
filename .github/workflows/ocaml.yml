@@ -34,7 +34,9 @@ jobs:
 
     - name: Install the dependencies
       if: steps.cache-opam.outputs.cache-hit != 'true'
-      run: opam install . --deps-only --with-test -y
+      run: |
+        opam install . --deps-only --with-test -y
+        opam install ocamlformat odoc -y
 
     - name: Check formatting
       run: opam exec -- dune build @fmt --action-stderr-on-success=must-be-empty

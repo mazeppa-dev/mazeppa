@@ -23,12 +23,12 @@
  (name mazeppa)
  (synopsis "A modern supercompiler for call-by-value functional languages")
  (depends
-  ocaml
-  ocamlformat
+  (ocaml
+   (>= 4.13))
   dune
   pprint
   (checked_oint
-   (= "0.2.0"))
+   (= 0.2.0))
   ppx_deriving
   ppx_string_interpolation
   ppx_yojson_conv
@@ -36,6 +36,7 @@
   bisect_ppx
   menhir
   (spectrum
-   (= "0.6.0"))
+   (= 0.6.0))
   clap
-  alcotest))
+  (alcotest
+   (>= 1.7.0))))
