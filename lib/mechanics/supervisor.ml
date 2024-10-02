@@ -50,7 +50,7 @@ end = struct
   (* Unreporting is used to "forget" nodes when generalization is performed. *)
   let unreport_nodes (gensym_backup : Gensym.t) : unit =
       let iter = Gensym.clone gensym_backup in
-      let until = Gensym.current State.node_gensym in
+      let until = Gensym.latest State.node_gensym in
       let rec go () =
           let node_id = Gensym.emit iter in
           S.unobserve_node node_id;

@@ -3,6 +3,7 @@ module Symbol = Symbol
 module Const = Const
 module Raw_term = Raw_term
 module Raw_program = Raw_program
+module Gensym = Gensym
 
 (** Something went wrong... *)
 exception Panic of string
@@ -60,7 +61,6 @@ module Internals : sig
   module Util = Util
   module Symbol_map = Symbol_map
   module Subst = Subst
-  module Gensym = Gensym
   module Term = Term
   module Program = Program
   module Homeomorphic_emb = Homeomorphic_emb

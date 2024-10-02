@@ -7,15 +7,18 @@ type t =
 
 let create ~prefix () = { prefix = ref prefix; counter = ref 0 }
 
+let make_symbol ~prefix i = Symbol.of_string (prefix ^ string_of_int i)
+
 let emit gensym =
-    let x = !(gensym.counter) in
+    let i = !(gensym.counter) in
     incr gensym.counter;
-    Symbol.of_string (!(gensym.prefix) ^ string_of_int x)
+    make_symbol ~prefix:!(gensym.prefix) i
 ;;
 
-let current gensym =
-    decr gensym.counter;
-    emit gensym
+let latest gensym =
+    let i = !(gensym.counter) in
+    assert (i > 0);
+    make_symbol ~prefix:!(gensym.prefix) i
 ;;
 
 let emit_list ~length_list gensym = List.map (fun _ -> emit gensym) length_list
