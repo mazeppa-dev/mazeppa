@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.3.2 - 2024-10-02
+
 ### Added
 
  - Expose the `Gensym` module in the public API (previously private).
