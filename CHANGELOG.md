@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.3.3 - 2024-10-03
+
 ### Fixed
 
   - Tweak the dependencies in `dune-project` after [trying to publish] the package.
