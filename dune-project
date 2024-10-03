@@ -24,19 +24,20 @@
  (synopsis "A modern supercompiler for call-by-value functional languages")
  (depends
   (ocaml
-   (>= 4.13))
+   (>= 5.1))
   dune
   pprint
   (checked_oint
-   (= 0.2.0))
+   (>= 0.2.0))
   ppx_deriving
   ppx_string_interpolation
   ppx_yojson_conv
-  ppx_blob
+  (ppx_blob
+   (>= 0.9.0))
   bisect_ppx
   menhir
   (spectrum
-   (= 0.6.0))
+   (>= 0.6.0))
   clap
   (alcotest
    (>= 1.7.0))))

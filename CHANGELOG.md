@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Fixed
+
+  - Tweak the dependencies in `dune-project` after [trying to publish] the package.
+
+[trying to publish]: https://github.com/ocaml/opam-repository/pull/26657
+
 ## 0.3.2 - 2024-10-02
 
 ### Added
