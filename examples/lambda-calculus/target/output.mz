@@ -1,2 +1,2 @@
 main() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64)
-    , Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Var(0u64))))))))));
+    , Appl(Var(1u64), Appl(Var(1u64), Var(0u64)))))))));
