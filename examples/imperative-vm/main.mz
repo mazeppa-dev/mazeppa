@@ -12,24 +12,6 @@ example() :=
         Nil()))),
     Nil())));
 
-fetchCell(env, x) := match env {
-    Nil() -> Panic(++("the variable is unbound: ", x)),
-    Cell(y, value, xs) -> match =(x, y) {
-        T() -> value,
-        F() -> fetchCell(xs, x)
-    }
-};
-
-updateCell(env, x, value) := match env {
-    Nil() -> Cell(x, value, Nil()),
-    Cell(y, value', xs) -> match =(x, y) {
-        T() -> Cell(x, value, xs),
-        F() ->
-            let xs := updateCell(xs, x, value);
-            Cell(y, value', xs)
-    }
-};
-
 evalProgram(program, env) := match program {
     Nil() -> env,
     Cons(stmt, rest) -> evalProgram(rest, evalStmt(stmt, env))
@@ -66,4 +48,22 @@ evalBoolean(t, env) := match evalTerm(t, env) {
 evalInt(t, env) := match evalTerm(t, env) {
     Int(n) -> n,
     Boolean(_b) -> Panic("want `Int(n)`, got `Boolean(b)`")
+};
+
+fetchCell(env, x) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", x)),
+    Cell(y, value, xs) -> match =(x, y) {
+        T() -> value,
+        F() -> fetchCell(xs, x)
+    }
+};
+
+updateCell(env, x, value) := match env {
+    Nil() -> Cell(x, value, Nil()),
+    Cell(y, value', xs) -> match =(x, y) {
+        T() -> Cell(x, value, xs),
+        F() ->
+            let xs := updateCell(xs, x, value);
+            Cell(y, value', xs)
+    }
 };
