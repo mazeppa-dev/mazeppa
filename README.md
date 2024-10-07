@@ -296,14 +296,6 @@ We will be using the code from [`examples/lambda-calculus/`](examples/lambda-cal
 [normalization-by-evaluation]: https://davidchristiansen.dk/tutorials/nbe/
 
 ```
-indexEnv(env, idx) := match env {
-    Nil() -> Panic(++("the variable is unbound: ", string(idx))),
-    Cons(value, xs) -> match =(idx, 0u64) {
-        T() -> value,
-        F() -> indexEnv(xs, -(idx, 1u64))
-    }
-};
-
 normalize(lvl, env, t) := quote(lvl, eval(env, t));
 
 normalizeAt(lvl, env, t) := normalize(+(lvl, 1u64), Cons(vvar(lvl), env), t);
@@ -331,6 +323,14 @@ quoteNeutral(lvl, nt) := match nt {
     NVar(var) -> Var(-(-(lvl, var), 1u64)),
     NAppl(nt, nVal) -> Appl(quoteNeutral(lvl, nt), quote(lvl, nVal))
 };
+
+indexEnv(env, idx) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", string(idx))),
+    Cons(value, xs) -> match =(idx, 0u64) {
+        T() -> value,
+        F() -> indexEnv(xs, -(idx, 1u64))
+    }
+};
 ```
 
 (`eval`/`quote` are sometimes called `reflect`/`reify`.)
@@ -342,26 +342,28 @@ Now let us compute something with this machine:
 ```
 main() := normalize(0u64, Nil(), example());
 
-example() := Lam(pow(Var(0u64), seven()));
+example() := Appl(Appl(mul(), two()), three());
 
-seven() := Lam(Lam(
-    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
-    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
-    Appl(Var(1u64), Var(0u64))))))))));
+two() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Var(0u64)))));
 
-pow(a, x) := Appl(x, a);
+three() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
+    Var(0u64))))));
+
+mul() := Lam(Lam(Lam(Lam(Appl(
+    Appl(Var(3u64), Appl(Var(2u64), Var(1u64))),
+    Var(0u64))))));
 ```
 
-The body of `main` is a lambda term that normalizes a lambda abstraction that takes a [Church numeral] and multiplies it seven times.
+The body of `main` computes the normal form of the lambda term `example()` that multiplies [Church numerals] `two()` and `three()`.
 
-[Church numeral]: https://en.wikipedia.org/wiki/Church_encoding#Church_numerals
+[Church numerals]: https://en.wikipedia.org/wiki/Church_encoding#Church_numerals
 
-By supercompiling `main()`, we obtain the following residual program:
+By supercompiling `main()`, we obtain the Church numeral of 6:
 
 [[`examples/lambda-calculus/target/output.mz`](examples/lambda-calculus/target/output.mz)]
 ```
 main() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64)
-    , Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Var(0u64))))))))));
+    , Appl(Var(1u64), Appl(Var(1u64), Var(0u64)))))))));
 ```
 
 The lambda calculus interpreter has been completely annihilated!

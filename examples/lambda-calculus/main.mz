@@ -3,23 +3,16 @@
 // enough to carry out the whole computation.
 main() := normalize(0u64, Nil(), example());
 
-example() := Lam(pow(Var(0u64), seven()));
+example() := Appl(Appl(mul(), two()), three());
 
-seven() := Lam(Lam(
-    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
-    Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
-    Appl(Var(1u64), Var(0u64))))))))));
+two() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Var(0u64)))));
 
-// Exponentiation of Church numerals is reverse application.
-pow(a, x) := Appl(x, a);
+three() := Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64),
+    Var(0u64))))));
 
-indexEnv(env, idx) := match env {
-    Nil() -> Panic(++("the variable is unbound: ", string(idx))),
-    Cons(value, xs) -> match =(idx, 0u64) {
-        T() -> value,
-        F() -> indexEnv(xs, -(idx, 1u64))
-    }
-};
+mul() := Lam(Lam(Lam(Lam(Appl(
+    Appl(Var(3u64), Appl(Var(2u64), Var(1u64))),
+    Var(0u64))))));
 
 // This is a standard normalization-by-evaluation procedure that obtains a beta
 // normal form, if it exists.
@@ -49,4 +42,12 @@ quote(lvl, v) := match v {
 quoteNeutral(lvl, nt) := match nt {
     NVar(var) -> Var(-(-(lvl, var), 1u64)),
     NAppl(nt, nVal) -> Appl(quoteNeutral(lvl, nt), quote(lvl, nVal))
+};
+
+indexEnv(env, idx) := match env {
+    Nil() -> Panic(++("the variable is unbound: ", string(idx))),
+    Cons(value, xs) -> match =(idx, 0u64) {
+        T() -> value,
+        F() -> indexEnv(xs, -(idx, 1u64))
+    }
 };

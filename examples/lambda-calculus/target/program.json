@@ -1,53 +1,33 @@
 [
   [
-    [ ".f0", [ "nVal", "mVal" ], ".g2(mVal, nVal)" ],
+    [ ".f0", [ "nVal", "mVal" ], ".g0(mVal, nVal)" ],
     [ ".f1", [ "mVal", "env", "n" ], ".f0(eval(env, n), mVal)" ],
-    [ "eval", [ "env", "t" ], ".g3(t, env)" ],
-    [ "example", [], "Lam(pow(Var(0u64), seven()))" ],
-    [ "indexEnv", [ "env", "idx" ], ".g1(env, idx)" ],
+    [ "eval", [ "env", "t" ], ".g1(t, env)" ],
+    [ "example", [], "Appl(Appl(mul(), two()), three())" ],
+    [ "indexEnv", [ "env", "idx" ], ".g5(env, idx)" ],
     [ "main", [], "normalize(0u64, Nil(), example())" ],
+    [
+      "mul", [],
+      "Lam(Lam(Lam(Lam(Appl(Appl(Var(3u64), Appl(Var(2u64), Var(1u64))), Var(0u64))))))"
+    ],
     [ "normalize", [ "lvl", "env", "t" ], "quote(lvl, eval(env, t))" ],
     [
       "normalizeAt",
       [ "lvl", "env", "t" ],
       "normalize(+(lvl, 1u64), Cons(vvar(lvl), env), t)"
     ],
-    [ "pow", [ "a", "x" ], "Appl(x, a)" ],
-    [ "quote", [ "lvl", "v" ], ".g4(v, lvl)" ],
-    [ "quoteNeutral", [ "lvl", "nt" ], ".g5(nt, lvl)" ],
+    [ "quote", [ "lvl", "v" ], ".g2(v, lvl)" ],
+    [ "quoteNeutral", [ "lvl", "nt" ], ".g3(nt, lvl)" ],
     [
-      "seven", [],
-      "Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Var(0u64))))))))))"
+      "three", [],
+      "Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Appl(Var(1u64), Var(0u64))))))"
     ],
+    [ "two", [], "Lam(Lam(Appl(Var(1u64), Appl(Var(1u64), Var(0u64)))))" ],
     [ "vvar", [ "lvl" ], "Neutral(NVar(lvl))" ]
   ],
   [
     [
       ".g0",
-      [
-        [ "F", [], [ "idx", "value", "xs" ], "indexEnv(xs, -(idx, 1u64))" ],
-        [ "T", [], [ "idx", "value", "xs" ], "value" ]
-      ]
-    ],
-    [
-      ".g1",
-      [
-        [
-          "Cons",
-          [ "value", "xs" ],
-          [ "idx" ],
-          ".g0(=(idx, 0u64), idx, value, xs)"
-        ],
-        [
-          "Nil",
-          [],
-          [ "idx" ],
-          "Panic(++(\"the variable is unbound: \", string(idx)))"
-        ]
-      ]
-    ],
-    [
-      ".g2",
       [
         [
           "Closure",
@@ -59,7 +39,7 @@
       ]
     ],
     [
-      ".g3",
+      ".g1",
       [
         [ "Appl", [ "m", "n" ], [ "env" ], ".f1(eval(env, m), env, n)" ],
         [ "Lam", [ "body" ], [ "env" ], "Closure(env, body)" ],
@@ -67,7 +47,7 @@
       ]
     ],
     [
-      ".g4",
+      ".g2",
       [
         [
           "Closure",
@@ -79,7 +59,7 @@
       ]
     ],
     [
-      ".g5",
+      ".g3",
       [
         [
           "NAppl",
@@ -88,6 +68,30 @@
           "Appl(quoteNeutral(lvl, nt), quote(lvl, nVal))"
         ],
         [ "NVar", [ "var" ], [ "lvl" ], "Var(-(-(lvl, var), 1u64))" ]
+      ]
+    ],
+    [
+      ".g4",
+      [
+        [ "F", [], [ "idx", "value", "xs" ], "indexEnv(xs, -(idx, 1u64))" ],
+        [ "T", [], [ "idx", "value", "xs" ], "value" ]
+      ]
+    ],
+    [
+      ".g5",
+      [
+        [
+          "Cons",
+          [ "value", "xs" ],
+          [ "idx" ],
+          ".g4(=(idx, 0u64), idx, value, xs)"
+        ],
+        [
+          "Nil",
+          [],
+          [ "idx" ],
+          "Panic(++(\"the variable is unbound: \", string(idx)))"
+        ]
       ]
     ]
   ]
