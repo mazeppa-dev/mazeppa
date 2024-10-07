@@ -18,7 +18,7 @@ program() :=
             Case("Cons", Cons("x", Cons("xs", Nil())), Op2(Var("x"), Add(),
                 FCall("sum", Cons(Var("xs"), Nil()))),
             Nil()))),
-    Nil());
+        Nil());
 
 // We do not account for object-level panics in this implementation.
 eval(env, t) := match t {
