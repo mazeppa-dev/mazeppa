@@ -4,29 +4,36 @@
 Supercompilation [^turchin-concept] is a program transformation technique that symbolically evaluates a given program, with run-time values as unknowns. In doing so, it discovers execution patterns of the original program and synthesizes them into standalone functions; the result of supercompilation is a more efficient residual program. In terms of transformational power, supercompilation subsumes both deforestation [^deforestation] and partial evaluation [^partial-evaluation], and even exhibits certain capabilities of theorem proving.
 
 _Mazeppa_ is a modern supercompiler intended to be a compilation target for call-by-value functional languages. Having prior supercompilers diligently compared and revised, Mazeppa
-  1. Provides the full set of primitive data types for efficient computation.
-  2. Supports manual control of function unfolding.
-  3. Is fully transparent in terms of what decisions it takes during transformation.
-  4. Is designed with efficiency in mind from the very beginning.
+  - Provides the full set of primitive data types for efficient computation.
+  - Translates to native machine code through GNU C11.
+  - Supports manual control of function unfolding.
+  - Is fully transparent in terms of what decisions it takes during transformation.
+  - Is designed with efficiency in mind from the very beginning.
 
 ## Installation
 
-First, install the OCaml system on your machine:
+First, prepare the OCaml system on your machine:
 
 ```
 $ bash -c "sh <(curl -fsSL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)"
 $ opam init --auto-setup
 ```
 
-Then clone the repository and install Mazeppa:
+Then install Mazeppa as an `opam` package:
+
+```
+$ opam install mazeppa
+```
+
+Type `mazeppa --help` to confirm the installation.
+
+Alternatively, you can clone the repository and install Mazeppa manually:
 
 ```
 $ git clone https://github.com/mazeppa-dev/mazeppa.git
 $ cd mazeppa
 $ ./scripts/install.sh
 ```
-
-Type `mazeppa --help` to confirm the installation.
 
 <details>
 <summary>Building with Flambda</summary>
@@ -490,7 +497,7 @@ Lazy constructors enable effortless deforestation, as discussed [below].
 
 ## Mazeppa as a library
 
-After running `./scripts/install.sh`, Mazeppa is available as an OCaml library!
+After installing Mazeppa via `opam` or `./scripts/install.sh`, it is available as an OCaml library!
 
 Set up a new Dune project as follows:
 
