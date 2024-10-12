@@ -629,11 +629,6 @@ static mz_Value op_getIt(mz_ArgsPtr args);
 
 static mz_Value thunk_0(mz_EnvPtr env) {
     mz_Value var_m = (env)[0];
-    return var_m;
-}
-
-static mz_Value thunk_1(mz_EnvPtr env) {
-    mz_Value var_m = (env)[0];
     mz_Value var_n = (env)[1];
     return ({
     struct mz_value args[2];
@@ -669,7 +664,7 @@ static mz_Value op_magic(mz_ArgsPtr args) {
     break;
     }
     case op_F: {
-    tmp = MZ_DATA(op_Cons, 2, MZ_THUNK(thunk_0, 1, var_m), MZ_THUNK(thunk_1, 2, var_m, var_n));
+    tmp = MZ_DATA(op_Cons, 2, MZ_SIMPLE_THUNK(var_m), MZ_THUNK(thunk_0, 2, var_m, var_n));
     break;
     }
     default: MZ_UNEXPECTED_TAG((tmp).tag);

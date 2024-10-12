@@ -371,6 +371,14 @@ static_assert(
 
 #endif // NDEBUG
 
+// Value forcing takes place whenever a variable coming from a constructor
+// pattern is used somewhere in the code.
+inline static mz_Value mz_force(mz_Value v) {
+    mz_Thunk *const thunk = MZ_GET(Thunk, v);
+
+    return thunk->callback(thunk->env);
+}
+
 // Value constructors
 // =============================================================================
 
@@ -415,6 +423,7 @@ X(I)
     ((mz_Value){                                                               \
         tag, .payload = MZ_PRIV_BOX_MANY(mz_Value, nvalues, __VA_ARGS__)})
 #define MZ_EMPTY_DATA(tag) ((mz_Value){tag, .payload = NULL})
+#define MZ_BOOL(b)         ((b) ? MZ_EMPTY_DATA(op_T) : MZ_EMPTY_DATA(op_F))
 
 #define MZ_THUNK(callback, nvalues, ...)                                       \
     MZ_VALUE(                                                                  \
@@ -424,8 +433,15 @@ X(I)
             {callback, MZ_PRIV_BOX_MANY(mz_Value, nvalues, __VA_ARGS__)}))
 #define MZ_EMPTY_THUNK(callback)                                               \
     MZ_VALUE(Thunk, MZ_PRIV_BOX(mz_Thunk, {callback, NULL}))
+#define MZ_SIMPLE_THUNK(x)      MZ_THUNK(mz_priv_env_var, 1, x)
+#define MZ_SIMPLE_THUNK_LAZY(x) MZ_THUNK(mz_priv_env_var_lazy, 1, x)
 
-#define MZ_BOOL(b) ((b) ? MZ_EMPTY_DATA(op_T) : MZ_EMPTY_DATA(op_F))
+// Here `inline` is used to suppress the unused function warning.
+inline static mz_Value mz_priv_env_var(mz_EnvPtr env) { return env[0]; }
+
+inline static mz_Value mz_priv_env_var_lazy(mz_EnvPtr env) {
+    return mz_force(env[0]);
+}
 
 // Unary operators
 // =============================================================================
@@ -462,12 +478,6 @@ inline static mz_Value mz_panic(mz_Value v) {
     }
 
     abort();
-}
-
-inline static mz_Value mz_force(mz_Value v) {
-    mz_Thunk *const thunk = MZ_GET(Thunk, v);
-
-    return thunk->callback(thunk->env);
 }
 
 #define X(signedness, bitness, _dummy)                                         \

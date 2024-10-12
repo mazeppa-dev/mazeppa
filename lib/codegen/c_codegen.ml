@@ -215,16 +215,18 @@ end = struct
             , [ c_identifier_expression (gen_op c)
               ; c_integer_constant_expression (index (List.length args))
               ]
-              @ List.map gen_thunk_call args_gen )
+              @ List.map (gen_thunk_call ~ctx) args_gen )
         , args_fv ))
 
-  and gen_thunk_call (thunk, env) =
-      if Symbol_set.is_empty env
-      then c_function_call (id "MZ_EMPTY_THUNK", [ c_identifier_expression thunk ])
-      else
+  and gen_thunk_call ~ctx (thunk, env) =
+      match thunk with
+      | `SimpleThunk x -> gen_simple_thunk_call ~ctx x
+      | `Thunk identifier when Symbol_set.is_empty env ->
+        c_function_call (id "MZ_EMPTY_THUNK", [ c_identifier_expression identifier ])
+      | `Thunk identifier ->
         c_function_call
           ( id "MZ_THUNK"
-          , [ c_identifier_expression thunk
+          , [ c_identifier_expression identifier
             ; c_integer_constant_expression (index (Symbol_set.cardinal env))
             ]
             @ (Symbol_set.elements env
@@ -232,25 +234,40 @@ end = struct
                  (* [x] is a computed free variable: no need to rename. *)
                  c_identifier_expression (gen_var x))) )
 
+  (* If a variable stands as a constructor argument, it needs a thunk. Generating
+     identical thunk definitions for each variable affects compilation times and code
+     size, so instead, we reuse our predefined thunks. *)
+  and gen_simple_thunk_call ~ctx x =
+      match assoc ~map:ctx.types x with
+      | VarEager ->
+        c_function_call (id "MZ_SIMPLE_THUNK", [ c_identifier_expression (gen_var x) ])
+      | VarLazy ->
+        c_function_call
+          (id "MZ_SIMPLE_THUNK_LAZY", [ c_identifier_expression (gen_var x) ])
+
   and gen_thunk_function ~ctx t =
       let t_gen, t_fv = gen_term ~ctx t in
-      let declaration_specifiers = [ c_static; c_typedef_name (id "mz_Value") ] in
-      let identifier = c_identifier (Gensym.emit thunks_gensym) in
-      let parameter_list =
-          [ c_parameter_declaration
-              ( [ c_typedef_name (id "mz_EnvPtr") ]
-              , Some (c_identifier_declarator (id "env")) )
-          ]
-      in
-      let block_item_list = gen_thunk_function_body (t_gen, t_fv) in
-      let f = !thunks in
-      (thunks
-       := fun xs ->
-            f
-              (c_function_definition
-                 (declaration_specifiers, identifier, parameter_list, block_item_list)
-               :: xs));
-      identifier, t_fv
+      ( (match t with
+         | Raw_term.Var x -> `SimpleThunk (assoc ~map:ctx.renaming x)
+         | _ ->
+           let declaration_specifiers = [ c_static; c_typedef_name (id "mz_Value") ] in
+           let identifier = c_identifier (Gensym.emit thunks_gensym) in
+           let parameter_list =
+               [ c_parameter_declaration
+                   ( [ c_typedef_name (id "mz_EnvPtr") ]
+                   , Some (c_identifier_declarator (id "env")) )
+               ]
+           in
+           let block_item_list = gen_thunk_function_body (t_gen, t_fv) in
+           let f = !thunks in
+           (thunks
+            := fun xs ->
+                 f
+                   (c_function_definition
+                      (declaration_specifiers, identifier, parameter_list, block_item_list)
+                    :: xs));
+           `Thunk identifier)
+      , t_fv )
 
   and gen_thunk_function_body (t_gen, t_fv) =
       (Symbol_set.elements t_fv
