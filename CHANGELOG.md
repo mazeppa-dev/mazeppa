@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Changed
+
+ - Reuse predefined thunks for variables standing as constructor arguments.
+   - This improves output code size and compilation times when C code generation is used.
+
 ## 0.3.3 - 2024-10-03
 
 ### Fixed
