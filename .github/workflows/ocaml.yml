@@ -30,7 +30,9 @@ jobs:
 
     - name: Initialize Opam
       if: steps.cache-opam.outputs.cache-hit != 'true'
-      run: opam init --auto-setup
+      run: |
+        # Disabling sandboxing because it does not work on some versions of Ubuntu.
+        opam init --auto-setup --disable-sandboxing -y
 
     - name: Install the dependencies
       if: steps.cache-opam.outputs.cache-hit != 'true'
