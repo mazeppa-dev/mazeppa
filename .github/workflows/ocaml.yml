@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install Ubuntu packages
-      run: sudo apt install bubblewrap libgc-dev -y
+      run: sudo apt install libgc-dev -y
 
     - name: Install Opam
       run: |
@@ -30,9 +30,8 @@ jobs:
 
     - name: Initialize Opam
       if: steps.cache-opam.outputs.cache-hit != 'true'
-      run: |
-        # Disabling sandboxing because it does not work on some versions of Ubuntu.
-        opam init --auto-setup --disable-sandboxing -y
+      # Disabling sandboxing because it does not work on some versions of Ubuntu.
+      run: opam init --auto-setup --disable-sandboxing -y
 
     - name: Install the dependencies
       if: steps.cache-opam.outputs.cache-hit != 'true'
