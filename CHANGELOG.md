@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.3.4 - 2024-10-12
+
 ### Changed
 
  - Reuse predefined thunks for variables standing as constructor arguments.
