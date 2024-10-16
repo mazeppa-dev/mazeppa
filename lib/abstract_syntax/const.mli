@@ -15,8 +15,6 @@ val int_ty_to_string_uppercase : Checked_oint.int_ty -> string
 
 val int_to_string : Checked_oint.generic -> string
 
-val escape_char : char -> string
-
 val escape_string : string -> string
 
 val to_string : t -> string
