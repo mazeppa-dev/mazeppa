@@ -6,6 +6,7 @@ type 'a step =
   | Decompose of Symbol.t * 'a list
   | Unfold of 'a
   | Analyze of Symbol.t * 'a * (contraction * 'a case_body) list
+  | Extract of (Symbol.t * 'a) * 'a
 
 and contraction = Symbol.t * Symbol.t list
 
@@ -35,6 +36,9 @@ let map ~(f : 'a -> 'b) : 'a step -> 'b step = function
         List.map (fun (contraction, body) -> contraction, map_case_body ~f body) variants
     in
     Analyze (x, t, variants)
+  | Extract ((x, t), u) ->
+    let binding = x, f t in
+    Extract (binding, f u)
 ;;
 
 let unify ~x ~contraction:(c, fresh_vars) list =
@@ -106,6 +110,32 @@ end = struct
       build_call ~op (Symbol.op_kind op, List.map (build ~env) args)
   ;;
 end
+
+(* [argument_status t] is [`Drive] when [t] can be further reduced, [`Extract] when [t]
+   must be extracted into a new let-binding for safety, and [`Pass] when [t] is ready to
+   be substituted for a respective parameter. *)
+let argument_status =
+    let open Term in
+    function
+    | Var _ | Const _ -> `Pass
+    (* We treat variable comparisons as values because they do not panic and facilitate
+       further information propagation. *)
+    | Call (op, ([ Var _; Var _ ] | [ Var _; Const _ ] | [ Const _; Var _ ]))
+      when match Symbol.to_string op with
+           | "=" | "!=" | ">" | ">=" | "<" | "<=" -> true
+           | _ -> false -> `Pass
+    (* Some compound neutral values can panic at run-time; for example, [+(x, 100u8)]
+       panics if [x] is instantiated to [200u8]. We therefore extract them into new
+       let-bindings to preserve the original order of panics. Another reason for this is
+       to avoid potential duplication of computation, because (as usual) arguments are
+       duplicated when they are substituted. *)
+    | t when Term.is_neutral t -> `Extract
+    (* Only regular constructor calls can be passed as arguments. *)
+    | Call (op, _args) ->
+      (match Symbol.op_kind op with
+       | `CCall when op <> symbol "Panic" -> `Pass
+       | `CCall | `FCall | `GCall -> `Drive)
+;;
 
 module Make (S : sig
     val program : Program.t
@@ -180,8 +210,13 @@ struct
   and reduce_args ~depth (op, args) =
       let rec go ~acc = function
         | [] -> reduce_call ~depth ~op (Symbol.op_kind op, acc [])
-        | t :: rest when Term.is_value t -> go ~acc:(fun xs -> acc (t :: xs)) rest
-        | t :: rest -> reduce_amidst ~depth ~op (acc [], t, rest)
+        | t :: rest ->
+          (match argument_status t with
+           | `Drive -> reduce_amidst ~depth ~op (acc [], t, rest)
+           | `Extract ->
+             let x = Gensym.emit gensym in
+             Extract ((x, t), Term.(Call (op, acc (Var x :: rest))))
+           | `Pass -> go ~acc:(fun xs -> acc (t :: xs)) rest)
       in
       go ~acc:Fun.id args
 
@@ -200,6 +235,7 @@ struct
           let u = Term.Call (op, unify before @ [ u ] @ unify after) in
           contraction, (binding, u))
         |> fun variants -> Analyze (x, t, variants)
+      | Extract ((x, t), u) -> Extract ((x, t), Term.Call (op, before @ [ u ] @ after))
 
   and reduce_call ~depth ~op = function
     | `CCall, args -> Decompose (op, args)

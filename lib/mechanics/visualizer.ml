@@ -70,6 +70,8 @@ let run ~(oc : out_channel Lazy.t) (graph : Process_graph.t) : unit =
           let parent_node = Some current_node in
           go ~parent_node ~attrs:(label "%s" (Symbol.to_string x)) graph;
           go_variants ~parent_node (x, variants)
+        | Process_graph.Step (Driver.Extract ((x, call), graph)) ->
+          go_extract ~attrs ~parent_node ~current_node ((x, call), graph)
         | Process_graph.(Bind (bindings, Fold node_id)) ->
           draw_node ~oc ~label:"<fold>" ~attrs:"style=filled" current_node;
           connect ~oc ~attrs ~parent_node current_node;
@@ -88,8 +90,6 @@ let run ~(oc : out_channel Lazy.t) (graph : Process_graph.t) : unit =
           let parent_node = Some current_node in
           go_bindings ~parent_node bindings;
           go_body ~parent_node graph
-        | Process_graph.(Extract ((x, call), graph)) ->
-          go_extract ~attrs ~parent_node ~current_node ((x, call), graph)
     and go_extract ~attrs ~parent_node ~current_node ((x, call), graph) =
         draw_node ~oc ~label:"<extract>" ~attrs:"style=filled" current_node;
         connect ~oc ~attrs ~parent_node current_node;

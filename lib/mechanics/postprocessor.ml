@@ -4,6 +4,7 @@ open Raw_term
 
 let symbol = Symbol.of_string
 
+(* [is_safe t] is an approximation of whether [t] diverges or panics. *)
 let is_safe = function
   | Var _ | Const _ -> true
   | Call (c, []) when Symbol.op_kind c = `CCall -> true

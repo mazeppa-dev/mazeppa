@@ -7,7 +7,6 @@ type t =
   (* Bindings must 1) contain _all_ free variables of a respective term and 2) be sorted
      in the lexicographic order. *)
   | Bind of (Symbol.t * t) list * binder
-  | Extract of (Symbol.t * t) * t
 
 and binder =
   | Fold of node_id

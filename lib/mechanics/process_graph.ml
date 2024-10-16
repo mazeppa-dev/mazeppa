@@ -3,7 +3,6 @@
 type t =
   | Step of t Driver.step
   | Bind of (Symbol.t * t) list * binder
-  | Extract of (Symbol.t * t) * t
 
 and binder =
   | Fold of node_id
@@ -20,7 +19,6 @@ let compute_symbol_table (graph : t) : symbol_table =
     let rec go = function
       | Step step -> go_step step
       | Bind (bindings, binder) -> go_binder ~bindings binder
-      | Extract ((x, call), graph) -> go_binder ~bindings:[ x, call ] (Split graph)
     and go_step = function
       | Driver.(Var _ | Const _) -> ()
       | Driver.Decompose (_op, params) -> List.iter go params
@@ -30,9 +28,11 @@ let compute_symbol_table (graph : t) : symbol_table =
         List.iter
           (fun (_contraction, (binding, graph)) ->
              match binding with
-             | Some binding -> go (Extract (binding, graph))
+             | Some binding -> go_extract (binding, graph)
              | None -> go graph)
           variants
+      | Driver.Extract (binding, graph) -> go_extract (binding, graph)
+    and go_extract ((x, call), graph) = go_binder ~bindings:[ x, call ] (Split graph)
     and go_binder ~bindings binder =
         List.iter (fun (_x, graph) -> go graph) bindings;
         match binder with

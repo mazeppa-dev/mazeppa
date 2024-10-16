@@ -1,0 +1,27 @@
+main(x, s) := combine(
+    castOps(
+        u8(x), u16(x), u32(x), u64(x), u128(x),
+        i8(x), i16(x), i32(x), i64(x), i128(x),
+        #(x), string(x)),
+    arithOps(
+        ~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)),
+    bitOps(
+        |(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)),
+    stringOps(
+        length(s), ++(s, "abc"), get(s, 7u64)),
+    cmpOps(
+        =(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8))
+);
+
+combine(x0, x1, x2, x3, x4) := Combine(x0, x1, x2, x3, x4);
+
+castOps(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) :=
+    CastOps(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
+
+arithOps(x0, x1, x2, x3, x4, x5) := ArithOps(x0, x1, x2, x3, x4, x5);
+
+bitOps(x0, x1, x2, x3, x4) := BitOps(x0, x1, x2, x3, x4);
+
+stringOps(x0, x1, x2) := StringOps(x0, x1, x2);
+
+cmpOps(x0, x1, x2, x3, x4, x5) := CmpOps(x0, x1, x2, x3, x4, x5);

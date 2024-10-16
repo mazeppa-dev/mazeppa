@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Changed
+
+ - Preserve the order of built-in panics in residual programs (issue https://github.com/mazeppa-dev/mazeppa/issues/23).
+   - Algebraic simplification now requires operands to be either variables or constants, not compound values.
+ - Eliminate let-bindings for "innocent terms" via postprocessing.
+   - Innocent terms are variables, integer constants, and zero-arity constructor calls.
+
 ## 0.3.4 - 2024-10-12
 
 ### Changed
