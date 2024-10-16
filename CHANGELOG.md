@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Eliminate let-bindings for "innocent terms" via postprocessing.
    - Innocent terms are variables, integer constants, and zero-arity constructor calls.
 
+### Removed
+
+ - The function `Const.escape_char` is no longer public [**BC**].
+
 ## 0.3.4 - 2024-10-12
 
 ### Changed
