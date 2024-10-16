@@ -9,6 +9,8 @@ type 'a step =
   | Unfold of 'a
   (* Case analysis of a g-call. *)
   | Analyze of Symbol.t * 'a * (contraction * 'a case_body) list
+  (* Extract a binding. *)
+  | Extract of (Symbol.t * 'a) * 'a
 
 and contraction = Symbol.t * Symbol.t list
 

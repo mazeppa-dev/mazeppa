@@ -107,6 +107,15 @@ let do_string_op2 ~op (s1, s2) =
     | _ -> Util.panic "Unexpected string binary operator: %s" (Symbol.verbatim op)
 ;;
 
+(* In the simplification rules below, we restrict neutral operands to variables only. The
+   reason is that sometimes it is possible to accidentally remove a panicking condition;
+   for example, rewriting [*(+(x, 100u8), 0u8)] to [0u8] would remove an overflow panic if
+   [x] is instantiated to [200u8] at run-time. Since Mazeppa must preserve the semantics
+   of input programs, the easiest solution is to simply reject compound neutral operands.
+   Even if an operand can be an arbitrary neutral value in principle, such as when
+   rewriting [+(t, 0u8)] to [t], we nonetheless follow the same approach for consistency
+   and to reduce the chance of messing up! *)
+
 let handle_op1 ~(op : Symbol.t) : t -> t =
     let involutory_ops, idempotent_ops =
         ( [ "~" ] |> Symbol.list
@@ -123,10 +132,10 @@ let handle_op1 ~(op : Symbol.t) : t -> t =
       let (module Singleton) = Checked_oint.singleton n in
       do_int_op1 ~op (module Singleton)
     | Const (Const.String s) -> do_string_op1 ~op s
-    (* op(op(t)) -> t *)
-    | Call (op', [ t ]) when List.mem op involutory_ops && op = op' -> t
-    (* op(op(t)) -> op(t) *)
-    | Call (op', [ t ]) when List.mem op idempotent_ops && op = op' -> Call (op', [ t ])
+    (* op(op(x)) -> x *)
+    | Call (op', [ (Var _x as t) ]) when List.mem op involutory_ops && op = op' -> t
+    (* op(op(x)) -> op(x) *)
+    | Call (op', [ Var _x ]) as t when List.mem op idempotent_ops && op = op' -> t
     (* The catch-call rule. *)
     | t -> Call (op, [ t ])
 ;;
@@ -142,43 +151,43 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
     (match s.[idx] with
      | c -> int (U8 (U8.of_int_exn (int_of_char c)))
      | exception Invalid_argument _ -> panic "out of bounds: `%du64`" idx)
-  (* +(t, 0), +(0, t) -> t *)
-  (* |(t, 0), |(0, t) -> t *)
-  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+  (* +(x, 0), +(0, x) -> x *)
+  (* |(x, 0), |(0, x) -> x *)
+  | ((Var _x as t), Const (Const.Int n) | Const (Const.Int n), (Var _x as t))
     when (op = symbol "+" || op = symbol "|") && is_zero n -> t
-  (* -(t, 0) -> t *)
-  | t, Const (Const.Int n) when op = symbol "-" && is_zero n -> t
-  (* *(t, 1), *(1, t) -> t *)
-  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+  (* -(x, 0) -> x *)
+  | (Var _x as t), Const (Const.Int n) when op = symbol "-" && is_zero n -> t
+  (* *(x, 1), *(1, x) -> x *)
+  | ((Var _x as t), Const (Const.Int n) | Const (Const.Int n), (Var _x as t))
     when op = symbol "*" && is_one n -> t
-  (* *(t, 0), *(0, t) -> 0 *)
-  (* &(t, 0), &(0, t) -> 0 *)
-  | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
+  (* *(x, 0), *(0, x) -> 0 *)
+  (* &(x, 0), &(0, x) -> 0 *)
+  | (Var _x, Const (Const.Int n) | Const (Const.Int n), Var _x)
     when (op = symbol "*" || op = symbol "&") && is_zero n -> int n
-  (* |(t, all ones), |(all ones, t) -> all ones *)
-  | (_t1, (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), _t2)
+  (* |(x, all ones), |(all ones, x) -> all ones *)
+  | (Var _x, Const (Const.Int n) | Const (Const.Int n), Var _x)
     when op = symbol "|" && is_all_ones n -> int n
-  (* &(t, all ones), &(all ones, t) -> t *)
-  | ((_t1 as t), (Const (Const.Int n) as _t2) | (Const (Const.Int n) as _t1), (_t2 as t))
+  (* &(x, all ones), &(all ones, x) -> x *)
+  | ((Var _x as t), Const (Const.Int n) | Const (Const.Int n), (Var _x as t))
     when op = symbol "&" && is_all_ones n -> t
-  (* /(t, 1) -> t *)
-  | t, Const (Const.Int n) when op = symbol "/" && is_one n -> t
-  (* /(0, t) -> 0 *)
-  | Const (Const.Int n), _t when op = symbol "/" && is_zero n -> int n
-  (* %(t, 1) -> 0 *)
-  | _t, Const (Const.Int n) when op = symbol "%" && is_one n ->
+  (* /(x, 1) -> x *)
+  | (Var _x as t), Const (Const.Int n) when op = symbol "/" && is_one n -> t
+  (* /(0, x) -> 0 *)
+  | Const (Const.Int n), Var _x when op = symbol "/" && is_zero n -> int n
+  (* %(x, 1) -> 0 *)
+  | Var _x, Const (Const.Int n) when op = symbol "%" && is_one n ->
     let (module Singleton) = Checked_oint.singleton n in
     int Singleton.(to_generic zero)
-  (* /(t, 0), %(t, 0) -> out of range *)
-  | _t, Const (Const.Int n) when (op = symbol "/" || op = symbol "%") && is_zero n ->
+  (* /(x, 0), %(x, 0) -> out of range *)
+  | Var _x, Const (Const.Int n) when (op = symbol "/" || op = symbol "%") && is_zero n ->
     do_int_op2 ~op (Checked_oint.pair_exn (n, n))
-  (* |(t, t), &(t, t) -> t *)
-  | t1, t2 when (op = symbol "|" || op = symbol "&") && equal t1 t2 -> t1
-  (* =(t, t), >=(t, t), <=(t, t) -> T() *)
-  | t1, t2 when (op = symbol "=" || op = symbol ">=" || op = symbol "<=") && equal t1 t2
+  (* |(x, x), &(x, x) -> x *)
+  | (Var x as t), Var y when (op = symbol "|" || op = symbol "&") && x = y -> t
+  (* =(x, x), >=(x, x), <=(x, x) -> T() *)
+  | Var x, Var y when (op = symbol "=" || op = symbol ">=" || op = symbol "<=") && x = y
     -> Call (symbol "T", [])
-  (* !=(t, t), >(t, t), <(t, t) -> F() *)
-  | t1, t2 when (op = symbol "!=" || op = symbol ">" || op = symbol "<") && equal t1 t2 ->
+  (* !=(x, x), >(x, x), <(x, x) -> F() *)
+  | Var x, Var y when (op = symbol "!=" || op = symbol ">" || op = symbol "<") && x = y ->
     Call (symbol "F", [])
   (* The catch-call rule. *)
   | t1, t2 -> Call (op, [ t1; t2 ])

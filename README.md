@@ -205,7 +205,7 @@ square(a) := *(a, a);
 
 [[`examples/power-sq/target/output.mz`](examples/power-sq/target/output.mz)]
 ```
-main(a) := *(a, let x0 := *(a, *(a, a)); *(x0, x0));
+main(a) := let x0 := *(a, *(a, a)); *(a, *(x0, x0));
 ```
 
 The whole `powerSq` function has been eliminated, thus achieving the effect of partial evaluation. (If we consider `powerSq` to be an interpreter for a program `x` and input data `a`, then it is the first Futamura projection: specializing an interpreter to obtain an efficient target program.) Also, notice how the supercompiler has managed to _share_ the argument `*(a, *(a, a))` twice, so that it is not recomputed each time anew. The residual program indeed reflects exponentiation by squaring.
@@ -827,30 +827,6 @@ While most of the above is not particularly novel, we believe that the combinati
  - What if we [partially evaluate](https://ocaml.org/manual/latest/flambda.html) the supercompiler based on a set of function definitions (e.g., some fixed interpreter)? This could make supercompilation significantly more efficient.
  - _Equality indices_ [^equality-indices] can enhance dynamic sharing of arguments. Would it be beneficial to implement them in Mazeppa?
  - Suppose that there exists a dirty language _L_, a pure interpreter _I_ for _L_, and a fixed program _P_ in _L_. By supercompiling _I(P, data)_, where _data_ is unknown, we should be able to automatically _purify_ the program _P_! Likewise, we should be able to purify not only all programs in _L_, but also all dirty languages with interpretive definitions in Mazeppa.
-
-## A note about built-in panics
-
-Some built-in operations raise a panic on certain conditions. Consider the following program:
-
-```
-main(x) := ignore(+(x, 100u8));
-
-ignore(_x) := 5u8;
-```
-
-It will be supercompiled as follows:
-
-```
-main(x) := 5u8;
-```
-
-These two programs are not semantically equivalent! Whereas the former one raises a panic if `x` is `200u8`, the latter does not. In general, Mazeppa can remove some built-in panics from the original program, or make them happen at some later point.
-
-Is this an appropriate behaviour?
-
-We believe it is. Take the semantics of Rust for example: when the code is compiled in the debug mode, integer overflow/underflow operations raise a panic, but in the release mode, they do not (modular arithmetic is used instead). The reason is that checked arithmetic introduces an overhead, and so application testing should detect those panics. The Rust compiler essentially changes the semantics of code depending on a compilation mode; as a result, some release programs may execute longer and terminate more often.
-
-In practice, this scheme usually works well. While it is theoretically possible to preserve even built-in panics at the cost of additional analyses, we decide to keep the current behaviour as it is.
 
 ## Language definition
 

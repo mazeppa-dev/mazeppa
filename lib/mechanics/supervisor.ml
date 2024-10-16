@@ -15,7 +15,7 @@ end = struct
 
   let var_gensym = Gensym.create ~prefix:".v" ()
 
-  module Driver = Driver.Make (struct
+  module Driver' = Driver.Make (struct
       include S
 
       let gensym = var_gensym
@@ -196,7 +196,7 @@ end = struct
                | _ -> raise_notrace (Failback (m_id, `Split)))
             (* Perform upwards generalization otherwise. *)
             | _ -> raise_notrace (Failback (m_id, `Generalize (subst_1, g)))))
-      | None, history -> Step (Driver.run ~f:(run ~history) n)
+      | None, history -> Step (Driver'.run ~f:(run ~history) n)
 
   and supercompile_bindings ~history subst =
       subst |> Symbol_map.bindings |> List.map (fun (x, t) -> x, run ~history t)
@@ -221,7 +221,7 @@ end = struct
   and extract ~history ((x, call), shell) =
       let call_sup = run ~history call in
       let shell_sup = run ~history shell in
-      Process_graph.Extract ((x, call_sup), shell_sup)
+      Process_graph.Step (Driver.Extract ((x, call_sup), shell_sup))
   ;;
 
   let run (t : Term.t) : Process_graph.t = run ~history:History.empty t

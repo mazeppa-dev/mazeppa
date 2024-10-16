@@ -63,10 +63,35 @@ let count_occurences ~x =
     go
 ;;
 
-(* We count how many times variables occur in their scopes. If a certain variable occurs
-   only once (i.e., it is linear), and occurs in a redex position, the associated
-   let-binding is substituted into the body. If the variable occurs zero times and it
-   binds an immediate term, the binding is removed. *)
+(* As with [count_occurences], there is no need to worry about name capture. *)
+let subst ~x ~value =
+    let open Raw_term in
+    let rec go = function
+      | Var y when x = y -> value
+      | (Var _ | Const _) as t -> t
+      | Call (op, args) -> Call (op, List.map go args)
+      | Match (t, cases) ->
+        Match (go t, List.map (fun (pattern, t) -> pattern, go t) cases)
+      | Let (x, t, u) -> Let (x, go t, go u)
+    in
+    go
+;;
+
+(* [is_innocent t] is true whenever [t] has size 1 and does not diverge or panic, so that
+   it can be safely substituted in a term. *)
+let is_innocent =
+    let open Raw_term in
+    function
+    | Var _ | Const (Const.Int _) -> true
+    | Call (c, []) when Symbol.op_kind c = `CCall -> true
+    | Const (Const.String _) | Call _ | Match _ | Let _ -> false
+;;
+
+(* [t] is substituted for [x] in [u] if either of the following holds: 1) [u] is linear
+   with respect to [x] (i.e., [x] occurs only once in [u]) and it occurs in a redex
+   position, or 2) [t] is an "innocent" term (whose size is always 1). The reasoning is to
+   maintain call-by-value semantics while ensuring that the resulting term is not
+   syntactically bigger than the initial one. *)
 let let' (x, t, u) =
     let open Raw_term in
     let exception Rebuild of Raw_term.t in
@@ -91,10 +116,9 @@ let let' (x, t, u) =
         try go t with
         | Rebuild better -> rebuild (f better)
     in
-    let occurs = count_occurences ~x u in
     try
-      if occurs = 1 then go u;
-      if occurs = 0 && Postprocessor.is_safe t then rebuild u;
+      if count_occurences ~x u = 1 then go u;
+      if is_innocent t then rebuild (subst ~x ~value:t u);
       Let (x, t, u)
     with
     | Rebuild better -> better
@@ -149,8 +173,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
         Memoizer.bind env (fun env ->
           match graph with
           | Process_graph.Step step -> go_step ~env step
-          | Process_graph.Bind (bindings, binder) -> go_binder ~env ~bindings binder
-          | Process_graph.Extract (binding, graph) -> go_extract ~env (binding, graph))
+          | Process_graph.Bind (bindings, binder) -> go_binder ~env ~bindings binder)
     and go_extract ~env ((x, call), graph) =
         let call_res = go ~env call in
         let t_res = go ~env graph in
@@ -172,6 +195,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
               | None -> contraction, go ~env graph)
         in
         match' (t_res, cases_res)
+      | Driver.Extract (binding, graph) -> go_extract ~env (binding, graph)
     and go_binder ~(env : environment) ~bindings = function
       | Process_graph.Fold node_id ->
         let f, _f_params = Symbol_map.find node_id symbol_table in
@@ -181,25 +205,20 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
         let env = Symbol_map.extend_map ~f:(go ~env) ~bindings env in
         go ~env graph
       | Process_graph.Split graph ->
-        let immediate_bindings_res, other_bindings_res =
+        let innocent_bindings_res, other_bindings_res =
             partition_bindings ~env bindings
         in
-        let env = Symbol_map.extend ~bindings:immediate_bindings_res env in
+        let env = Symbol_map.extend ~bindings:innocent_bindings_res env in
         let t_res = go ~env graph in
         List.fold_right
           (fun (x, t_res) res -> let' (x, t_res, res))
           other_bindings_res
           t_res
-    (* We need to preserve the original semantics: evaluating arguments before unfolding a
-       function call. However, we can freely substitute variables, constants, and
-       zero-arity constructor calls, since they are already computed values. Other
-       constructor calls are still shared because this 1) reduces program size and 2)
-       takes advantage of call-by-need evaluation. *)
     and partition_bindings ~env bindings =
         bindings
         |> List.partition_map (fun (x, graph) ->
           let t_res = go ~env graph in
-          if Postprocessor.is_safe t_res then Left (x, t_res) else Right (x, t_res))
+          if is_innocent t_res then Left (x, t_res) else Right (x, t_res))
     in
     let t_res = go ~env:Symbol_map.empty graph in
     ( Postprocessor.handle_term

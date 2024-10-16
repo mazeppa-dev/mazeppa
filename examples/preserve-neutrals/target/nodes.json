@@ -1,0 +1,254 @@
+[
+  [ "n0", "main(x, s)" ],
+  [
+    "n1",
+    "combine(castOps(u8(x), u16(x), u32(x), u64(x), u128(x), i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n2", "u8(x)" ],
+  [ "n3", "x" ],
+  [
+    "n4",
+    "combine(castOps(.v0, u16(x), u32(x), u64(x), u128(x), i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n5", "u16(x)" ],
+  [ "n6", "x" ],
+  [
+    "n7",
+    "combine(castOps(.v0, .v1, u32(x), u64(x), u128(x), i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n8", "u32(x)" ],
+  [ "n9", "x" ],
+  [
+    "n10",
+    "combine(castOps(.v0, .v1, .v2, u64(x), u128(x), i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n11", "u64(x)" ],
+  [ "n12", "x" ],
+  [
+    "n13",
+    "combine(castOps(.v0, .v1, .v2, .v3, u128(x), i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n14", "u128(x)" ],
+  [ "n15", "x" ],
+  [
+    "n16",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, i8(x), i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n17", "i8(x)" ],
+  [ "n18", "x" ],
+  [
+    "n19",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, i16(x), i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n20", "i16(x)" ],
+  [ "n21", "x" ],
+  [
+    "n22",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, i32(x), i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n23", "i32(x)" ],
+  [ "n24", "x" ],
+  [
+    "n25",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, i64(x), i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n26", "i64(x)" ],
+  [ "n27", "x" ],
+  [
+    "n28",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, i128(x), #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n29", "i128(x)" ],
+  [ "n30", "x" ],
+  [
+    "n31",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, #(x), string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n32", "#(x)" ],
+  [ "n33", "x" ],
+  [
+    "n34",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, string(x)), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n35", "string(x)" ],
+  [ "n36", "x" ],
+  [
+    "n37",
+    "combine(castOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n38",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(~(x), +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n39", "~(x)" ],
+  [ "n40", "x" ],
+  [
+    "n41",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, +(x, 7u8), -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n42", "+(x, 7u8)" ],
+  [ "n43", "x" ],
+  [ "n44", "7u8" ],
+  [
+    "n45",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, .v13, -(x, 7u8), *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n46", "-(x, 7u8)" ],
+  [ "n47", "x" ],
+  [ "n48", "7u8" ],
+  [
+    "n49",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, .v13, .v14, *(x, 7u8), /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n50", "*(x, 7u8)" ],
+  [ "n51", "x" ],
+  [ "n52", "7u8" ],
+  [
+    "n53",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, .v13, .v14, .v15, /(7u8, x), %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n54", "/(7u8, x)" ],
+  [ "n55", "7u8" ],
+  [ "n56", "x" ],
+  [
+    "n57",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, .v13, .v14, .v15, .v16, %(7u8, x)), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n58", "%(7u8, x)" ],
+  [ "n59", "7u8" ],
+  [ "n60", "x" ],
+  [
+    "n61",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), arithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n62",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(|(x, 7u8), &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n63", "|(x, 7u8)" ],
+  [ "n64", "x" ],
+  [ "n65", "7u8" ],
+  [
+    "n66",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(.v18, &(x, 7u8), ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n67", "&(x, 7u8)" ],
+  [ "n68", "x" ],
+  [ "n69", "7u8" ],
+  [
+    "n70",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(.v18, .v19, ^(x, 7u8), <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n71", "^(x, 7u8)" ],
+  [ "n72", "x" ],
+  [ "n73", "7u8" ],
+  [
+    "n74",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(.v18, .v19, .v20, <<(x, 7u8), >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n75", "<<(x, 7u8)" ],
+  [ "n76", "x" ],
+  [ "n77", "7u8" ],
+  [
+    "n78",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(.v18, .v19, .v20, .v21, >>(x, 7u8)), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n79", ">>(x, 7u8)" ],
+  [ "n80", "x" ],
+  [ "n81", "7u8" ],
+  [
+    "n82",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), bitOps(.v18, .v19, .v20, .v21, .v22), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n83",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), stringOps(length(s), ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n84", "length(s)" ],
+  [ "n85", "s" ],
+  [
+    "n86",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), stringOps(.v23, ++(s, \"abc\"), get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n87", "++(s, \"abc\")" ],
+  [ "n88", "s" ],
+  [ "n89", "\"abc\"" ],
+  [
+    "n90",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), stringOps(.v23, .v24, get(s, 7u64)), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [ "n91", "get(s, 7u64)" ],
+  [ "n92", "s" ],
+  [ "n93", "7u64" ],
+  [
+    "n94",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), stringOps(.v23, .v24, .v25), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n95",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), StringOps(.v23, .v24, .v25), cmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n96",
+    "combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), StringOps(.v23, .v24, .v25), CmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n97",
+    "Combine(CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11), ArithOps(.v12, .v13, .v14, .v15, .v16, .v17), BitOps(.v18, .v19, .v20, .v21, .v22), StringOps(.v23, .v24, .v25), CmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8)))"
+  ],
+  [
+    "n98",
+    "CastOps(.v0, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11)"
+  ],
+  [ "n99", ".v0" ],
+  [ "n100", ".v1" ],
+  [ "n101", ".v2" ],
+  [ "n102", ".v3" ],
+  [ "n103", ".v4" ],
+  [ "n104", ".v5" ],
+  [ "n105", ".v6" ],
+  [ "n106", ".v7" ],
+  [ "n107", ".v8" ],
+  [ "n108", ".v9" ],
+  [ "n109", ".v10" ],
+  [ "n110", ".v11" ],
+  [ "n111", "ArithOps(.v12, .v13, .v14, .v15, .v16, .v17)" ],
+  [ "n112", ".v12" ],
+  [ "n113", ".v13" ],
+  [ "n114", ".v14" ],
+  [ "n115", ".v15" ],
+  [ "n116", ".v16" ],
+  [ "n117", ".v17" ],
+  [ "n118", "BitOps(.v18, .v19, .v20, .v21, .v22)" ],
+  [ "n119", ".v18" ],
+  [ "n120", ".v19" ],
+  [ "n121", ".v20" ],
+  [ "n122", ".v21" ],
+  [ "n123", ".v22" ],
+  [ "n124", "StringOps(.v23, .v24, .v25)" ],
+  [ "n125", ".v23" ],
+  [ "n126", ".v24" ],
+  [ "n127", ".v25" ],
+  [
+    "n128",
+    "CmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x, 7u8), <=(x, 7u8))"
+  ],
+  [ "n129", "=(x, 7u8)" ],
+  [ "n130", "x" ],
+  [ "n131", "7u8" ],
+  [ "n132", "!=(x, 7u8)" ],
+  [ "n133", "x" ],
+  [ "n134", "7u8" ],
+  [ "n135", ">(x, 7u8)" ],
+  [ "n136", "x" ],
+  [ "n137", "7u8" ],
+  [ "n138", ">=(x, 7u8)" ],
+  [ "n139", "x" ],
+  [ "n140", "7u8" ],
+  [ "n141", "<(x, 7u8)" ],
+  [ "n142", "x" ],
+  [ "n143", "7u8" ],
+  [ "n144", "<=(x, 7u8)" ],
+  [ "n145", "x" ],
+  [ "n146", "7u8" ]
+]
