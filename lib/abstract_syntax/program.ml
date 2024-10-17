@@ -60,16 +60,16 @@ let output ~oc ({ f_rules; g_rules; _ } : t) =
     in
     let f_rules =
         f_rules
-        |> F_rules.to_list
+        |> F_rules.bindings
         |> List.map (fun (f, (params, body)) -> f, params, Term.to_string body)
     in
     let g_rules =
         g_rules
-        |> G_rules_by_name.to_list
+        |> G_rules_by_name.bindings
         |> List.map (fun (g, rules) ->
           ( g
           , rules
-            |> G_rules_by_pattern.to_list
+            |> G_rules_by_pattern.bindings
             |> List.map (fun (c, (c_params, params, body)) ->
               c, c_params, params, Term.to_string body) ))
     in

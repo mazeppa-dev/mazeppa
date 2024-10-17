@@ -296,14 +296,14 @@ let cut_list list =
       Array.(to_list first_10 @ [ middle ] @ to_list last_10))
 ;;
 
-let its_over ?(reduction_path = []) msg =
+let its_over ?reduction_path msg =
     Spectrum.Simple.eprintf "@{<bold,red>error:@} %s\n" msg;
-    if not (List.is_empty reduction_path)
-    then
+    reduction_path
+    |> Option.iter (fun reduction_path ->
       Spectrum.Simple.eprintf
         "%s@{<bold,aqua>note:@} While reducing %s\n"
         tab
-        (String.concat " -> " (cut_list reduction_path));
+        (String.concat " -> " (cut_list reduction_path)));
     exit 1
 ;;
 

@@ -169,7 +169,8 @@ let to_program (input : t) : Program.t =
         let rules =
             cases
             |> List.map (fun ((c, c_params), t) -> c, (c_params, cases_fv_list, t))
-            |> Program.G_rules_by_pattern.of_list
+            |> List.to_seq
+            |> Program.G_rules_by_pattern.of_seq
         in
         let fresh_g = Gensym.emit g_gensym in
         g_rules := Program.G_rules_by_name.add fresh_g rules !g_rules;
