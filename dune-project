@@ -4,16 +4,16 @@
 
 (name mazeppa)
 
-(version 0.3.4)
+(version 0.4.0)
 
 (generate_opam_files true)
 
 (source
  (github mazeppa-dev/mazeppa))
 
-(authors "hirrolot <hirrolot@gmail.com>")
+(authors "Lewis Pearson <hirrolot@gmail.com>")
 
-(maintainers "hirrolot <hirrolot@gmail.com>")
+(maintainers "Lewis Pearson <hirrolot@gmail.com>")
 
 (license MIT)
 

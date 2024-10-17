@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.4.0 - 2024-10-17
+
 ### Changed
 
  - Preserve the order of built-in panics in residual programs (issue https://github.com/mazeppa-dev/mazeppa/issues/23).
