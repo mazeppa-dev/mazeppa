@@ -9,9 +9,7 @@ exception Panic of string
 
 let wrap_panic f =
     try f () with
-    | Util.Panic { msg; reduction_path } ->
-      assert (List.is_empty reduction_path);
-      raise (Panic msg)
+    | Util.Panic { msg; reduction_path = _ } -> raise (Panic msg)
 ;;
 
 let supercompile (input : Raw_program.t) : Raw_program.t =

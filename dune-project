@@ -1,4 +1,4 @@
-(lang dune 3.15)
+(lang dune 3.14)
 
 (using menhir 3.0)
 
@@ -24,7 +24,7 @@
  (synopsis "A modern supercompiler for call-by-value functional languages")
  (depends
   (ocaml
-   (>= 5.1))
+   (>= 4.14))
   dune
   pprint
   (checked_oint

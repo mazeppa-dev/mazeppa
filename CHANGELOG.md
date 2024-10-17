@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - Algebraic simplification now requires operands to be either variables or constants, not compound values.
  - Eliminate let-bindings for "innocent terms" via postprocessing.
    - Innocent terms are variables, integer constants, and zero-arity constructor calls.
+ - The minimum supported OCaml version is now 4.14.0.
 
 ### Removed
 

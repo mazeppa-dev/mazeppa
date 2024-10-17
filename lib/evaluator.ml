@@ -106,7 +106,7 @@ let run_exn (input : Raw_program.t) =
         go ~env body
     in
     let main_params, t = find_rule ~program (Symbol.of_string "main") in
-    if not (List.is_empty main_params)
-    then (Util.panic [@coverage off]) "The main function cannot accept parameters";
-    go ~env:Symbol_map.empty t
+    match main_params with
+    | [] -> go ~env:Symbol_map.empty t
+    | _ -> (Util.panic [@coverage off]) "The main function cannot accept parameters"
 ;;

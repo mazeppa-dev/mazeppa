@@ -26,7 +26,9 @@ let list xs =
       (Raw_term.call ("Nil", []))
 ;;
 
-let make_subst list = list |> List.map (fun (x, t) -> symbol x, t) |> Symbol_map.of_list
+let make_subst list =
+    list |> List.map (fun (x, t) -> symbol x, t) |> List.to_seq |> Symbol_map.of_seq
+;;
 
 let print_constants () =
     let check ~expected const =

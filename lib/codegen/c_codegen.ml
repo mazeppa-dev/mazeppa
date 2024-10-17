@@ -200,11 +200,11 @@ end = struct
 
   and gen_data_call ~ctx (c, args) =
       remember_constructor c;
-      if List.is_empty args
-      then
+      match args with
+      | [] ->
         ( c_function_call (id "MZ_EMPTY_DATA", [ c_identifier_expression (gen_op c) ])
         , Symbol_set.empty )
-      else (
+      | _ ->
         let args_gen = List.map (gen_thunk_function ~ctx) args in
         let args_fv =
             Symbol_set.(
@@ -216,7 +216,7 @@ end = struct
               ; c_integer_constant_expression (index (List.length args))
               ]
               @ List.map (gen_thunk_call ~ctx) args_gen )
-        , args_fv ))
+        , args_fv )
 
   and gen_thunk_call ~ctx (thunk, env) =
       match thunk with
@@ -385,9 +385,9 @@ end = struct
         let declaration_specifiers = [ c_static; c_typedef_name (id "mz_Value") ] in
         let identifier = gen_op f in
         let parameter_list =
-            if List.is_empty params
-            then []
-            else
+            match params with
+            | [] -> []
+            | _ ->
               [ c_parameter_declaration
                   ( [ c_typedef_name (id "mz_ArgsPtr") ]
                   , Some (c_identifier_declarator (id "args")) )
@@ -416,9 +416,9 @@ end = struct
   ;;
 
   let main_wrapper_body =
-      if List.is_empty main_params
-      then [ c_return_statement (c_function_call (gen_op main_symbol, [])) ]
-      else
+      match main_params with
+      | [] -> [ c_return_statement (c_function_call (gen_op main_symbol, [])) ]
+      | _ ->
         [ c_return_statement
             (c_function_call
                ( id "MZ_CALL_MAIN"
