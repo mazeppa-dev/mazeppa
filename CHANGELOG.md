@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.4.1 - 2024-10-18
+
 ### Fixed
 
  - Set the minimum `menhir` version requirement to [`20180905`](https://gitlab.inria.fr/fpottier/menhir/-/blob/master/CHANGES.md?ref_type=heads#20180905).
