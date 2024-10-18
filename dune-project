@@ -35,7 +35,8 @@
   (ppx_blob
    (>= 0.9.0))
   bisect_ppx
-  menhir
+  (menhir
+   (>= 20180905))
   (spectrum
    (>= 0.6.0))
   clap
