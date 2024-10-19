@@ -213,10 +213,11 @@ struct
         | t :: rest ->
           (match argument_status t with
            | `Drive -> reduce_amidst ~depth ~op (acc [], t, rest)
-           | `Extract ->
+           (* Primitive operations cannot remove/reorder panics in their operands. *)
+           | `Extract when not (Symbol.is_primitive_op op) ->
              let x = Gensym.emit gensym in
              Extract ((x, t), Term.(Call (op, acc (Var x :: rest))))
-           | `Pass -> go ~acc:(fun xs -> acc (t :: xs)) rest)
+           | `Extract | `Pass -> go ~acc:(fun xs -> acc (t :: xs)) rest)
       in
       go ~acc:Fun.id args
 
