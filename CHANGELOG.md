@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.4.2 - 2024-10-19
+
 ### Changed
 
  - Do not extract operands from calls to primitive operations like `+` (issue https://github.com/mazeppa-dev/mazeppa/issues/24).
