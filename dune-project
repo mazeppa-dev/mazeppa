@@ -11,9 +11,9 @@
 (source
  (github mazeppa-dev/mazeppa))
 
-(authors "Lewis Pearson <hirrolot@gmail.com>")
+(authors "hirrolot <hirrolot@gmail.com>")
 
-(maintainers "Lewis Pearson <hirrolot@gmail.com>")
+(maintainers "hirrolot <hirrolot@gmail.com>")
 
 (license MIT)
 
