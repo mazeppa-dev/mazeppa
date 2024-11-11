@@ -28,7 +28,7 @@
   dune
   pprint
   (checked_oint
-   (>= 0.2.1))
+   (>= 0.3.0))
   ppx_deriving
   ppx_string_interpolation
   ppx_yojson_conv

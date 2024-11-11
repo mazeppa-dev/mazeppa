@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Changed
+
+ - Set the minimum `checked_oint` version requirement to [`0.3.0`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#030---2024-11-09).
+
 ## 0.4.2 - 2024-10-19
 
 ### Changed
@@ -26,7 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - Algebraic simplification now requires operands to be either variables or constants, not compound values.
  - Eliminate let-bindings for "innocent terms" via postprocessing.
    - Innocent terms are variables, integer constants, and zero-arity constructor calls.
- - The minimum supported OCaml version is now 4.14.0.
+ - Set the minimum supported OCaml version to 4.14.0.
+ - Set the minimum `checked_oint` version requirement to [`0.2.1`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#021---2024-10-16).
 
 ### Removed
 
