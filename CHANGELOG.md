@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.4.3 - 2024-11-11
+
 ### Changed
 
  - Set the minimum `checked_oint` version requirement to [`0.3.0`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#030---2024-11-09).
