@@ -142,9 +142,9 @@ let handle_op1 ~(op : Symbol.t) : t -> t =
 
 let handle_op2 ~(op : Symbol.t) : t * t -> t = function
   | (Const (Const.Int m) as t1), (Const (Const.Int n) as t2) ->
-    (match Checked_oint.pair_exn (m, n) with
-     | (module Pair) -> do_int_op2 ~op (module Pair)
-     | exception Invalid_argument _ -> invalid_arg_list ~op [ t1; t2 ])
+    (match Checked_oint.pair (m, n) with
+     | Some (module Pair) -> do_int_op2 ~op (module Pair)
+     | None -> invalid_arg_list ~op [ t1; t2 ])
   | Const (Const.String s1), Const (Const.String s2) -> do_string_op2 ~op (s1, s2)
   | Const (Const.String s), Const (Const.Int (U64 idx)) when op = symbol "get" ->
     let idx = to_int (U64 idx) in
