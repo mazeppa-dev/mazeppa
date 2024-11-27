@@ -178,9 +178,6 @@ let handle_op2 ~(op : Symbol.t) : t * t -> t = function
   | Var _x, Const (Const.Int n) when op = symbol "%" && is_one n ->
     let (module Singleton) = Checked_oint.singleton n in
     int Singleton.(to_generic zero)
-  (* /(x, 0), %(x, 0) -> out of range *)
-  | Var _x, Const (Const.Int n) when (op = symbol "/" || op = symbol "%") && is_zero n ->
-    do_int_op2 ~op (Checked_oint.pair_exn (n, n))
   (* |(x, x), &(x, x) -> x *)
   | (Var x as t), Var y when (op = symbol "|" || op = symbol "&") && x = y -> t
   (* =(x, x), >=(x, x), <=(x, x) -> T() *)
