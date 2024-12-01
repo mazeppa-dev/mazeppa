@@ -1,0 +1,53 @@
+[
+  [ "n0", "main(t)" ],
+  [ "n1", "depthDef(t)" ],
+  [ "n2", "applyTree(t, Pair(SelLeaf(), SelNode()))" ],
+  [ "n3", ".g1(Pair(SelLeaf(), SelNode()), t)" ],
+  [ "n4", ".g0(t, SelLeaf(), SelNode())" ],
+  [ "n5", "t" ],
+  [ "n6", "applySel(SelLeaf(), .v0)" ],
+  [ "n7", ".g3(SelLeaf(), .v0)" ],
+  [ "n8", "0u64" ],
+  [
+    "n9",
+    "applySel(SelNode(), Pair(applyTree(.v1, Pair(SelLeaf(), SelNode())), applyTree(.v2, Pair(SelLeaf(), SelNode()))))"
+  ],
+  [
+    "n10",
+    ".g3(SelNode(), Pair(applyTree(.v1, Pair(SelLeaf(), SelNode())), applyTree(.v2, Pair(SelLeaf(), SelNode()))))"
+  ],
+  [
+    "n11",
+    ".g2(Pair(applyTree(.v1, Pair(SelLeaf(), SelNode())), applyTree(.v2, Pair(SelLeaf(), SelNode()))))"
+  ],
+  [
+    "n12",
+    "+(max(applyTree(.v1, Pair(SelLeaf(), SelNode())), applyTree(.v2, Pair(SelLeaf(), SelNode()))), 1u64)"
+  ],
+  [
+    "n13",
+    "+(max(.g1(Pair(SelLeaf(), SelNode()), .v1), applyTree(.v2, Pair(SelLeaf(), SelNode()))), 1u64)"
+  ],
+  [
+    "n14",
+    "+(max(.g0(.v1, SelLeaf(), SelNode()), applyTree(.v2, Pair(SelLeaf(), SelNode()))), 1u64)"
+  ],
+  [ "n15", ".g0(.v1, SelLeaf(), SelNode())" ],
+  [ "n16", ".v1" ],
+  [ "n17", "+(max(.v3, applyTree(.v2, Pair(SelLeaf(), SelNode()))), 1u64)" ],
+  [ "n18", "+(max(.v3, .g1(Pair(SelLeaf(), SelNode()), .v2)), 1u64)" ],
+  [ "n19", "+(max(.v3, .g0(.v2, SelLeaf(), SelNode())), 1u64)" ],
+  [ "n20", ".g0(.v2, SelLeaf(), SelNode())" ],
+  [ "n21", ".v2" ],
+  [ "n22", "+(max(.v3, .v4), 1u64)" ],
+  [ "n23", "+(.g4(>(.v3, .v4), .v3, .v4), 1u64)" ],
+  [ "n24", ".g4(>(.v3, .v4), .v3, .v4)" ],
+  [ "n25", ">(.v3, .v4)" ],
+  [ "n26", ".v3" ],
+  [ "n27", ".v4" ],
+  [ "n28", ".v4" ],
+  [ "n29", ".v3" ],
+  [ "n30", "+(.v5, 1u64)" ],
+  [ "n31", ".v5" ],
+  [ "n32", "1u64" ]
+]

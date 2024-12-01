@@ -1,0 +1,38 @@
+[
+  [
+    [ "applySel", [ "s", "x" ], ".g3(s, x)" ],
+    [ "applyTree", [ "t", "x" ], ".g1(x, t)" ],
+    [ "depthDef", [ "t" ], "applyTree(t, Pair(SelLeaf(), SelNode()))" ],
+    [ "main", [ "t" ], "depthDef(t)" ],
+    [ "max", [ "d1", "d2" ], ".g4(>(d1, d2), d1, d2)" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "Leaf", [ "x" ], [ "f", "g" ], "applySel(f, x)" ],
+        [
+          "Node",
+          [ "t1", "t2" ],
+          [ "f", "g" ],
+          "applySel(g, Pair(applyTree(t1, Pair(f, g)), applyTree(t2, Pair(f, g))))"
+        ]
+      ]
+    ],
+    [ ".g1", [ [ "Pair", [ "f", "g" ], [ "t" ], ".g0(t, f, g)" ] ] ],
+    [ ".g2", [ [ "Pair", [ "d1", "d2" ], [], "+(max(d1, d2), 1u64)" ] ] ],
+    [
+      ".g3",
+      [
+        [ "SelLeaf", [], [ "x" ], "0u64" ],
+        [ "SelNode", [], [ "x" ], ".g2(x)" ]
+      ]
+    ],
+    [
+      ".g4",
+      [
+        [ "F", [], [ "d1", "d2" ], "d2" ], [ "T", [], [ "d1", "d2" ], "d1" ]
+      ]
+    ]
+  ]
+]

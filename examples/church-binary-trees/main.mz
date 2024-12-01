@@ -1,0 +1,24 @@
+// Defunctionalized Church binary trees. Borrowed from "Defunctionalization at
+// Work" (2001) by Olivier Danvy and Lasse R. Nielsen.
+main(t) := depthDef(t);
+
+depthDef(t) := applyTree(t, Pair(SelLeaf(), SelNode()));
+
+applyTree(t, x) := match x {
+    Pair(f, g) -> match t {
+        Leaf(x) -> applySel(f, x),
+        Node(t1, t2) ->
+            applySel(g, Pair(applyTree(t1, Pair(f, g)),
+                applyTree(t2, Pair(f, g))))
+    }
+};
+
+applySel(s, x) := match s {
+    SelLeaf() -> 0u64,
+    SelNode() -> match x {
+        Pair(d1, d2) -> +(max(d1, d2), 1u64)
+    }
+};
+
+max(d1, d2) :=
+    match >(d1, d2) { T() -> d1, F() -> d2 };
