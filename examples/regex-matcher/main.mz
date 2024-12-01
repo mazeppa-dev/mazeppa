@@ -1,0 +1,34 @@
+// Borrowed from Sergei Romanenko's "scp-notes-ru":
+// <https://sergei-romanenko.github.io/scp-notes-ru/10-ho-dsl.html>.
+main(i) := intR(Seq(Char('a'), Rep(Alt(Char('a'), Char('b')))), i);
+
+// Notice that this interpreter directly corresponds to the `apply` function
+// after defunctionalization of the higher-order regex combinators. In general,
+// all first-class functions can be automatically transformed into ordinary
+// data; for this reason, higher-order supercompilation does not increase the
+// set of programs that can be optimized.
+intR(r, i) := match r {
+    Seq(r1, r2) -> match intR(r1, i) {
+        None() -> None(),
+        Some(j) -> intR(r2, j)
+    },
+    Alt(r1, r2) -> match intR(r1, i) {
+        None() -> intR(r2, i),
+        Some(j) -> Some(j)
+    },
+    Opt(r1) -> match intR(r1, i) {
+        None() -> Some(i),
+        Some(j) -> Some(j)
+    },
+    Rep(r1) -> match intR(r1, i) {
+        None() -> Some(i),
+        Some(j) -> intR(Rep(r1), j)
+    },
+    Char(c) -> match i {
+        Cons(c', j) -> match =(c, c') {
+            T() -> Some(j),
+            F() -> None()
+        },
+        Nil() -> None()
+    }
+};

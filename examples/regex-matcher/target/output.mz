@@ -1,0 +1,20 @@
+main(i) := match i {
+    Cons(x0, x1) -> match =(97u8, x0) {
+        F() -> None(),
+        T() -> f0(x1)
+    },
+    Nil() -> None()
+};
+
+f0(x0) := match x0 {
+    Cons(x1, x2) -> match =(97u8, x1) {
+        F() -> match =(98u8, x1) {
+            F() -> Some(Cons(x1, x2)),
+            T() -> f1(x2)
+        },
+        T() -> f1(x2)
+    },
+    Nil() -> Some(Nil())
+};
+
+f1(x0) := f0(x0);

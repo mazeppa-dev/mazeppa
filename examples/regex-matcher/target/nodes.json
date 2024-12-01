@@ -1,0 +1,142 @@
+[
+  [ "n0", "main(i)" ],
+  [ "n1", "intR(Seq(Char(97u8), Rep(Alt(Char(97u8), Char(98u8)))), i)" ],
+  [ "n2", ".g6(Seq(Char(97u8), Rep(Alt(Char(97u8), Char(98u8)))), i)" ],
+  [ "n3", ".g0(intR(Char(97u8), i), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n4", ".g0(.g6(Char(97u8), i), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n5", ".g0(.g5(i, 97u8), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n6", "i" ],
+  [ "n7", ".g0(.g4(=(97u8, .v0), .v1), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n8", "=(97u8, .v0)" ],
+  [ "n9", "97u8" ],
+  [ "n10", ".v0" ],
+  [ "n11", ".g0(None(), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n12", "None()" ],
+  [ "n13", ".g0(Some(.v1), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n14", "intR(Rep(Alt(Char(97u8), Char(98u8))), .v1)" ],
+  [ "n15", ".g6(Rep(Alt(Char(97u8), Char(98u8))), .v1)" ],
+  [
+    "n16",
+    ".g3(intR(Alt(Char(97u8), Char(98u8)), .v1), .v1, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n17",
+    ".g3(.g6(Alt(Char(97u8), Char(98u8)), .v1), .v1, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n18",
+    ".g3(.g1(intR(Char(97u8), .v1), .v1, Char(98u8)), .v1, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n19",
+    ".g3(.g1(.g6(Char(97u8), .v1), .v1, Char(98u8)), .v1, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n20",
+    ".g3(.g1(.g5(.v1, 97u8), .v1, Char(98u8)), .v1, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n21", ".v1" ],
+  [
+    "n22",
+    ".g3(.g1(.g4(=(97u8, .v3), .v4), Cons(.v3, .v4), Char(98u8)), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n23", "=(97u8, .v3)" ],
+  [ "n24", "97u8" ],
+  [ "n25", ".v3" ],
+  [
+    "n26",
+    ".g3(.g1(None(), Cons(.v3, .v4), Char(98u8)), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n27",
+    ".g3(intR(Char(98u8), Cons(.v3, .v4)), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n28",
+    ".g3(.g6(Char(98u8), Cons(.v3, .v4)), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n29",
+    ".g3(.g5(Cons(.v3, .v4), 98u8), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n30",
+    ".g3(.g4(=(98u8, .v3), .v4), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n31", "=(98u8, .v3)" ],
+  [ "n32", "98u8" ],
+  [ "n33", ".v3" ],
+  [ "n34", ".g3(None(), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))" ],
+  [ "n35", "Some(Cons(.v3, .v4))" ],
+  [ "n36", "Cons(.v3, .v4)" ],
+  [ "n37", ".v3" ],
+  [ "n38", ".v4" ],
+  [ "n39", ".g3(Some(.v4), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))" ],
+  [ "n40", "intR(Rep(Alt(Char(97u8), Char(98u8))), .v4)" ],
+  [ "n41", ".g6(Rep(Alt(Char(97u8), Char(98u8))), .v4)" ],
+  [
+    "n42",
+    ".g3(intR(Alt(Char(97u8), Char(98u8)), .v4), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n43",
+    ".g3(.g6(Alt(Char(97u8), Char(98u8)), .v4), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n44",
+    ".g3(.g1(intR(Char(97u8), .v4), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n45",
+    ".g3(.g1(.g6(Char(97u8), .v4), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n46",
+    ".g3(.g1(.g5(.v4, 97u8), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n47", ".v4" ],
+  [
+    "n48",
+    ".g3(.g1(Some(.v4), Cons(.v3, .v4), Char(98u8)), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n49", ".g3(Some(.v4), Cons(.v3, .v4), Alt(Char(97u8), Char(98u8)))" ],
+  [ "n50", "intR(Rep(Alt(Char(97u8), Char(98u8))), .v4)" ],
+  [ "n51", ".g6(Rep(Alt(Char(97u8), Char(98u8))), .v4)" ],
+  [
+    "n52",
+    ".g3(intR(Alt(Char(97u8), Char(98u8)), .v4), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n53",
+    ".g3(.g6(Alt(Char(97u8), Char(98u8)), .v4), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n54",
+    ".g3(.g1(intR(Char(97u8), .v4), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n55",
+    ".g3(.g1(.g6(Char(97u8), .v4), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n56",
+    ".g3(.g1(.g5(.v4, 97u8), .v4, Char(98u8)), .v4, Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n57", ".v4" ],
+  [
+    "n58",
+    ".g3(.g1(None(), Nil(), Char(98u8)), Nil(), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n59", ".g3(intR(Char(98u8), Nil()), Nil(), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [
+    "n60", ".g3(.g6(Char(98u8), Nil()), Nil(), Alt(Char(97u8), Char(98u8)))"
+  ],
+  [ "n61", ".g3(.g5(Nil(), 98u8), Nil(), Alt(Char(97u8), Char(98u8)))" ],
+  [ "n62", ".g3(None(), Nil(), Alt(Char(97u8), Char(98u8)))" ],
+  [ "n63", "Some(Nil())" ],
+  [ "n64", "Nil()" ],
+  [ "n65", ".g0(None(), Rep(Alt(Char(97u8), Char(98u8))))" ],
+  [ "n66", "None()" ]
+]
