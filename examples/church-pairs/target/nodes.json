@@ -1,0 +1,20 @@
+[
+  [ "n0", "main(p)" ],
+  [ "n1", "sndDef(fstDef(p))" ],
+  [ "n2", "sndDef(applyPair(p, SelFst()))" ],
+  [ "n3", "sndDef(.g2(p, SelFst()))" ],
+  [ "n4", ".g2(p, SelFst())" ],
+  [ "n5", "p" ],
+  [ "n6", "applySel(SelFst(), Pair(.v1, .v2))" ],
+  [ "n7", ".g1(Pair(.v1, .v2), SelFst())" ],
+  [ "n8", ".g0(SelFst(), .v1, .v2)" ],
+  [ "n9", ".v1" ],
+  [ "n10", "sndDef(.v0)" ],
+  [ "n11", "applyPair(.v0, SelSnd())" ],
+  [ "n12", ".g2(.v0, SelSnd())" ],
+  [ "n13", ".v0" ],
+  [ "n14", "applySel(SelSnd(), Pair(.v3, .v4))" ],
+  [ "n15", ".g1(Pair(.v3, .v4), SelSnd())" ],
+  [ "n16", ".g0(SelSnd(), .v3, .v4)" ],
+  [ "n17", ".v4" ]
+]

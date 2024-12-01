@@ -1,0 +1,17 @@
+// Defunctionalized Church pairs. Borrowed from "Defunctionalization at Work"
+// (2001) by Olivier Danvy and Lasse R. Nielsen.
+main(p) := sndDef(fstDef(p));
+
+applySel(s, x) := match x {
+    Pair(x1, x2) -> match s {
+        SelFst() -> x1, SelSnd() -> x2
+    }
+};
+
+applyPair(p, s) := match p {
+    Pair(x1, x2) -> applySel(s, Pair(x1, x2))
+};
+
+fstDef(p) := applyPair(p, SelFst());
+
+sndDef(p) := applyPair(p, SelSnd());

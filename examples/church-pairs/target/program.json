@@ -1,0 +1,23 @@
+[
+  [
+    [ "applyPair", [ "p", "s" ], ".g2(p, s)" ],
+    [ "applySel", [ "s", "x" ], ".g1(x, s)" ],
+    [ "fstDef", [ "p" ], "applyPair(p, SelFst())" ],
+    [ "main", [ "p" ], "sndDef(fstDef(p))" ],
+    [ "sndDef", [ "p" ], "applyPair(p, SelSnd())" ]
+  ],
+  [
+    [
+      ".g0",
+      [
+        [ "SelFst", [], [ "x1", "x2" ], "x1" ],
+        [ "SelSnd", [], [ "x1", "x2" ], "x2" ]
+      ]
+    ],
+    [ ".g1", [ [ "Pair", [ "x1", "x2" ], [ "s" ], ".g0(s, x1, x2)" ] ] ],
+    [
+      ".g2",
+      [ [ "Pair", [ "x1", "x2" ], [ "s" ], "applySel(s, Pair(x1, x2))" ] ]
+    ]
+  ]
+]
