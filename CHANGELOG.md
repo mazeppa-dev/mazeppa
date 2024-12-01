@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
  - Do not simplify _/(x, 0)_ and _%(x, 0)_ to avoid incorrect panic messages (issue https://github.com/mazeppa-dev/mazeppa/issues/25).
+ - Hide empty reduction paths in CLI error messages (issue https://github.com/mazeppa-dev/mazeppa/issues/27).
 
 ## 0.4.3 - 2024-11-11
 
