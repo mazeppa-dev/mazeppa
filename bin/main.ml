@@ -171,10 +171,12 @@ type translate_config =
   }
 
 let c_identifier x =
-    if Str.(
-         string_match (regexp "[a-zA-Z_][a-zA-Z0-9_]*") x 0
-         && (* Ensure that the whole string has been matched. *)
-         matched_string x = x)
+    if
+      Str.(
+        string_match (regexp "[a-zA-Z_][a-zA-Z0-9_]*") x 0
+        &&
+        (* Ensure that the whole string has been matched. *)
+        matched_string x = x)
     then Symbol.of_string x
     else Util.panic "Invalid entry name: `%s`" x
 ;;

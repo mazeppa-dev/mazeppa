@@ -33,11 +33,12 @@ let common_subst (g, subst_1, subst_2) =
     |> scan_subst ~f:(fun (x, s1) ->
       subst_1
       |> scan_subst ~f:(fun (y, s2) ->
-        if x <> y
-           && Term.equal s1 s2
-           && Option.bind (Symbol_map.find_opt x subst_2) (fun t1 ->
-                Symbol_map.find_opt y subst_2 |> Option.map (fun t2 -> Term.equal t1 t2))
-              |> Option.value ~default:false
+        if
+          x <> y
+          && Term.equal s1 s2
+          && Option.bind (Symbol_map.find_opt x subst_2) (fun t1 ->
+               Symbol_map.find_opt y subst_2 |> Option.map (fun t2 -> Term.equal t1 t2))
+             |> Option.value ~default:false
         then Some (x, y)
         else None))
     |> Option.map (fun (x, y) ->

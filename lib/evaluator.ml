@@ -20,7 +20,7 @@ let to_const = function
 
 let of_const = function
   | Term.Const const -> Raw_term.Const const
-  | Term.Call (c, []) when (Symbol.op_kind c = `CCall) [@coverage off] ->
+  | Term.Call (c, []) when ((Symbol.op_kind c = `CCall) [@coverage off]) ->
     Raw_term.Call (c, []) [@coverage off]
   | Term.(Call (c, [ Const (Const.String s) ])) when c = Symbol.of_string "Panic" ->
     Raw_term.(Call (c, [ string s ]))
@@ -77,8 +77,9 @@ let run_exn (input : Raw_program.t) =
       | Raw_term.Call (c, args) when Symbol.op_kind c = `CCall ->
         Raw_term.Call (c, List.map (subst ~env) args)
       | Raw_term.Call (op, [ t ]) when Symbol.is_op1 op ->
-        (let$ t_val = go ~env t in
-         of_const (Simplifier.handle_op1 ~op (to_const t_val))) [@coverage off]
+        ((let$ t_val = go ~env t in
+          of_const (Simplifier.handle_op1 ~op (to_const t_val)))
+        [@coverage off])
       | Raw_term.Call (op, [ t1; t2 ]) when Symbol.is_op2 op ->
         let$ t1_val = go ~env t1 in
         let$ t2_val = go ~env t2 in
@@ -93,8 +94,9 @@ let run_exn (input : Raw_program.t) =
         let env = Symbol_map.extend2 ~keys:c_params ~values:c_args env in
         go ~env body
       | Raw_term.Let (x, t, u) ->
-        (let$ t_val = go ~env t in
-         go ~env:(Symbol_map.add x t_val env) u) [@coverage off]
+        ((let$ t_val = go ~env t in
+          go ~env:(Symbol_map.add x t_val env) u)
+        [@coverage off])
     and go_args ~env ~f ~acc = function
       | [] -> go_call ~f (acc [])
       | t :: rest ->
