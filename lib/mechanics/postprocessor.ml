@@ -45,14 +45,14 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
            let t = go_scrutinee ~env ~cases t in
            let case_f = (c_f, []), hermetic (go_restrict ~env ~x ~negation) case_f in
            let case_t = (c_t, []), hermetic (go ~env) case_t in
-           Raw_term.Match (t, [ case_f; case_t ])
+           Match (t, [ case_f; case_t ])
          with
          | Select t -> t)
       | Match (t, cases) ->
         (try
            let t = go_scrutinee ~env ~cases t in
            let cases = List.map (hermetic (go_case ~env)) cases in
-           Raw_term.Match (t, cases)
+           Match (t, cases)
          with
          | Select t -> t)
       | Let (x, t, u) ->
