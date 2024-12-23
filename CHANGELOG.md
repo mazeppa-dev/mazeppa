@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Changed
+
+ - Do not share syntactically equal arguments during postprocessing.
+
 ### Fixed
 
  - Do not simplify _/(x, 0)_ and _%(x, 0)_ to avoid incorrect panic messages (issue https://github.com/mazeppa-dev/mazeppa/issues/25).

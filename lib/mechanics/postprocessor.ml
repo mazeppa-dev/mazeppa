@@ -4,69 +4,6 @@ open Raw_term
 
 let symbol = Symbol.of_string
 
-(* [is_safe t] is an approximation of whether [t] diverges or panics. *)
-let is_safe = function
-  | Var _ | Const _ -> true
-  | Call (c, []) when Symbol.op_kind c = `CCall -> true
-  | Call _ | Match _ | Let _ -> false
-;;
-
-(* Shares equal arguments in a call [op(t1, ..., tN)] by nested let-bindings. The rules
-   are: 1) variables, constants, and zero-arity constructor calls (such as [T()] or [F()])
-   are always inlined, 2) the original order of evaluating arguments (eager,
-   left-to-right) is preserved, and 3) [gensym] is triggered only as many times as new
-   let-bindings are (physically) generated. The result is a term that shares _all_
-   syntactically equal arguments from the set [{ t1, ..., tN }].
-
-   In order to meet the above criteria, we 1) use lazy symbols for expected let-bindings
-   (which may or may not materialize) and 2) associate mutable cells called "levers" to
-   every expected binding, so that unnecessary bindings can be easily and efficiently
-   "inlined". Incidentally, lazy symbols are useful to track if some expected binding is
-   shared or not: if the symbol was forced, then it was used as a variable at least twice
-   in the call; otherwise, it was used only once. *)
-let share_args ~gensym (op, initial_args) =
-    let bindings, args = ref [], ref [] in
-    let rec finalize_bindings () =
-        match !bindings with
-        | (x, t, lever) :: rest when not (Lazy.is_val x) ->
-          lever := lazy t;
-          bindings := rest;
-          finalize_bindings ()
-        | rest -> List.rev rest
-    in
-    let rec go = function
-      | [] ->
-        let bindings = finalize_bindings () in
-        let args = List.(rev (map (fun lever -> Lazy.force !lever) !args)) in
-        List.fold_right
-          (fun ((lazy x), t, _lever) acc -> Let (x, t, acc))
-          bindings
-          (Call (op, args))
-      | t :: rest when is_safe t ->
-        args := ref (lazy t) :: !args;
-        go rest
-      | t :: rest ->
-        (match
-           List.find_map
-             (fun (x, t', _lever) -> if equal t t' then Some (Lazy.force x) else None)
-             !bindings
-         with
-         | Some x ->
-           args := ref (lazy (Var x)) :: !args;
-           go rest
-         | None ->
-           let x = lazy (Gensym.emit gensym) in
-           let lever = ref (lazy (Var (Lazy.force x))) in
-           bindings := (x, t, lever) :: !bindings;
-           args := lever :: !args;
-           go rest)
-    in
-    if Symbol.is_lazy_op op
-    then (* Let-bindings might affect the order of evaluation. *)
-      Call (op, initial_args)
-    else go initial_args
-;;
-
 let query_env ~env x = Option.value ~default:x (Symbol_map.find_opt x env)
 
 (* TODO: handle other types of restrictions as well. *)
@@ -99,12 +36,7 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
       | Call (op, [ t; Var x ])
         when op = symbol "=" && is_conflict (x, hermetic (go ~env) t) ->
         Call (symbol "F", [])
-      | Call (op, args) ->
-        (* The problem of sharing arguments has optimal substructure: by postprocessing
-           arguments before feeding them to [share_args], we make the resulting term share
-           all equal arguments which reside on the same syntactical level (a function
-           call), throughout all levels in the term. *)
-        share_args ~gensym (op, List.map (hermetic (go ~env)) args)
+      | Call (op, args) -> Call (op, List.map (hermetic (go ~env)) args)
       | Match
           ( (Call (op, ([ Var x; negation ] | [ negation; Var x ])) as t)
           , ([ ((c_f, []), case_f); ((c_t, []), case_t) ] as cases) )
