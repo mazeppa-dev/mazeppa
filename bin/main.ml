@@ -109,7 +109,7 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
     (match channels.nodes_oc with
      | Some oc -> Nodes.output ~oc ()
      | None -> ());
-    let t_res, program_res = Residualizer.run graph in
+    let t_res, program_res = Residualizer.run ~unknowns:main_params graph in
     let residue = ([], main_symbol, main_params, t_res) :: program_res in
     Pretty.print_program ~oc:channels.output_oc residue
 ;;

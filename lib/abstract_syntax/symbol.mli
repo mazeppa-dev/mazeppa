@@ -8,6 +8,10 @@ val to_string : t -> string
 
 val verbatim : t -> string
 
+(** [freshen ~p x] returns such a symbol [y] for which [p y] holds true, while
+    being as close to [x] as possible. *)
+val freshen : p:(t -> bool) -> t -> t
+
 val op_kind : t -> [ `CCall | `FCall | `GCall ]
 
 val is_lazy_op : t -> bool

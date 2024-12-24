@@ -411,13 +411,13 @@ let supercompile () =
         [ [], symbol "main", [ symbol "xs" ], call ("f0", [ var "xs" ])
         ; ( []
           , symbol "f0"
-          , [ symbol "x0" ]
+          , [ symbol "xs" ]
           , Match
-              ( var "x0"
-              , [ ( (symbol "Cons", [ symbol "x1"; symbol "x2" ])
+              ( var "xs"
+              , [ ( (symbol "Cons", [ symbol "x0"; symbol "x1" ])
                   , call
                       ( "+"
-                      , [ call ("*", [ var "x1"; var "x1" ]); call ("f0", [ var "x2" ]) ]
+                      , [ call ("*", [ var "x0"; var "x0" ]); call ("f0", [ var "x1" ]) ]
                       ) )
                 ; (symbol "Nil", []), int (i32 0)
                 ] ) )
@@ -430,6 +430,44 @@ let supercompile () =
 ;;
 
 let supercompilation_cases = [ "Tests", supercompile ]
+
+(* See <https://github.com/mazeppa-dev/mazeppa/issues/28>. *)
+let freshen_variables () =
+    let open Raw_term in
+    let make_rule a =
+        ( []
+        , symbol "main"
+        , [ symbol "x"; symbol "x0" ]
+        , Match
+            (var "x", [ (symbol "A", [ symbol a ]), call ("Result", [ var a; var "x0" ]) ])
+        )
+    in
+    Alcotest.(check' (module Raw_program))
+      ~msg:"Freshen variables"
+      ~actual:(Mazeppa.supercompile [ make_rule "a" ])
+      ~expected:[ make_rule "x0'" ]
+;;
+
+let freshen_variables_cases = [ "Tests", freshen_variables ]
+
+let freshen_variables_in_rules () =
+    let open Raw_term in
+    let make_program (f, a) =
+        [ [], symbol "main", [ symbol "x"; symbol "x0" ], call (f, [ var "x"; var "x0" ])
+        ; ( []
+          , symbol f
+          , [ symbol "x"; symbol "x0" ]
+          , Match (var "x", [ (symbol "A", [ symbol a ]), call (f, [ var a; var "x0" ]) ])
+          )
+        ]
+    in
+    Alcotest.(check' (module Raw_program))
+      ~msg:"Freshen variables in rules"
+      ~actual:(Mazeppa.supercompile (make_program ("f", "a")))
+      ~expected:(make_program ("f0", "x0'"))
+;;
+
+let freshen_variables_in_rules_cases = [ "Tests", freshen_variables_in_rules ]
 
 let eval () =
     let open Raw_term in
@@ -557,6 +595,8 @@ let () =
        ; "Homeomorphic embedding", he_cases
        ; "Raw program errors", raw_program_errors_cases
        ; "Supercompilation", supercompilation_cases
+       ; "Freshen variables", freshen_variables_cases
+       ; "Freshen variables in rules", freshen_variables_in_rules_cases
        ; "Evaluation", evaluation_cases
        ; "Evaluation errors", evaluation_errors_cases
        ; "Lazy evaluation", lazy_evaluation_cases

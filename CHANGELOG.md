@@ -6,14 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Added
+
+ - The `Symbol.freshen` function that generates a fresh symbol according to a given predicate.
+
 ### Changed
 
  - Do not share syntactically equal arguments during postprocessing.
+ - Preserve original parameter names in residual code.
 
 ### Fixed
 
  - Do not simplify _/(x, 0)_ and _%(x, 0)_ to avoid incorrect panic messages (issue https://github.com/mazeppa-dev/mazeppa/issues/25).
  - Hide empty reduction paths in CLI error messages (issue https://github.com/mazeppa-dev/mazeppa/issues/27).
+ - Do not overshadow user-specified symbols during residualization (issue https://github.com/mazeppa-dev/mazeppa/issues/28).
 
 ## 0.4.3 - 2024-11-11
 

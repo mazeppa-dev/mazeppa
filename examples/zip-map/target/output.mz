@@ -3,10 +3,10 @@ main(xs, ys) := match xs {
     Nil() -> f1(ys)
 };
 
-f0(x0, x1, x2) := match x2 {
-    Cons(x3, x4) -> match x1 {
-        Cons(x5, x6) -> Cons(Pair(Blah(x0), Blah(x3)), f0(x5, x6, x4)),
-        Nil() -> Cons(Pair(Blah(x0), Blah(x3)), f1(x4))
+f0(x0, x1, ys) := match ys {
+    Cons(x2, x3) -> match x1 {
+        Cons(x4, x5) -> Cons(Pair(Blah(x0), Blah(x2)), f0(x4, x5, x3)),
+        Nil() -> Cons(Pair(Blah(x0), Blah(x2)), f1(x3))
     },
     Nil() -> Nil()
 };

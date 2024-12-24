@@ -10,17 +10,17 @@ f0() := T();
 
 f1(x0) := x0;
 
-f2(x0, x1) := If(x1, f1(x0), f3(x0));
+f2(x0, c) := If(c, f1(x0), f3(x0));
 
 f3(x0) := F();
 
-f4(x0, x1, x2) := If(x1, f1(x0), f2(x0, x2));
+f4(x0, a, c) := If(a, f1(x0), f2(x0, c));
 
-f5(x0, x1, x2) := If(x1, f2(x0, x2), f1(x0));
+f5(x0, e, g) := If(e, f2(x0, g), f1(x0));
 
-f6(x0, x1) := If(x1, f3(x0), f1(x0));
+f6(x0, c) := If(c, f3(x0), f1(x0));
 
-f7(x0, x1, x2, x3) := If(x1, f1(x0), If(x2, f6(x0, x3), f1(x0)));
+f7(x0, a, b, c) := If(a, f1(x0), If(b, f6(x0, c), f1(x0)));
 
 f8(x0) := match x0 {
     F() -> F(),

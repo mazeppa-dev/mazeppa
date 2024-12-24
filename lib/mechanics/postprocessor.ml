@@ -4,8 +4,6 @@ open Raw_term
 
 let symbol = Symbol.of_string
 
-let query_env ~env x = Option.value ~default:x (Symbol_map.find_opt x env)
-
 (* TODO: handle other types of restrictions as well. *)
 type restriction = NotEqual of Raw_term.t
 
@@ -28,7 +26,7 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
     in
     let exception Select of Raw_term.t in
     let rec go ~env = function
-      | Var x -> Var (query_env ~env x)
+      | Var x -> Var (Symbol_map.find x env)
       | Const _ as t -> t
       | Call (op, [ Var x; t ])
         when op = symbol "=" && is_conflict (x, hermetic (go ~env) t) ->
@@ -57,12 +55,9 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
          | Select t -> t)
       | Let (x, t, u) ->
         let t = hermetic (go ~env) t in
-        let x' = Gensym.emit gensym in
-        let u = go_extend ~env (([ x ], [ x' ]), u) in
-        Let (x', t, u)
-    and go_extend ~env ((params, params'), t) =
-        let env = Symbol_map.extend2 ~keys:params ~values:params' env in
-        go ~env t
+        let env, y = Renaming.insert ~gensym (env, x) in
+        let u = go ~env u in
+        Let (y, t, u)
     and go_restrict ~env ~x ~negation t =
         let negation = hermetic (go ~env) negation in
         match negation with
@@ -73,8 +68,8 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
           t
         | _ -> go ~env t
     and go_case ~env ((c, c_params), t) =
-        let c_params' = Gensym.emit_list ~length_list:c_params gensym in
-        (c, c_params'), go_extend ~env ((c_params, c_params'), t)
+        let env, c_params' = Renaming.insert_list ~gensym (env, c_params) in
+        (c, c_params'), go ~env t
     and go_scrutinee ~env ~cases t =
         let t = hermetic (go ~env) t in
         (match t with
@@ -92,7 +87,7 @@ let handle_term ~(gensym : Gensym.t) ~(env : Renaming.t) t =
 
 let handle_rule ((attrs, f, params, body) : Raw_program.rule) : Raw_program.rule =
     let gensym = Gensym.create ~prefix:"x" () in
-    let params' = Gensym.emit_list ~length_list:params gensym in
-    let env = Symbol_map.setup2 (params, params') in
+    let env = Symbol_map.empty in
+    let env, params' = Renaming.insert_list ~gensym (env, params) in
     attrs, f, params', handle_term ~gensym ~env body
 ;;

@@ -12,6 +12,8 @@ let to_string x = x
 
 let verbatim x = "`" ^ x ^ "`"
 
+let rec freshen ~p x = if p x then x else freshen ~p (x ^ "'")
+
 let is_op1 = function
   | "~"
   | "#"

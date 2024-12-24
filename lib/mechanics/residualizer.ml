@@ -162,7 +162,8 @@ end = struct
   ;;
 end
 
-let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
+let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw_program.t
+  =
     let symbol_table = Process_graph.compute_symbol_table graph in
     let module Memoizer =
       Memoizer (struct
@@ -221,9 +222,7 @@ let run (graph : Process_graph.t) : Raw_term.t * Raw_program.t =
           if is_innocent t_res then Left (x, t_res) else Right (x, t_res))
     in
     let t_res = go ~env:Symbol_map.empty graph in
-    ( Postprocessor.handle_term
-        ~gensym:(Gensym.create ~prefix:"x" ())
-        ~env:Symbol_map.empty
-        t_res
-    , Memoizer.finalize () )
+    let gensym = Gensym.create ~prefix:"x" () in
+    let env, _ = Renaming.insert_list ~gensym (Symbol_map.empty, unknowns) in
+    Postprocessor.handle_term ~gensym ~env t_res, Memoizer.finalize ()
 ;;

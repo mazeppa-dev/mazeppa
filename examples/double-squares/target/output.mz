@@ -1,6 +1,6 @@
 main(xs) := f0(xs);
 
-f0(x0) := match x0 {
-    Cons(x1, x2) -> Cons(*(*(x1, x1), *(x1, x1)), f0(x2)),
+f0(xs) := match xs {
+    Cons(x0, x1) -> Cons(*(*(x0, x0), *(x0, x0)), f0(x1)),
     Nil() -> Nil()
 };

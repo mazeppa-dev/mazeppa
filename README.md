@@ -126,8 +126,8 @@ target
 ```
 main(xs) := f0(xs);
 
-f0(x0) := match x0 {
-    Cons(x1, x2) -> +(*(x1, x1), f0(x2)),
+f0(xs) := match xs {
+    Cons(x0, x1) -> +(*(x0, x0), f0(x1)),
     Nil() -> 0i32
 };
 ```
@@ -251,10 +251,10 @@ By running Mazeppa on the above sample, we can obtain an efficient string matchi
 ```
 main(s) := f0(s);
 
-f0(x0) := match x0 {
-    Cons(x1, x2) -> match =(97u8, x1) {
-        F() -> f1(x2),
-        T() -> f2(x2)
+f0(s) := match s {
+    Cons(x0, x1) -> match =(97u8, x0) {
+        F() -> f1(x1),
+        T() -> f2(x1)
     },
     Nil() -> F()
 };
@@ -562,12 +562,12 @@ Run `dune exec my_compiler` to see the desired residual program:
 
 ```
 [([], "main", ["xs"], (Raw_term.Call ("f0", [(Raw_term.Var "xs")])));
-  ([], "f0", ["x0"],
-   (Raw_term.Match ((Raw_term.Var "x0"),
-      [(("Cons", ["x1"; "x2"]),
+  ([], "f0", ["xs"],
+   (Raw_term.Match ((Raw_term.Var "xs"),
+      [(("Cons", ["x0"; "x1"]),
         (Raw_term.Call ("+",
-           [(Raw_term.Call ("*", [(Raw_term.Var "x1"); (Raw_term.Var "x1")]));
-             (Raw_term.Call ("f0", [(Raw_term.Var "x2")]))]
+           [(Raw_term.Call ("*", [(Raw_term.Var "x0"); (Raw_term.Var "x0")]));
+             (Raw_term.Call ("f0", [(Raw_term.Var "x1")]))]
            )));
         (("Nil", []), (Raw_term.Const (Const.Int (Checked_oint.I32 0))))]
       )))

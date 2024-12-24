@@ -24,7 +24,7 @@ let supercompile (input : Raw_program.t) : Raw_program.t =
       let main_params, _ = Program.find_f_rule ~program main_symbol in
       let t = Term.(Call (main_symbol, var_list main_params)) in
       let graph = Supervisor.run t in
-      let t_res, program_res = Residualizer.run graph in
+      let t_res, program_res = Residualizer.run ~unknowns:main_params graph in
       ([], main_symbol, main_params, t_res) :: program_res)
 ;;
 

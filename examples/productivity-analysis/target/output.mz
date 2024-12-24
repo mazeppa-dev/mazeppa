@@ -1,20 +1,20 @@
 main(stmt) := f0(stmt);
 
-f0(x0) := match x0 {
-    If1(x1, x2, x3) -> match x1 {
-        F() -> f1(x3),
-        T() -> f1(x2),
-        Var(x4, x5) -> match f2(x4, x5) {
-            F() -> f1(x3),
-            T() -> f1(x2)
+f0(stmt) := match stmt {
+    If1(x0, x1, x2) -> match x0 {
+        F() -> f1(x2),
+        T() -> f1(x1),
+        Var(x3, x4) -> match f2(x3, x4) {
+            F() -> f1(x2),
+            T() -> f1(x1)
         }
     },
-    If2(x1, x2, x3) -> match x1 {
-        F() -> f1(x3),
-        T() -> f1(x2),
-        Var(x4, x5) -> match f2(x4, x5) {
-            F() -> f1(x3),
-            T() -> f1(x2)
+    If2(x0, x1, x2) -> match x0 {
+        F() -> f1(x2),
+        T() -> f1(x1),
+        Var(x3, x4) -> match f2(x3, x4) {
+            F() -> f1(x2),
+            T() -> f1(x1)
         }
     }
 };

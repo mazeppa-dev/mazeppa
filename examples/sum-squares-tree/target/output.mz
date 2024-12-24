@@ -1,8 +1,8 @@
 main(xs) := f0(xs);
 
-f0(x0) := match x0 {
-    Branch(x1, x2) -> +(f1(x1), f1(x2)),
-    Leaf(x1) -> *(x1, x1)
+f0(xs) := match xs {
+    Branch(x0, x1) -> +(f1(x0), f1(x1)),
+    Leaf(x0) -> *(x0, x0)
 };
 
 f1(x0) := f0(x0);

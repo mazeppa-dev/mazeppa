@@ -1,9 +1,9 @@
 main(s) := f0(s);
 
-f0(x0) := match x0 {
-    Cons(x1, x2) -> match =(97u8, x1) {
-        F() -> f1(x2),
-        T() -> f2(x2)
+f0(s) := match s {
+    Cons(x0, x1) -> match =(97u8, x0) {
+        F() -> f1(x1),
+        T() -> f2(x1)
     },
     Nil() -> F()
 };

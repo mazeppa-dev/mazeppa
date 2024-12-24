@@ -1,13 +1,13 @@
 main(t) := f0(t);
 
-f0(x0) := match x0 {
-    Leaf(x1) -> 0u64,
-    Node(x1, x2) ->
+f0(t) := match t {
+    Leaf(x0) -> 0u64,
+    Node(x0, x1) ->
+    let x2 := f1(x0);
     let x3 := f1(x1);
-    let x4 := f1(x2);
-    +(match >(x3, x4) {
-        F() -> x4,
-        T() -> x3
+    +(match >(x2, x3) {
+        F() -> x3,
+        T() -> x2
     }, 1u64)
 };
 
