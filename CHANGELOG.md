@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
  - Do not share syntactically equal arguments during postprocessing.
- - Preserve original parameter names in residual code.
+ - Preserve `main` parameter names in residual code.
 
 ### Fixed
 
