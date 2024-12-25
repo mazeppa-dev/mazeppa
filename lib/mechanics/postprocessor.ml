@@ -5,8 +5,8 @@ let symbol = Symbol.of_string
 (* TODO: handle other types of restrictions as well. *)
 type restriction = NotEqual of Raw_term.t
 
-(* We propagate negative information about primitives at residualization-time.
-   During driving, we only propagate positive information. *)
+(* We propagate negative information about primitives at residualization-time. During
+   driving, we only propagate positive information. *)
 let propagate_restrictions : env:restriction Symbol_map.t -> Raw_term.t -> Raw_term.t =
     let open Raw_term in
     let is_conflict ~env = function
@@ -62,8 +62,8 @@ let propagate_restrictions : env:restriction Symbol_map.t -> Raw_term.t -> Raw_t
     go
 ;;
 
-(* Generate proper symbols (i.e., without a leading dot), recovering as much
-   original program symbols as possible. *)
+(* Generate proper symbols (i.e., without a leading dot), recovering as much original
+   program symbols as possible. *)
 let rename ~gensym ~fresh_to_source_vars : env:Renaming.t -> Raw_term.t -> Raw_term.t =
     let open Raw_term in
     let rec go ~env = function
