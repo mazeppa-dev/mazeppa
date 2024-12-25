@@ -19,6 +19,8 @@ let string s = Const (Const.String s)
 
 let call (op, args) = Call (Symbol.of_string op, args)
 
+let let' (x, t, u) = Let (Symbol.of_string x, t, u)
+
 let var_list symbols = List.map (fun x -> Var x) symbols
 
 let to_string =

@@ -1,31 +1,31 @@
 main(x, s) :=
-    let x0 := u8(x);
-    let x1 := u16(x);
-    let x2 := u32(x);
-    let x3 := u64(x);
-    let x4 := u128(x);
-    let x5 := i8(x);
-    let x6 := i16(x);
-    let x7 := i32(x);
-    let x8 := i64(x);
-    let x9 := i128(x);
-    let x10 := #(x);
-    let x11 := string(x);
-    let x12 := ~(x);
-    let x13 := +(x, 7u8);
-    let x14 := -(x, 7u8);
-    let x15 := *(x, 7u8);
-    let x16 := /(7u8, x);
-    let x17 := %(7u8, x);
-    let x18 := |(x, 7u8);
-    let x19 := &(x, 7u8);
-    let x20 := ^(x, 7u8);
-    let x21 := <<(x, 7u8);
-    let x22 := >>(x, 7u8);
-    let x23 := length(s);
-    let x24 := ++(s, "abc");
-    let x25 := get(s, 7u64);
-    Combine(CastOps(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11), ArithOps(
-    x12, x13, x14, x15, x16, x17), BitOps(x18, x19, x20, x21, x22), StringOps(
-    x23, x24, x25), CmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x,
+    let v0 := u8(x);
+    let v1 := u16(x);
+    let v2 := u32(x);
+    let v3 := u64(x);
+    let v4 := u128(x);
+    let v5 := i8(x);
+    let v6 := i16(x);
+    let v7 := i32(x);
+    let v8 := i64(x);
+    let v9 := i128(x);
+    let v10 := #(x);
+    let v11 := string(x);
+    let v12 := ~(x);
+    let v13 := +(x, 7u8);
+    let v14 := -(x, 7u8);
+    let v15 := *(x, 7u8);
+    let v16 := /(7u8, x);
+    let v17 := %(7u8, x);
+    let v18 := |(x, 7u8);
+    let v19 := &(x, 7u8);
+    let v20 := ^(x, 7u8);
+    let v21 := <<(x, 7u8);
+    let v22 := >>(x, 7u8);
+    let v23 := length(s);
+    let v24 := ++(s, "abc");
+    let v25 := get(s, 7u64);
+    Combine(CastOps(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11), ArithOps(
+    v12, v13, v14, v15, v16, v17), BitOps(v18, v19, v20, v21, v22), StringOps(
+    v23, v24, v25), CmpOps(=(x, 7u8), !=(x, 7u8), >(x, 7u8), >=(x, 7u8), <(x,
     7u8), <=(x, 7u8)));

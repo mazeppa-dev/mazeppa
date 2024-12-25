@@ -414,10 +414,10 @@ let supercompile () =
           , [ symbol "xs" ]
           , Match
               ( var "xs"
-              , [ ( (symbol "Cons", [ symbol "x0"; symbol "x1" ])
+              , [ ( (symbol "Cons", [ symbol "x"; symbol "xs'" ])
                   , call
                       ( "+"
-                      , [ call ("*", [ var "x0"; var "x0" ]); call ("f0", [ var "x1" ]) ]
+                      , [ call ("*", [ var "x"; var "x" ]); call ("f0", [ var "xs'" ]) ]
                       ) )
                 ; (symbol "Nil", []), int (i32 0)
                 ] ) )
@@ -434,37 +434,41 @@ let supercompilation_cases = [ "Tests", supercompile ]
 (* See <https://github.com/mazeppa-dev/mazeppa/issues/28>. *)
 let freshen_variables () =
     let open Raw_term in
-    let make_rule a =
-        ( []
-        , symbol "main"
-        , [ symbol "x"; symbol "x0" ]
-        , Match
-            (var "x", [ (symbol "A", [ symbol a ]), call ("Result", [ var a; var "x0" ]) ])
-        )
+    let make_program y =
+        [ ( []
+          , symbol "main"
+          , [ symbol "x"; symbol "v0" ]
+          , let'
+              ( y
+              , call ("+", [ var "x"; var "x" ])
+              , call ("+", [ call ("*", [ var y; var y ]); var "v0" ]) ) )
+        ]
     in
     Alcotest.(check' (module Raw_program))
       ~msg:"Freshen variables"
-      ~actual:(Mazeppa.supercompile [ make_rule "a" ])
-      ~expected:[ make_rule "x0'" ]
+      ~actual:(Mazeppa.supercompile (make_program "y"))
+      ~expected:(make_program "v0'")
 ;;
 
 let freshen_variables_cases = [ "Tests", freshen_variables ]
 
 let freshen_variables_in_rules () =
     let open Raw_term in
-    let make_program (f, a) =
-        [ [], symbol "main", [ symbol "x"; symbol "x0" ], call (f, [ var "x"; var "x0" ])
+    let make_program (f, y) =
+        [ [], symbol "main", [ symbol "x"; symbol "v0" ], call (f, [ var "v0"; var "x" ])
         ; ( []
           , symbol f
-          , [ symbol "x"; symbol "x0" ]
-          , Match (var "x", [ (symbol "A", [ symbol a ]), call (f, [ var a; var "x0" ]) ])
-          )
+          , [ symbol "v0"; symbol "x" ]
+          , let'
+              ( y
+              , call ("+", [ var "x"; var "x" ])
+              , call (f, [ var "v0"; call ("*", [ var y; var y ]) ]) ) )
         ]
     in
     Alcotest.(check' (module Raw_program))
       ~msg:"Freshen variables in rules"
-      ~actual:(Mazeppa.supercompile (make_program ("f", "a")))
-      ~expected:(make_program ("f0", "x0'"))
+      ~actual:(Mazeppa.supercompile (make_program ("f", "y")))
+      ~expected:(make_program ("f0", "v0'"))
 ;;
 
 let freshen_variables_in_rules_cases = [ "Tests", freshen_variables_in_rules ]

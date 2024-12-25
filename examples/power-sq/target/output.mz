@@ -1,1 +1,1 @@
-main(a) := let x0 := *(a, *(a, a)); *(a, *(x0, x0));
+main(a) := let v0 := *(a, *(a, a)); *(a, *(v0, v0));

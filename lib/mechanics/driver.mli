@@ -12,7 +12,11 @@ type 'a step =
   (* Extract a binding. *)
   | Extract of (Symbol.t * 'a) * 'a
 
-and contraction = Symbol.t * Symbol.t list
+and contraction =
+  { c : Symbol.t
+  ; fresh_vars : Symbol.t list
+  ; original_vars : Symbol.t list
+  }
 
 and 'a case_body = (Symbol.t * 'a) option * 'a
 

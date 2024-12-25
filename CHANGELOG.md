@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - The `Symbol.freshen` function that generates a fresh symbol according to a given predicate.
+ - The `Raw_term.let'` shortcut function.
 
 ### Changed
 
  - Do not share syntactically equal arguments during postprocessing.
- - Preserve `main` parameter names in residual code.
+ - Preserve names of global unknowns and constructor parameters in residual code (refreshing if necessary).
 
 ### Fixed
 

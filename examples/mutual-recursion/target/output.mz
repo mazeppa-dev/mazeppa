@@ -1,9 +1,9 @@
 main(xs) := f0(xs);
 
 f0(xs) := match xs {
-    Cons(x0, x1) -> match x1 {
-        Cons(x2, x3) -> +(*(2i32, x0), +(*(3i32, x2), f0(x3))),
-        Nil() -> +(*(2i32, x0), 0i32)
+    Cons(x, xs') -> match xs' {
+        Cons(x', xs'') -> +(*(2i32, x), +(*(3i32, x'), f0(xs''))),
+        Nil() -> +(*(2i32, x), 0i32)
     },
     Nil() -> 0i32
 };

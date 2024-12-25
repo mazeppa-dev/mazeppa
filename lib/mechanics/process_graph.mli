@@ -15,7 +15,10 @@ and binder =
 
 and node_id = Symbol.t
 
-type symbol_table = (Symbol.t * Program.param_list) Symbol_map.t
+type metadata =
+  { symbol_table : (Symbol.t * Program.param_list) Symbol_map.t
+  ; fresh_to_original_vars : Renaming.t
+  }
 
 (* Computes a map from node identifiers to residualized function signatures. *)
-val compute_symbol_table : t -> symbol_table
+val compute_metadata : t -> metadata

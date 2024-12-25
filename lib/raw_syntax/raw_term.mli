@@ -17,6 +17,8 @@ val string : string -> t
 
 val call : string * t list -> t
 
+val let' : string * t * t -> t
+
 val var_list : Symbol.t list -> t list
 
 val to_string : t -> string

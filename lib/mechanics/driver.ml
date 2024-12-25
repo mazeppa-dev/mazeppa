@@ -8,7 +8,11 @@ type 'a step =
   | Analyze of Symbol.t * 'a * (contraction * 'a case_body) list
   | Extract of (Symbol.t * 'a) * 'a
 
-and contraction = Symbol.t * Symbol.t list
+and contraction =
+  { c : Symbol.t
+  ; fresh_vars : Symbol.t list
+  ; original_vars : Symbol.t list
+  }
 
 and 'a case_body = (Symbol.t * 'a) option * 'a
 
@@ -41,7 +45,7 @@ let map ~(f : 'a -> 'b) : 'a step -> 'b step = function
     Extract (binding, f u)
 ;;
 
-let unify ~x ~contraction:(c, fresh_vars) list =
+let unify ~x ~contraction:{ c; fresh_vars; original_vars = _ } list =
     match x with
     | None -> list
     | Some x ->
@@ -167,7 +171,7 @@ struct
       view_g_rules ~program g
       |> List.map (fun ((c, (c_params, params, body)), is_productive) ->
         let fresh_vars = Gensym.emit_list ~length_list:c_params gensym in
-        let contraction = c, fresh_vars in
+        let contraction = { c; fresh_vars; original_vars = c_params } in
         let args =
             try f contraction with
             | Uncontractable ->
@@ -189,7 +193,7 @@ struct
   ;;
 
   let unfold_g_rules_t_f ~depth ~test:(x, op', unifier) ~args g =
-      let f (c, fresh_vars) =
+      let f { c; fresh_vars; original_vars = _ } =
           match Symbol.(to_string c, to_string op'), fresh_vars with
           | ("T", "="), [] | ("F", "!="), [] ->
             List.map (Term.subst ~x ~value:unifier) args

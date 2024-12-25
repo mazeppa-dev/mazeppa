@@ -127,7 +127,7 @@ let let' (x, t, u) =
 let query_env ~env x = Option.value ~default:(Raw_term.Var x) (Symbol_map.find_opt x env)
 
 module Memoizer (S : sig
-    val symbol_table : Process_graph.symbol_table
+    val graph_metadata : Process_graph.metadata
   end) : sig
   val bind : environment -> (environment -> Raw_term.t) -> Raw_term.t
 
@@ -141,12 +141,16 @@ end = struct
 
   let bind env k =
       let node_id = Gensym.emit node_gensym in
-      match Symbol_map.find_opt node_id symbol_table with
+      match Symbol_map.find_opt node_id graph_metadata.symbol_table with
       | Some (f, params) ->
         (* This will be the body of [f]; do not make any substitution. *)
         let t_res = k Symbol_map.empty in
         (* [params] contains all free variables in [t_res]. *)
-        f_rules := Postprocessor.handle_rule ([], f, params, t_res) :: !f_rules;
+        f_rules
+        := Postprocessor.handle_rule
+             ~renaming:graph_metadata.fresh_to_original_vars
+             ([], f, params, t_res)
+           :: !f_rules;
         (* Some parameters may refer to bound variables; substitute. *)
         Raw_term.Call (f, List.map (query_env ~env) params)
       | None -> k env
@@ -164,10 +168,10 @@ end
 
 let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw_program.t
   =
-    let symbol_table = Process_graph.compute_symbol_table graph in
+    let graph_metadata = Process_graph.compute_metadata graph in
     let module Memoizer =
       Memoizer (struct
-        let symbol_table = symbol_table
+        let graph_metadata = graph_metadata
       end)
     in
     let rec go ~(env : environment) (graph : Process_graph.t) : Raw_term.t =
@@ -190,16 +194,17 @@ let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw
         let t_res = go ~env graph in
         let cases_res =
             variants
-            |> List.map (fun (contraction, (binding, graph)) ->
-              match binding with
-              | Some binding -> contraction, go_extract ~env (binding, graph)
-              | None -> contraction, go ~env graph)
+            |> List.map
+                 (fun (Driver.{ c; fresh_vars; original_vars = _ }, (binding, graph)) ->
+                   match binding with
+                   | Some binding -> (c, fresh_vars), go_extract ~env (binding, graph)
+                   | None -> (c, fresh_vars), go ~env graph)
         in
         match' (t_res, cases_res)
       | Driver.Extract (binding, graph) -> go_extract ~env (binding, graph)
     and go_binder ~(env : environment) ~bindings = function
       | Process_graph.Fold node_id ->
-        let f, _f_params = Symbol_map.find node_id symbol_table in
+        let f, _f_params = Symbol_map.find node_id graph_metadata.symbol_table in
         let args_res = List.map (fun (_x, graph) -> go ~env graph) bindings in
         Raw_term.Call (f, args_res)
       | Process_graph.Generalize graph ->
@@ -222,7 +227,12 @@ let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw
           if is_innocent t_res then Left (x, t_res) else Right (x, t_res))
     in
     let t_res = go ~env:Symbol_map.empty graph in
-    let gensym = Gensym.create ~prefix:"x" () in
+    let gensym = Gensym.create ~prefix:"v" () in
     let env, _ = Renaming.insert_list ~gensym (Symbol_map.empty, unknowns) in
-    Postprocessor.handle_term ~gensym ~env t_res, Memoizer.finalize ()
+    ( Postprocessor.handle_term
+        ~gensym
+        ~env
+        ~renaming:graph_metadata.fresh_to_original_vars
+        t_res
+    , Memoizer.finalize () )
 ;;

@@ -1,34 +1,34 @@
-main(a, b, c, d, e, f, g) := f8(f7(let x0 := let x0 := let x0 := f7(let x0 :=
-    let x0 := If(g, If(d, If(b, F(), f0()), f0()), f0());
-    If(a, f1(x0), f4(x0, a, c));
-    If(f, f5(x0, e, g), f1(x0)), a, b, c);
-    If(g, f4(x0, c, d), f1(x0));
-    If(e, f1(x0), f5(x0, g, f));
-    If(f, If(e, f1(x0), f6(x0, g)), f1(x0)), a, b, c));
+main(a, b, c, d, e, f, g) := f8(f7(let v4 := let v3 := let v2 := f7(let v1 :=
+    let v0 := If(g, If(d, If(b, F(), f0()), f0()), f0());
+    If(a, f1(v0), f4(v0, a, c));
+    If(f, f5(v1, e, g), f1(v1)), a, b, c);
+    If(g, f4(v2, c, d), f1(v2));
+    If(e, f1(v3), f5(v3, g, f));
+    If(f, If(e, f1(v4), f6(v4, g)), f1(v4)), a, b, c));
 
 f0() := T();
 
-f1(x0) := x0;
+f1(v0) := v0;
 
-f2(x0, c) := If(c, f1(x0), f3(x0));
+f2(v0, c) := If(c, f1(v0), f3(v0));
 
-f3(x0) := F();
+f3(v0) := F();
 
-f4(x0, a, c) := If(a, f1(x0), f2(x0, c));
+f4(v0, a, c) := If(a, f1(v0), f2(v0, c));
 
-f5(x0, e, g) := If(e, f2(x0, g), f1(x0));
+f5(v0, e, g) := If(e, f2(v0, g), f1(v0));
 
-f6(x0, c) := If(c, f3(x0), f1(x0));
+f6(v0, c) := If(c, f3(v0), f1(v0));
 
-f7(x0, a, b, c) := If(a, f1(x0), If(b, f6(x0, c), f1(x0)));
+f7(v0, a, b, c) := If(a, f1(v0), If(b, f6(v0, c), f1(v0)));
 
-f8(x0) := match x0 {
+f8(v0) := match v0 {
     F() -> F(),
-    If(x1, x2, x3) -> match x1 {
-        F() -> f9(x3),
-        T() -> f9(x2)
+    If(x, m, n) -> match x {
+        F() -> f9(n),
+        T() -> f9(m)
     },
     T() -> T()
 };
 
-f9(x0) := f8(x0);
+f9(n) := f8(n);

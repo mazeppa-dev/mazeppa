@@ -127,7 +127,7 @@ target
 main(xs) := f0(xs);
 
 f0(xs) := match xs {
-    Cons(x0, x1) -> +(*(x0, x0), f0(x1)),
+    Cons(x, xs') -> +(*(x, x), f0(xs')),
     Nil() -> 0i32
 };
 ```
@@ -205,7 +205,7 @@ square(a) := *(a, a);
 
 [[`examples/power-sq/target/output.mz`](examples/power-sq/target/output.mz)]
 ```
-main(a) := let x0 := *(a, *(a, a)); *(a, *(x0, x0));
+main(a) := let v0 := *(a, *(a, a)); *(a, *(v0, v0));
 ```
 
 The whole `powerSq` function has been eliminated, thus achieving the effect of partial evaluation. (If we consider `powerSq` to be an interpreter for a program `x` and input data `a`, then it is the first Futamura projection: specializing an interpreter to obtain an efficient target program.) Also, notice how the supercompiler has managed to _share_ the argument `*(a, *(a, a))` twice, so that it is not recomputed each time anew. The residual program indeed reflects exponentiation by squaring.
@@ -252,30 +252,30 @@ By running Mazeppa on the above sample, we can obtain an efficient string matchi
 main(s) := f0(s);
 
 f0(s) := match s {
-    Cons(x0, x1) -> match =(97u8, x0) {
-        F() -> f1(x1),
-        T() -> f2(x1)
+    Cons(s', ss) -> match =(97u8, s') {
+        F() -> f1(ss),
+        T() -> f2(ss)
     },
     Nil() -> F()
 };
 
-f1(x0) := f0(x0);
+f1(ss) := f0(ss);
 
-f2(x0) := match x0 {
-    Cons(x1, x2) -> match =(97u8, x1) {
-        F() -> f1(x2),
-        T() -> f4(x2)
+f2(ss) := match ss {
+    Cons(s, ss') -> match =(97u8, s) {
+        F() -> f1(ss'),
+        T() -> f4(ss')
     },
     Nil() -> F()
 };
 
-f3(x0) := f2(x0);
+f3(ss) := f2(ss);
 
-f4(x0) := match x0 {
-    Cons(x1, x2) -> match =(98u8, x1) {
-        F() -> match =(97u8, x1) {
-            F() -> f1(x2),
-            T() -> f4(x2)
+f4(ss) := match ss {
+    Cons(s, ss') -> match =(98u8, s) {
+        F() -> match =(97u8, s) {
+            F() -> f1(ss'),
+            T() -> f4(ss')
         },
         T() -> T()
     },
@@ -564,10 +564,10 @@ Run `dune exec my_compiler` to see the desired residual program:
 [([], "main", ["xs"], (Raw_term.Call ("f0", [(Raw_term.Var "xs")])));
   ([], "f0", ["xs"],
    (Raw_term.Match ((Raw_term.Var "xs"),
-      [(("Cons", ["x0"; "x1"]),
+      [(("Cons", ["x"; "xs'"]),
         (Raw_term.Call ("+",
-           [(Raw_term.Call ("*", [(Raw_term.Var "x0"); (Raw_term.Var "x0")]));
-             (Raw_term.Call ("f0", [(Raw_term.Var "x1")]))]
+           [(Raw_term.Call ("*", [(Raw_term.Var "x"); (Raw_term.Var "x")]));
+             (Raw_term.Call ("f0", [(Raw_term.Var "xs'")]))]
            )));
         (("Nil", []), (Raw_term.Const (Const.Int (Checked_oint.I32 0))))]
       )))
