@@ -15,7 +15,7 @@ type 'a step =
 and contraction =
   { c : Symbol.t
   ; fresh_vars : Symbol.t list
-  ; original_vars : Symbol.t list
+  ; source_vars : Symbol.t list
   }
 
 and 'a case_body = (Symbol.t * 'a) option * 'a

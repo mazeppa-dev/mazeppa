@@ -13,15 +13,12 @@ type t = (Symbol.t Symbol_map.t[@printer pp_as_list]) [@@deriving eq, show]
 
 let not_in_codomain ~env y = Symbol_map.for_all (fun _ y' -> y <> y') env
 
-let fresh_symbol ~gensym ~renaming ~env = function
+let fresh_symbol ~gensym ~fresh_to_source_vars ~env = function
   (* [x] was generated in the process of driving; we must generate a new symbol that has
      not been used yet. *)
   | x when (Symbol.to_string x).[0] = '.' ->
     let x' =
-        (* [renaming] maps driver-generated variables to their counterparts from the
-           original user program. If it contains a mapping for [x], we use it; otherwise,
-           we generate a new proper symbol to replace [x]. *)
-        match Symbol_map.find_opt x renaming with
+        match Symbol_map.find_opt x fresh_to_source_vars with
         | Some x' -> x'
         | None -> Gensym.emit gensym
     in
@@ -30,19 +27,16 @@ let fresh_symbol ~gensym ~renaming ~env = function
   | x -> x
 ;;
 
-let insert
-      ~(gensym : Gensym.t)
-      ?(renaming = ((Symbol_map.empty : t) [@coverage off]))
-      ((env, x) : t * Symbol.t)
+let insert ~(gensym : Gensym.t) ~(fresh_to_source_vars : t) ((env, x) : t * Symbol.t)
   : t * Symbol.t
   =
-    let y = fresh_symbol ~gensym ~renaming ~env x in
+    let y = fresh_symbol ~gensym ~fresh_to_source_vars ~env x in
     Symbol_map.add x y env, y
 ;;
 
 let insert_list
       ~(gensym : Gensym.t)
-      ?(renaming = (Symbol_map.empty : t))
+      ~(fresh_to_source_vars : t)
       ((env, list) : t * Symbol.t list)
   : t * Symbol.t list
   =
@@ -50,7 +44,7 @@ let insert_list
         list
         |> List.fold_left
              (fun (env, list) x ->
-                let env, y = insert ~gensym ~renaming (env, x) in
+                let env, y = insert ~gensym ~fresh_to_source_vars (env, x) in
                 env, fun xs -> list (y :: xs))
              (env, Fun.id)
     in

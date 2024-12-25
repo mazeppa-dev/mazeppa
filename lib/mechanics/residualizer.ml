@@ -148,7 +148,7 @@ end = struct
         (* [params] contains all free variables in [t_res]. *)
         f_rules
         := Postprocessor.handle_rule
-             ~renaming:graph_metadata.fresh_to_original_vars
+             ~fresh_to_source_vars:graph_metadata.fresh_to_source_vars
              ([], f, params, t_res)
            :: !f_rules;
         (* Some parameters may refer to bound variables; substitute. *)
@@ -195,7 +195,7 @@ let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw
         let cases_res =
             variants
             |> List.map
-                 (fun (Driver.{ c; fresh_vars; original_vars = _ }, (binding, graph)) ->
+                 (fun (Driver.{ c; fresh_vars; source_vars = _ }, (binding, graph)) ->
                    match binding with
                    | Some binding -> (c, fresh_vars), go_extract ~env (binding, graph)
                    | None -> (c, fresh_vars), go ~env graph)
@@ -227,12 +227,9 @@ let run ~(unknowns : Symbol.t list) (graph : Process_graph.t) : Raw_term.t * Raw
           if is_innocent t_res then Left (x, t_res) else Right (x, t_res))
     in
     let t_res = go ~env:Symbol_map.empty graph in
-    let gensym = Gensym.create ~prefix:"v" () in
-    let env, _ = Renaming.insert_list ~gensym (Symbol_map.empty, unknowns) in
-    ( Postprocessor.handle_term
-        ~gensym
-        ~env
-        ~renaming:graph_metadata.fresh_to_original_vars
+    ( Postprocessor.handle_main_body
+        ~fresh_to_source_vars:graph_metadata.fresh_to_source_vars
+        ~unknowns
         t_res
     , Memoizer.finalize () )
 ;;

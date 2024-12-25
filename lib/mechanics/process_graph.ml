@@ -13,13 +13,13 @@ and node_id = Symbol.t
 
 type metadata =
   { symbol_table : (Symbol.t * Program.param_list) Symbol_map.t
-  ; fresh_to_original_vars : Renaming.t
+  ; fresh_to_source_vars : Renaming.t
   }
 
 let compute_metadata (graph : t) : metadata =
     let f_gensym = Gensym.create ~prefix:"f" () in
     let metadata =
-        ref { symbol_table = Symbol_map.empty; fresh_to_original_vars = Symbol_map.empty }
+        ref { symbol_table = Symbol_map.empty; fresh_to_source_vars = Symbol_map.empty }
     in
     let rec go = function
       | Step step -> go_step step
@@ -31,16 +31,16 @@ let compute_metadata (graph : t) : metadata =
       | Driver.Analyze (_x, graph, variants) ->
         go graph;
         List.iter
-          (fun (Driver.{ c = _; fresh_vars; original_vars }, (binding, graph)) ->
+          (fun (Driver.{ c = _; fresh_vars; source_vars }, (binding, graph)) ->
              List.iter2
                (fun x y ->
                   metadata
                   := { !metadata with
-                       fresh_to_original_vars =
-                         Symbol_map.add x y !metadata.fresh_to_original_vars
+                       fresh_to_source_vars =
+                         Symbol_map.add x y !metadata.fresh_to_source_vars
                      })
                fresh_vars
-               original_vars;
+               source_vars;
              match binding with
              | Some binding -> go_extract (binding, graph)
              | None -> go graph)

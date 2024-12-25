@@ -98,7 +98,7 @@ let run ~(oc : out_channel Lazy.t) (graph : Process_graph.t) : unit =
         go_body ~parent_node graph
     and go_variants ~parent_node (x, variants) =
         List.iter
-          (fun (Driver.{ c; fresh_vars; original_vars = _ }, (binding, graph)) ->
+          (fun (Driver.{ c; fresh_vars; source_vars = _ }, (binding, graph)) ->
              let attrs =
                  Symbol.(
                    label "%s=%s(%s)" (to_string x) (to_string c) (comma_sep fresh_vars))
