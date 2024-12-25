@@ -143,15 +143,14 @@ end = struct
       let node_id = Gensym.emit node_gensym in
       match Symbol_map.find_opt node_id graph_metadata.symbol_table with
       | Some (f, params) ->
-        (* This will be the body of [f]; do not make any substitution. *)
         let t_res = k Symbol_map.empty in
-        (* [params] contains all free variables in [t_res]. *)
         f_rules
         := Postprocessor.handle_rule
              ~fresh_to_source_vars:graph_metadata.fresh_to_source_vars
              ([], f, params, t_res)
            :: !f_rules;
-        (* Some parameters may refer to bound variables; substitute. *)
+        (* Some parameters may refer to bound environment variables; we must therefore
+           replace them with their definitions. *)
         Raw_term.Call (f, List.map (query_env ~env) params)
       | None -> k env
   ;;
