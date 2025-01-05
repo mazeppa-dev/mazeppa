@@ -122,7 +122,7 @@ end = struct
 
      [let x := 1u8; let x := +(x, 2u8); x]
 
-     Will be renamed to:
+     will be renamed to:
 
      [let x := 1u8; let x' := +(x, 2u8); x']
 
@@ -132,9 +132,9 @@ end = struct
      [int x = x + 1;]
 
      With freshening, we avoid this situation that would otherwise result in undefined
-     behaviour (by reading uninitialized memory). In generated code, we prepend [sym_] to
-     identifiers and replace apostrophes (') with dollar signs ($), so the above Mazeppa
-     code would first define [sym_x] and then [sym_x$]. *)
+     behaviour (by reading uninitialized memory). In generated code, we prepend [var_] to
+     variables and replace apostrophes (') with dollar signs ($), so the above Mazeppa
+     code would first define [var_x] and then [var_x$]. *)
   let rec freshen ~ctx x =
       if Symbol_map.exists (fun _x' y -> x = y) ctx.renaming
       then freshen ~ctx Symbol.(of_string (to_string x ^ "'"))
