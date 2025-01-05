@@ -991,7 +991,7 @@ The definition of `eval` is now complete.
     1. Generate a source code archive and include it in the release:
        <br>`git archive HEAD -o mazeppa-<major>.<minor>.<patch>.tar.gz`
  1. Type `git pull && opam publish`.
- 1. In the opened PR, specify the correct archive URL and checksums (by running `md5sum` and `sha512sum`).
+    1. Specify the correct archive URL and checksums (by running `md5sum` and `sha512sum` on the archive).
 
 [GitHub Releases]: https://github.com/mazeppa-dev/mazeppa/releases
 
