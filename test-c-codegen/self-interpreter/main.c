@@ -1,4 +1,4 @@
-#include "mazeppa.h"
+#include "../mazeppa.h"
 
 mz_Value run(void);
 
