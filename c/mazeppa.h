@@ -116,13 +116,13 @@ typedef int32_t mz_prim_I32;
 typedef int64_t mz_prim_I64;
 typedef __int128 mz_prim_I128;
 
-#define MZ_U8_MIN   ((mz_prim_U8)0)
+#define MZ_U8_MIN   UINT8_C(0)
 #define MZ_U8_MAX   UINT8_MAX
-#define MZ_U16_MIN  ((mz_prim_U16)0)
+#define MZ_U16_MIN  UINT16_C(0)
 #define MZ_U16_MAX  UINT16_MAX
-#define MZ_U32_MIN  ((mz_prim_U32)0)
+#define MZ_U32_MIN  UINT32_C(0)
 #define MZ_U32_MAX  UINT32_MAX
-#define MZ_U64_MIN  ((mz_prim_U64)0)
+#define MZ_U64_MIN  UINT64_C(0)
 #define MZ_U64_MAX  UINT64_MAX
 #define MZ_U128_MIN ((unsigned __int128)0)
 #define MZ_U128_MAX (~MZ_U128_MIN)
