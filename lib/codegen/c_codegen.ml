@@ -141,23 +141,22 @@ end = struct
       else x
   ;;
 
-  let remember ~ctx (x, ty) =
+  let remember' ~ctx (x, ty) =
       let x' = freshen ~ctx x in
-      { renaming = Symbol_map.add x x' ctx.renaming
-      ; types = Symbol_map.add x' ty ctx.types
-      }
+      ( x'
+      , { renaming = Symbol_map.add x x' ctx.renaming
+        ; types = Symbol_map.add x' ty ctx.types
+        } )
+  ;;
+
+  let remember ~ctx (x, ty) =
+      let _x', ctx = remember' ~ctx (x, ty) in
+      ctx
   ;;
 
   let assoc ~map x =
       try Symbol_map.find x map with
       | Not_found -> Util.panic "Unbound variable %s" (Symbol.verbatim x)
-  ;;
-
-  (* See <https://github.com/mazeppa-dev/mazeppa/issues/29>. *)
-  let protect_scope ~seen ~x block_item_list =
-      if Symbol_set.mem x seen
-      then [ c_expression_statement (c_statement_expression block_item_list) ]
-      else block_item_list
   ;;
 
   let rec gen_term ~(ctx : context) = function
@@ -193,12 +192,18 @@ end = struct
   and flatten_let_sequence ~ctx ~seen = function
     | Raw_term.(Let (x, t, u)) ->
       let t_gen, t_fv = gen_term ~ctx t in
-      let ctx = remember ~ctx (x, VarEager) in
-      let x' = assoc ~map:ctx.renaming x in
-      let u_gen, u_fv = flatten_let_sequence ~ctx ~seen:(Symbol_set.add x' seen) u in
-      ( protect_scope
-          ~seen
-          ~x:x'
+      let x', ctx = remember' ~ctx (x, VarEager) in
+      (* See <https://github.com/mazeppa-dev/mazeppa/issues/29>. *)
+      let seen = Symbol_set.(if mem x' seen then empty else add x' seen) in
+      let u_gen, u_fv = flatten_let_sequence ~ctx ~seen u in
+      let scope =
+          if Symbol_set.is_empty seen
+          then
+            fun block_item_list ->
+              [ c_expression_statement (c_statement_expression block_item_list) ]
+          else Fun.id
+      in
+      ( scope
           (c_initialization_declaration
              ( [ c_typedef_name (id "mz_Value") ]
              , c_identifier_declarator (gen_var x')
