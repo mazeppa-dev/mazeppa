@@ -1,0 +1,5 @@
+main() :=
+    let x := 100i32;
+    let x := x;
+    let x := x;
+    x;

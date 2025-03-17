@@ -153,6 +153,13 @@ end = struct
       | Not_found -> Util.panic "Unbound variable %s" (Symbol.verbatim x)
   ;;
 
+  (* See <https://github.com/mazeppa-dev/mazeppa/issues/29>. *)
+  let protect_scope ~seen ~x block_item_list =
+      if Symbol_set.mem x seen
+      then [ c_expression_statement (c_statement_expression block_item_list) ]
+      else block_item_list
+  ;;
+
   let rec gen_term ~(ctx : context) = function
     | Raw_term.Var x ->
       let x = assoc ~map:ctx.renaming x in
@@ -163,7 +170,7 @@ end = struct
       , Symbol_set.singleton x )
     | Raw_term.Const const -> gen_const const, Symbol_set.empty
     | Raw_term.Let _ as t ->
-      let t_gen, t_fv = flatten_let_sequence ~ctx t in
+      let t_gen, t_fv = flatten_let_sequence ~ctx ~seen:Symbol_set.empty t in
       c_statement_expression t_gen, t_fv
     | Raw_term.(Call (c, [ t ])) when c = Symbol.of_string "Panic" ->
       let t_gen, t_fv = gen_term ~ctx t in
@@ -183,16 +190,20 @@ end = struct
     | Raw_term.Call (f, args) -> gen_call ~ctx (f, args)
     | Raw_term.Match (t, cases) -> gen_match ~ctx (t, cases)
 
-  and flatten_let_sequence ~ctx = function
+  and flatten_let_sequence ~ctx ~seen = function
     | Raw_term.(Let (x, t, u)) ->
       let t_gen, t_fv = gen_term ~ctx t in
       let ctx = remember ~ctx (x, VarEager) in
-      let u_gen, u_fv = flatten_let_sequence ~ctx u in
-      ( c_initialization_declaration
-          ( [ c_typedef_name (id "mz_Value") ]
-          , c_identifier_declarator (gen_var (assoc ~map:ctx.renaming x))
-          , Some t_gen )
-        :: u_gen
+      let x' = assoc ~map:ctx.renaming x in
+      let u_gen, u_fv = flatten_let_sequence ~ctx ~seen:(Symbol_set.add x' seen) u in
+      ( protect_scope
+          ~seen
+          ~x:x'
+          (c_initialization_declaration
+             ( [ c_typedef_name (id "mz_Value") ]
+             , c_identifier_declarator (gen_var x')
+             , Some t_gen )
+           :: u_gen)
       , Symbol_set.(union t_fv (diff u_fv (singleton x))) )
     | t ->
       let t_gen, t_fv = gen_term ~ctx t in
