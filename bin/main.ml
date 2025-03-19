@@ -85,7 +85,7 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
      | Some oc -> Program.output ~oc program
      | None -> ());
     let module Nodes = Make_nodes (struct end) in
-    let module Supervisor =
+    let module Supervisor_inst =
       Supervisor.Make (struct
         let program = program
 
@@ -102,7 +102,7 @@ let supercompile ~(channels : channels) (input : Raw_program.t) : unit =
     in
     let main_params, _ = Program.find_f_rule ~program main_symbol in
     let t = Term.(Call (main_symbol, var_list main_params)) in
-    let graph = Supervisor.run t in
+    let graph = Supervisor_inst.run t in
     (match channels.graph_oc with
      | Some oc -> Visualizer.run ~oc graph
      | None -> ());

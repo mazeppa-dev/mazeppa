@@ -15,13 +15,13 @@ end = struct
 
   let var_gensym = Gensym.create ~prefix:".v" ()
 
-  module Driver' = Driver.Make (struct
+  module Driver_inst = Driver.Make (struct
       include S
 
       let gensym = var_gensym
     end)
 
-  module History = History.Make (struct end)
+  module History_inst = History.Make (struct end)
 
   module State = struct
     let node_gensym : Gensym.t = Gensym.create ~prefix:"n" ()
@@ -112,7 +112,7 @@ end = struct
       fun t -> go ~depth:0 t
   ;;
 
-  let rec run ~(history : History.t) (n : Term.t) : Process_graph.t =
+  let rec run ~(history : History_inst.t) (n : Term.t) : Process_graph.t =
       let n_id = report_node n in
       let gensym_backup, globals_backup = State.backup () in
       try check_extract ~history (n_id, n) with
@@ -175,7 +175,7 @@ end = struct
      any node, we must check that the suggested substitution is safe, so as to preserve
      call-by-value semantics of code. *)
   and check_whistle ~history (n_id, n) =
-      match History.memoize ~suspect:(n_id, n) history with
+      match History_inst.memoize ~suspect:(n_id, n) history with
       | Some (m_id, m), history ->
         (match Term.match_against (m, n) with
          | Some subst when Subst.is_safe subst -> fold ~history ~bindings:subst m_id
@@ -196,7 +196,7 @@ end = struct
                | _ -> raise_notrace (Failback (m_id, `Split)))
             (* Perform upwards generalization otherwise. *)
             | _ -> raise_notrace (Failback (m_id, `Generalize (subst_1, g)))))
-      | None, history -> Step (Driver'.run ~f:(run ~history) n)
+      | None, history -> Step (Driver_inst.run ~f:(run ~history) n)
 
   and supercompile_bindings ~history subst =
       subst |> Symbol_map.bindings |> List.map (fun (x, t) -> x, run ~history t)
@@ -224,7 +224,7 @@ end = struct
       Process_graph.Step (Driver.Extract ((x, call_sup), shell_sup))
   ;;
 
-  let run (t : Term.t) : Process_graph.t = run ~history:History.empty t
+  let run (t : Term.t) : Process_graph.t = run ~history:History_inst.empty t
 end
 
 module Make (S : sig
