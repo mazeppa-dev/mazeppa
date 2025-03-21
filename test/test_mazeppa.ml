@@ -281,10 +281,22 @@ let he () =
     (* Integers of distinct types cannot embed into each other -- even if they have the
        same numeric value. *)
     check ~expected:false T.(int (u8 10), int (u16 10));
-    (* Strings are cons lists of characters. *)
-    check ~expected:true T.(string "octopus", string "octopus");
-    check ~expected:true T.(string "otus", string "octopus");
-    check ~expected:false T.(string "octopusx", string "octopus");
+    (* Checks that a given sequence of strings is well-formed. *)
+    let check_strings (sequence : string array) =
+        for i = 0 to Array.length sequence - 1 do
+          for j = 0 to i - 1 do
+            let s1, s2 = sequence.(j), sequence.(i) in
+            check ~expected:false T.(string s1, string s2)
+          done
+        done
+    in
+    (* [set(s1) = set(s2) /\ length(s1) <= length(s2)] *)
+    check_strings [| "abc"; "ac"; "a" |];
+    check_strings [| "a"; "b"; "c" |];
+    check_strings [| "c"; "b"; "a" |];
+    check_strings [| "aa"; "ccc"; "bbbbaa"; "ca" |];
+    check ~expected:true T.(string "abc", string "abc");
+    check ~expected:true T.(string "abc", string "aaabc");
     (* Incomparable terms. *)
     let incomparable_terms = T.[ int (u8 10); string "hello world"; var "x" ] in
     incomparable_terms

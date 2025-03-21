@@ -4,17 +4,28 @@ open Term
    constructor. See issue #12 for more discussion. *)
 let decide_ints (x, y) = Checked_oint.equal_generic x y
 
-(* Strings are compared as sequences (lazy lists) of single-arity constructors: e.g.,
-   "abc" is broken up into [A(B(C(Nil())))]. *)
+(* Decides whether strings [s1] and [s2] contain the same characters, possibly in
+   different number and/or order. *)
+let same_character_set (s1, s2) =
+    let present = Array.make 256 0 in
+    s1
+    |> String.iter (fun c ->
+      let i = Char.code c in
+      present.(i) <- present.(i) lor 1);
+    s2
+    |> String.iter (fun c ->
+      let i = Char.code c in
+      present.(i) <- present.(i) lor 2);
+    Array.(for_all (unsafe_get [| true; false; false; true |]) present)
+;;
+
+(* This relation is borrowed from [1]. For the proof that this is a valid WQO, see theorem
+   3.2 from the same paper.
+
+   [1] Bolingbroke, Maximilian, Simon Peyton Jones, and Dimitrios Vytiniotis. "Termination
+   combinators forever." Proceedings of the 4th ACM symposium on Haskell. 2011. *)
 let decide_strings (s1, s2) =
-    let rec go (s1, s2) =
-        match s1 (), s2 () with
-        | Seq.(Cons (c1, s1), Cons (c2, s2)) when c1 = c2 -> go (s1, s2)
-        | _, Seq.Cons (_c2, s2) -> go (s1, s2)
-        | Seq.Nil, _ -> true
-        | Seq.Cons _, _ -> false
-    in
-    go (String.to_seq s1, String.to_seq s2)
+    same_character_set (s1, s2) && String.(length s1 <= length s2)
 ;;
 
 let decide_const =

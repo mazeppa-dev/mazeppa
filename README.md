@@ -774,8 +774,12 @@ $ gcc main.c program.o sds.c -lgc -std=gnu11
  - Supercompiling a whole user program is not a good idea. Instead, consider supercompiling separate modules and then linking them together (the exact way you do so depends on your situation).
    - Although Mazeppa is itself not parallel, supercompiling separate modules can be done in parallel.
  - It is _much_ better if recursive functions reduce at least one argument structurally, just as in total functional programming. Otherwise, termination checking might not work well.
-   - No integer is structurally smaller than another one: iteration can happen in any order.
-   - A string _s1_ is smaller than _s2_ iff _s2_ contains all the characters of _s1_, preserving the order; for example, `"otus"` is smaller than `"octopus"` but `"octopusx"` is not.
+   - No integer is embedded in another one: iteration can happen in any order.
+   - A string _s1_ is embedded in _s2_ iff _set(s1) = set(s2) /\ length(s1) <= length(s2)_, where _set(s)_ is the set of all characters in _s_. This relation is borrowed from [^termination-combinators]; for the proof that this is a well-quasi order, see theorem 3.2 from the same paper. All of the following sequences are well-formed according to this relation:
+     - `"abc"`, `"ac"`, `"a"`
+     - `"a"`, `"b"`, `"c"`
+     - `"c"`, `"b"`, `"a"`
+     - `"aa"`, `"ccc"`, `"bbbbaa"`, `"ca"`
 
 ## Technical decisions
 
@@ -1098,6 +1102,8 @@ Just fork the repository, work in your own branch, and submit a pull request. Pr
 [^turchin-dialogue]: Turchin, Valentin F.. “A dialogue on Metasystem transition.” World Futures 45 (1995): 5-57.
 
 [^turchin-metavariables]: Turchin, V., and A. Nemytykh. Metavariables: Their implementation and use in Program Transformation. CCNY Technical Report CSc TR-95-012, 1995.
+
+[^termination-combinators]: Bolingbroke, Maximilian, Simon Peyton Jones, and Dimitrios Vytiniotis. "Termination combinators forever." Proceedings of the 4th ACM symposium on Haskell. 2011.
 
 [^supercomp-by-eval]: Maximilian Bolingbroke and Simon Peyton Jones. 2010. Supercompilation by evaluation. In Proceedings of the third ACM Haskell symposium on Haskell (Haskell '10). Association for Computing Machinery, New York, NY, USA, 135–146. https://doi.org/10.1145/1863523.1863540
 

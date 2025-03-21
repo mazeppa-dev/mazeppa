@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Do not share syntactically equal arguments during postprocessing.
  - Preserve names of global unknowns and constructor parameters in residual code (refreshing if necessary).
+ - Use a more lenient WQO for strings: _set(s1) = set(s2) /\ length(s1) <= length(s2)_.
 
 ### Fixed
 
