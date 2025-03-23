@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Do not share syntactically equal arguments during postprocessing.
  - Preserve names of global unknowns and constructor parameters in residual code (refreshing if necessary).
  - Use a more lenient WQO for strings: _set(s1) = set(s2) /\ length(s1) <= length(s2)_.
+ - Set the minimum `checked_oint` version requirement to [`0.4.1`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#041---2025-01-03).
+   - This fixes compilation on Fedora Linux, openSUSE, FreeBSD, and Oracle Linux.
 
 ### Fixed
 
