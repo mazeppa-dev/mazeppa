@@ -89,9 +89,7 @@ end = struct
   module Pool = Weak.Make (struct
       type t = Term.t
 
-      let equal = Term.equal
-
-      let hash = Hashtbl.hash
+      let equal, hash = Term.equal, Hashtbl.hash
     end)
 
   (* The same size as that of the global homeomorphic embedding cache. *)

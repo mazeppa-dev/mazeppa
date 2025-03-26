@@ -77,9 +77,7 @@ module Make (_ : sig end) = struct
       (struct
         type t = Term.t
 
-        let equal = ( == )
-
-        let hash = address_of_value
+        let equal, hash = ( == ), address_of_value
       end)
 
   module Result_cache =

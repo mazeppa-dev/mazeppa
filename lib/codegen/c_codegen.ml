@@ -474,9 +474,7 @@ end
 let run ~(oc : out_channel) ~(entry : Symbol.t) (rules : Raw_program.t) : unit =
     let module M =
       Make (struct
-        let rules = rules
-
-        let entry = entry
+        let rules, entry = rules, entry
       end)
     in
     c_translation_unit ~oc M.external_declarations
