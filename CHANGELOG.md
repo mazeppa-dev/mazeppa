@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Fixed
+
+ - The outdated version number in the CLI output.
+
 ## 0.5.0 - 2025-03-23
 
 ### Added
