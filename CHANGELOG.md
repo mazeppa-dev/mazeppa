@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Do not share syntactically equal arguments during postprocessing.
  - Preserve names of global unknowns and constructor parameters in residual code (refreshing if necessary).
  - Use a more lenient WQO for strings: _set(s1) = set(s2) /\ length(s1) <= length(s2)_.
- - Set the minimum `checked_oint` version requirement to [`0.4.1`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#041---2025-01-03).
+ - Set the minimum `checked_oint` version requirement to [`0.4.1`](https://opam.ocaml.org/packages/checked_oint/checked_oint.0.4.1/).
    - This fixes compilation on Fedora Linux, openSUSE, FreeBSD, and Oracle Linux.
 
 ### Fixed
@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Set the minimum `checked_oint` version requirement to [`0.3.0`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#030---2024-11-09).
+ - Set the minimum `checked_oint` version requirement to [`0.3.0`](https://opam.ocaml.org/packages/checked_oint/checked_oint.0.3.0/).
 
 ## 0.4.2 - 2024-10-19
 
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Eliminate let-bindings for "innocent terms" via postprocessing.
    - Innocent terms are variables, integer constants, and zero-arity constructor calls.
  - Set the minimum supported OCaml version to 4.14.0.
- - Set the minimum `checked_oint` version requirement to [`0.2.1`](https://github.com/hirrolot/checked_oint/blob/master/CHANGELOG.md#021---2024-10-16).
+ - Set the minimum `checked_oint` version requirement to [`0.2.1`](https://opam.ocaml.org/packages/checked_oint/checked_oint.0.2.1/).
 
 ### Removed
 
