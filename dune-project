@@ -11,9 +11,9 @@
 (source
  (github mazeppa-dev/mazeppa))
 
-(authors "hirrolot <hirrolot@gmail.com>")
+(authors "mazeppa-dev <mazeppa.dev@protonmail.com>")
 
-(maintainers "hirrolot <hirrolot@gmail.com>")
+(maintainers "mazeppa-dev <mazeppa.dev@protonmail.com>")
 
 (license MIT)
 
