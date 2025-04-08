@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+### Changed
+
+ - Set the minimum `checked_oint` version requirement to [`0.5.0`](https://opam.ocaml.org/packages/checked_oint/checked_oint.0.5.0/).
+   - Internally, this enables proper integer conversion instead of going to `string` and parsing it back.
+
 ## 0.5.1 - 2025-03-27
 
 ### Fixed

@@ -27,10 +27,9 @@ let to_int (n : Checked_oint.generic) : int =
 let do_int_op1 ~op (module S : Checked_oint.Singleton) =
     let of_int n = int (S.to_generic n) in
     let cast ty =
-        let repr = S.(show value) in
         let (module Target) = Checked_oint.ops ty in
-        let result = Target.(to_generic (of_string_exn repr)) in
-        int result
+        let x = S.(to_generic value) in
+        int Target.(to_generic (of_generic_exn x))
     in
     try
       match Symbol.to_string op with
