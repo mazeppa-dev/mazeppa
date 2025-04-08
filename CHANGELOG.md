@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## unreleased
 
+## 0.5.2 - 2025-04-08
+
 ### Changed
 
  - Set the minimum `checked_oint` version requirement to [`0.5.0`](https://opam.ocaml.org/packages/checked_oint/checked_oint.0.5.0/).
