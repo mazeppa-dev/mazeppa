@@ -35,16 +35,16 @@ let do_int_op1 ~op (module S : Checked_oint.Singleton) =
       match Symbol.to_string op with
       | "~" -> S.(bit_not value) |> of_int
       | "string" -> S.(show value) |> string
-      | "u8" -> cast u8_int_ty
-      | "u16" -> cast u16_int_ty
-      | "u32" -> cast u32_int_ty
-      | "u64" -> cast u64_int_ty
-      | "u128" -> cast u128_int_ty
-      | "i8" -> cast i8_int_ty
-      | "i16" -> cast i8_int_ty
-      | "i32" -> cast i32_int_ty
-      | "i64" -> cast i64_int_ty
-      | "i128" -> cast i128_int_ty
+      | "u8" -> cast Int_ty.u8
+      | "u16" -> cast Int_ty.u16
+      | "u32" -> cast Int_ty.u32
+      | "u64" -> cast Int_ty.u64
+      | "u128" -> cast Int_ty.u128
+      | "i8" -> cast Int_ty.i8
+      | "i16" -> cast Int_ty.i16
+      | "i32" -> cast Int_ty.i32
+      | "i64" -> cast Int_ty.i64
+      | "i128" -> cast Int_ty.i128
       | _ -> Util.panic "Unexpected integer unary operator: %s" (Symbol.verbatim op)
     with
     | Checked_oint.Out_of_range ->

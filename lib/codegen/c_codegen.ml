@@ -52,7 +52,8 @@ let gen_int =
 
 let gen_const = function
   | C.Int x ->
-    c_function_call (id "MZ_INT", int_ty (Checked_oint.generic_int_ty x) @ [ gen_int x ])
+    c_function_call
+      (id "MZ_INT", int_ty (Checked_oint.Int_ty.of_generic x) @ [ gen_int x ])
   | C.String s -> c_function_call (id "MZ_STRING", [ c_string_literal s ])
 ;;
 

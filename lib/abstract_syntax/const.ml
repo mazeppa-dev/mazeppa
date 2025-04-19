@@ -39,7 +39,7 @@ let int_ty_to_string_uppercase (signedness, bitness) =
 
 let int_to_string x =
     let (module Singleton) = Checked_oint.singleton x in
-    Singleton.(show value) ^ int_ty_to_string (Checked_oint.generic_int_ty x)
+    Singleton.(show value) ^ int_ty_to_string (Checked_oint.Int_ty.of_generic x)
 ;;
 
 [@@@coverage on]
